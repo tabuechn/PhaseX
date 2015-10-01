@@ -1,5 +1,8 @@
 package view.gui;
 
+import model.card.CardColor;
+import model.card.impl.Card;
+
 import java.awt.*;
 
 /**
@@ -56,6 +59,7 @@ public final class GUIConstants {
     public static final Dimension BUTTON_LABEL_MIN_SIZE = new Dimension(GUIConstants.WINDOW_WIDTH, 600);
     public static final Dimension BUTTON_LABEL_MAX_SIZE = new Dimension(GUIConstants.WINDOW_WIDTH, 775);
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 50);
+    public static final Card BLANK_CARD = new Card(0, CardColor.BLANK);
 
     private GUIConstants() {
     }
