@@ -21,15 +21,15 @@ public class ColorStackTest {
     public void setUp() throws Exception {
         DeckOfCards cardList = new DeckOfCards();
         cardList.add(new Card(4, CardColor.BLUE));
-        cardList.add(new Card(6,CardColor.BLUE));
-        cardList.add(new Card(1,CardColor.BLUE));
+        cardList.add(new Card(6, CardColor.BLUE));
+        cardList.add(new Card(1, CardColor.BLUE));
         cs = new ColorStack(cardList);
     }
 
     @Test
     public void csTest() {
         assertTrue(cs.getList().size() == 3);
-        assertTrue(cs.getStackColor()== CardColor.BLUE);
+        assertTrue(cs.getStackColor() == CardColor.BLUE);
         cs.addCardToStack(new Card(3, CardColor.BLUE));
         assertTrue(cs.getList().size() == 4);
         assertTrue(cs.checkCardMatching(new Card(8, CardColor.BLUE)));

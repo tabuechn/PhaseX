@@ -1,4 +1,4 @@
-package view.TUI;
+package view.tui;
 
 import controller.IController;
 import model.card.ICard;
@@ -55,9 +55,9 @@ public class TUI implements IObserver {
 
     private void checkPlayerTurnFinished(String input) {
         String lowerCaseInput = input.toLowerCase();
-        if(lowerCaseInput.matches("discard ([0-9]|10)")) {
+        if (lowerCaseInput.matches("discard ([0-9]|10)")) {
             discardInput(lowerCaseInput);
-        } else if(lowerCaseInput.matches("addtophase [0-3] ([0-9]|10)")) {
+        } else if (lowerCaseInput.matches("addtophase [0-3] ([0-9]|10)")) {
             addToPhase(lowerCaseInput);
         } else {
             LOGGER.info("Wrong input: unknown command or wrong arguments");
@@ -67,22 +67,23 @@ public class TUI implements IObserver {
     private void addToPhase(String input) {
         int stackIndex = Integer.parseInt(input.split(" ")[1]);
         int cardIndex = Integer.parseInt(input.split(" ")[2]);
-        if(controller.getAllStacks().size() < stackIndex + 1) {
+        if (controller.getAllStacks().size() < stackIndex + 1) {
             LOGGER.info("Wrong input: there is no phase with the index on the field");
             return;
         }
-        if(controller.getCurrentPlayersHand().size() < cardIndex + 1) {
+        if (controller.getCurrentPlayersHand().size() < cardIndex + 1) {
             LOGGER.info("Wrong input: the current player doesn't have a card with that index");
             return;
         }
-        controller.addToFinishedPhase(controller.getCurrentPlayersHand().get(cardIndex),controller.getAllStacks().get(stackIndex));
+        controller.addToFinishedPhase(controller.getCurrentPlayersHand().get(cardIndex),
+                controller.getAllStacks().get(stackIndex));
     }
 
     private void checkPlayerTurnNotFinished(String input) {
         String lowerCaseInput = input.toLowerCase();
-        if(lowerCaseInput.matches("discard ([0-9]|10)")) {
+        if (lowerCaseInput.matches("discard ([0-9]|10)")) {
             discardInput(lowerCaseInput);
-        } else if(lowerCaseInput.matches("playphase (([0-9]|10)\\s){5,7}([0-9]|10)")) {
+        } else if (lowerCaseInput.matches("playphase (([0-9]|10)\\s){5,7}([0-9]|10)")) {
             playPhaseInput(lowerCaseInput);
         } else {
             LOGGER.info("Wrong input: unknown command or wrong arguments");
@@ -90,12 +91,12 @@ public class TUI implements IObserver {
     }
 
     private void playPhaseInput(String input) {
-        String[] splitArray =  input.split(" ");
+        String[] splitArray = input.split(" ");
         IDeckOfCards phase = new DeckOfCards();
         Set<Integer> numberSet = new HashSet<>();
-        for(int i = 1; i < splitArray.length; i++) {
+        for (int i = 1; i < splitArray.length; i++) {
             int index = Integer.parseInt(splitArray[i]);
-            if(numberSet.contains(index)) {
+            if (numberSet.contains(index)) {
                 LOGGER.info("Wrong input: you cannot pick a card twice");
                 return;
             }
@@ -147,12 +148,13 @@ public class TUI implements IObserver {
 
 
     private void printDraw() {
-        LOGGER.info(controller.getCurrentPlayer().getPlayerName() +"'s Turn");
+        LOGGER.info(controller.getCurrentPlayer().getPlayerName() + "'s Turn");
         printCurrentPlayersHand();
         printStacks();
-        if(controller.getDiscardPile().size() > 0) {
+        if (controller.getDiscardPile().size() > 0) {
             ICard discardPileCard = controller.getDiscardPile().get(controller.getDiscardPile().size() - 1);
-            LOGGER.info("The Card on the Discard Pile is: " + Integer.toString(discardPileCard.getNumber()) + discardPileCard.getColor().toString());
+            LOGGER.info("The Card on the Discard Pile is: " + Integer.toString(discardPileCard.getNumber()) +
+                    discardPileCard.getColor().toString());
             LOGGER.info("Enter DrawHidden to draw from the draw pile");
             LOGGER.info("Enter DrawDiscard to draw from the discard pile");
         } else {
@@ -163,7 +165,7 @@ public class TUI implements IObserver {
 
     private void printStacks() {
         List<ICardStack> allStacks = controller.getAllStacks();
-        if(allStacks.isEmpty()) {
+        if (allStacks.isEmpty()) {
             LOGGER.info("There are currently no phases played");
         } else {
             LOGGER.info("These Phases are currently played");
@@ -172,14 +174,14 @@ public class TUI implements IObserver {
     }
 
     private void printAllStacks(List<ICardStack> allStacks) {
-        for(ICardStack stack : allStacks) {
+        for (ICardStack stack : allStacks) {
             printSingleStack(stack.getList());
         }
     }
 
     private void printSingleStack(IDeckOfCards list) {
         String output = "";
-        for(ICard card : list) {
+        for (ICard card : list) {
             output += Integer.toString(card.getNumber()) + card.getColor().toString() + " ";
         }
         LOGGER.info(output);
@@ -188,7 +190,7 @@ public class TUI implements IObserver {
     private void printCurrentPlayersHand() {
         LOGGER.info("This is the current players hand:");
         String hand = "";
-        for(ICard card : controller.getCurrentPlayersHand()) {
+        for (ICard card : controller.getCurrentPlayersHand()) {
             hand += Integer.toString(card.getNumber()) + card.getColor().toString() + " ";
         }
         LOGGER.info(hand);

@@ -1,7 +1,7 @@
-package view.GUI.views.commonViews;
+package view.gui.views.commonViews;
 
-import view.GUI.GUIConstants;
-import view.GUI.specialViews.CenteredLabel;
+import view.gui.GUIConstants;
+import view.gui.specialViews.CenteredLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class NotificationLabel extends CenteredLabel {
 
-    public NotificationLabel(){
+    public NotificationLabel() {
         super("");
         this.setFont(GUIConstants.DEFAULT_FONT);
         this.setVerticalTextPosition(JLabel.CENTER);
@@ -24,11 +24,11 @@ public class NotificationLabel extends CenteredLabel {
         this.setVisible(true);
     }
 
-    public void changeTextSize(float size){
+    public void changeTextSize(float size) {
         this.setFont(getFont().deriveFont(size));
     }
 
-    public void setFontColor(Color color){
+    public void setFontColor(Color color) {
         this.setForeground(color);
     }
 }

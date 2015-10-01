@@ -7,5 +7,6 @@ package model.card;
  */
 public interface ICard {
     int getNumber();
+
     CardColor getColor();
 }

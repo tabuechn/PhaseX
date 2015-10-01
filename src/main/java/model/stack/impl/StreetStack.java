@@ -32,18 +32,23 @@ public class StreetStack implements ICardStack {
 
     @Override
     public boolean checkCardMatching(ICard card) {
-        return (card.getNumber() == (lowestCardNumber-1) || card.getNumber() == (highestCardNumber+1)) ;
+        return (card.getNumber() == (lowestCardNumber - 1) || card.getNumber() == (highestCardNumber + 1));
     }
 
     @Override
     public void addCardToStack(ICard card) {
         list.add(card);
         list.sort(new CardComparator());
-        if(card.getNumber() > this.highestCardNumber) {
+        if (card.getNumber() > this.highestCardNumber) {
             increaseHighestCardNumber();
         } else {
             decreaseLowestCardNumber();
         }
+    }
+
+    @Override
+    public IDeckOfCards getList() {
+        return this.list;
     }
 
     private void decreaseLowestCardNumber() {
@@ -52,10 +57,5 @@ public class StreetStack implements ICardStack {
 
     private void increaseHighestCardNumber() {
         this.highestCardNumber++;
-    }
-
-    @Override
-    public IDeckOfCards getList() {
-        return this.list;
     }
 }

@@ -25,27 +25,29 @@ public class CardTest {
     }
 
     @Test
-    public void equalsOnSameObjectShouldReturnTrue(){
+    public void equalsOnSameObjectShouldReturnTrue() {
         assertEquals(CARD_1, CARD_1);
     }
 
     @Test
-    public void equalsOnTwoEquivalentCardsShouldReturnTrue(){
+    public void equalsOnTwoEquivalentCardsShouldReturnTrue() {
         assertEquals(CARD_1, CARD_2);
     }
 
     @Test
-    public void equalsWithDifferentNumberShouldReturnFalse(){
+    public void equalsWithDifferentNumberShouldReturnFalse() {
         assertNotEquals(CARD_1, CARD_3);
     }
 
     @Test
-    public void equalsWithDifferentColorShouldReturnFalse(){
+    public void equalsWithDifferentColorShouldReturnFalse() {
         assertNotEquals(CARD_1, CARD_4);
     }
 
     @Test
-    public void equalsWithDifferentClassShouldReturnFalse() {assertFalse(CARD_1.equals(new Player("testplayer",3)));}
+    public void equalsWithDifferentClassShouldReturnFalse() {
+        assertFalse(CARD_1.equals(new Player("testplayer", 3)));
+    }
 
     @Test
     public void hashTest() {

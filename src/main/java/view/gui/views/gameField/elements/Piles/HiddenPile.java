@@ -1,8 +1,8 @@
-package view.GUI.views.gameField.elements.Piles;
+package view.gui.views.gameField.elements.Piles;
 
 import model.card.CardColor;
 import model.card.impl.Card;
-import view.GUI.cardDrawer.DrawnCard;
+import view.gui.cardDrawer.DrawnCard;
 
 import javax.swing.*;
 
@@ -15,7 +15,7 @@ public class HiddenPile extends JPanel {
 
     private DrawnCard drawn;
 
-    public HiddenPile(){
+    public HiddenPile() {
         drawn = new DrawnCard(new Card(0, CardColor.BACK));
         this.add(drawn);
         this.setOpaque(false);

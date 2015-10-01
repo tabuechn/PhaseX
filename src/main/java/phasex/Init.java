@@ -3,8 +3,8 @@ package phasex;
 import controller.IController;
 import controller.impl.Controller;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import view.GUI.GUI;
-import view.TUI.TUI;
+import view.gui.GUI;
+import view.tui.TUI;
 
 import java.util.Scanner;
 
@@ -31,7 +31,7 @@ public final class Init {
         GUI gui = new GUI(controller);
 
         //noinspection InfiniteLoopStatement
-        while(true) {
+        while (true) {
             tui.processInputLine(scanner.nextLine());
         }
 

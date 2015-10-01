@@ -1,13 +1,13 @@
-package view.GUI.views.gameField;
+package view.gui.views.gameField;
 
 import controller.IController;
-import view.GUI.specialViews.BackgroundPanel;
-import view.GUI.views.commonViews.NotificationLabel;
-import view.GUI.views.gameField.elements.Piles.PilePane;
-import view.GUI.views.gameField.elements.phases.PhaseDescription;
-import view.GUI.views.gameField.elements.phases.PhasePane;
-import view.GUI.views.gameField.elements.player.CurrentPlayer;
-import view.GUI.views.gameField.elements.player.HiddenPlayer;
+import view.gui.specialViews.BackgroundPanel;
+import view.gui.views.commonViews.NotificationLabel;
+import view.gui.views.gameField.elements.Piles.PilePane;
+import view.gui.views.gameField.elements.phases.PhaseDescription;
+import view.gui.views.gameField.elements.phases.PhasePane;
+import view.gui.views.gameField.elements.player.CurrentPlayer;
+import view.gui.views.gameField.elements.player.HiddenPlayer;
 
 import java.awt.*;
 
@@ -32,7 +32,7 @@ public class GameField extends BackgroundPanel {
 
     private PhaseDescription phaseDescription;
 
-    public GameField(IController controller){
+    public GameField(IController controller) {
         this.controller = controller;
         controller.startGame();
 
@@ -41,7 +41,7 @@ public class GameField extends BackgroundPanel {
         currentPlayer.addMultipleICards(controller.getCurrentPlayersHand());
         this.setLayout(new BorderLayout());
         this.add(pile, BorderLayout.EAST);
-        this.add(currentPlayer,BorderLayout.SOUTH);
+        this.add(currentPlayer, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 

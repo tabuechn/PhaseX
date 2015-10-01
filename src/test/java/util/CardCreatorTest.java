@@ -18,25 +18,25 @@ public class CardCreatorTest {
     private IDeckOfCards testee;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         testee = CardCreator.giveDeckOfCards();
     }
 
     @Test
-    public void checkIfEnoughCardsAreCreated(){
+    public void checkIfEnoughCardsAreCreated() {
         assertEquals(getAmountOfCards(), testee.size());
     }
 
     @Test
-    public void cardLowerThanMinValueShouldNotExist(){
-        for (CardColor color : CardColor.values()){
+    public void cardLowerThanMinValueShouldNotExist() {
+        for (CardColor color : CardColor.values()) {
             assertFalse(testee.contains(new Card(CardCreator.LOWEST_CARD - 1, color)));
         }
     }
 
     @Test
-    public void cardHigherThanMaxValueShouldNotExist(){
-        for (CardColor color : CardColor.values()){
+    public void cardHigherThanMaxValueShouldNotExist() {
+        for (CardColor color : CardColor.values()) {
             assertFalse(testee.contains(new Card(CardCreator.HIGHEST_CARD + 1, color)));
         }
     }

@@ -37,12 +37,12 @@ public class Phase2Test {
 
     @Test
     public void nextPhaseReturnsPhase3() {
-        assertEquals(testee.getNextPhase().getPhaseNumber(),Phase3.PHASE_NUMBER);
+        assertEquals(testee.getNextPhase().getPhaseNumber(), Phase3.PHASE_NUMBER);
     }
 
     @Test
     public void descriptionTest() {
-        assertEquals(testee.getDescription(),"street of six numbers");
+        assertEquals(testee.getDescription(), "street of six numbers");
     }
 
     @Test

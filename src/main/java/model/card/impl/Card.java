@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
  */
-public class Card implements ICard{
+public class Card implements ICard {
     private int number;
     private CardColor color;
 
@@ -28,26 +28,21 @@ public class Card implements ICard{
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o == null || getClass() != o.getClass()){
-            return false;
-        }
-        if(o == this){
-            return true;
-        }
-        Card other = (Card) o;
-        return new EqualsBuilder()
-                .append(this.number, other.getNumber())
-                .append(this.color, other.getColor())
-                .isEquals();
+    public int hashCode() {
+        return new HashCodeBuilder().append(this.number).append(this.color).toHashCode();
     }
 
     @Override
-    public int hashCode(){
-        return new HashCodeBuilder()
-                .append(this.number)
-                .append(this.color)
-                .toHashCode();
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+        Card other = (Card) o;
+        return new EqualsBuilder().append(this.number, other.getNumber()).append(this.color, other.getColor())
+                .isEquals();
     }
 
 

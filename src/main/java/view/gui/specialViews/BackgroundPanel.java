@@ -1,8 +1,8 @@
-package view.GUI.specialViews;
+package view.gui.specialViews;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import view.GUI.GUIConstants;
+import view.gui.GUIConstants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,14 +21,14 @@ public class BackgroundPanel extends JPanel {
 
     private Image background;
 
-    public BackgroundPanel(){
+    public BackgroundPanel() {
         getBackgroundImage();
         this.setSize(GUIConstants.WINDOW_SIZE);
         this.setVisible(true);
     }
 
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         g.drawImage(background, 0, 0, this);
@@ -37,7 +37,7 @@ public class BackgroundPanel extends JPanel {
     private void getBackgroundImage() {
         try {
             background = ImageIO.read(new File(GUIConstants.BACKGROUND_IMAGE_PATH));
-        } catch (IOException e){
+        } catch (IOException e) {
             LOG.error("Background image can not be found!", e);
         }
     }

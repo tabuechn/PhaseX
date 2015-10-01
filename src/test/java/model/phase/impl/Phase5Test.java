@@ -12,9 +12,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
@@ -38,8 +36,8 @@ public class Phase5Test {
     }
 
     @Test
-    public void nextPhaseIsSamePhaseThanCurrent(){
-        assertEquals(testee.getNextPhase().getPhaseNumber(),Phase5.PHASE_NUMBER);
+    public void nextPhaseIsSamePhaseThanCurrent() {
+        assertEquals(testee.getNextPhase().getPhaseNumber(), Phase5.PHASE_NUMBER);
     }
 
     @Test

@@ -1,11 +1,11 @@
-package view.GUI.views.menu;
+package view.gui.views.menu;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import view.GUI.GUIConstants;
-import view.GUI.specialViews.BackgroundPanel;
-import view.GUI.views.commonViews.NotificationLabel;
-import view.GUI.views.menu.elements.LogoLabel;
+import view.gui.GUIConstants;
+import view.gui.specialViews.BackgroundPanel;
+import view.gui.views.commonViews.NotificationLabel;
+import view.gui.views.menu.elements.LogoLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +25,7 @@ public class MenuPanel extends BackgroundPanel {
 
     private JButton startButton;
 
-    public MenuPanel(){
+    public MenuPanel() {
         super();
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(getLogoAndMessagePanel());
@@ -45,7 +45,7 @@ public class MenuPanel extends BackgroundPanel {
     }
 
     private JPanel getButtonPanel() {
-        JPanel panel  = new BackgroundPanel();
+        JPanel panel = new BackgroundPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -62,12 +62,12 @@ public class MenuPanel extends BackgroundPanel {
         startButton.setMaximumSize(GUIConstants.BUTTON_SIZE);
         startButton.setPreferredSize(GUIConstants.BUTTON_SIZE);
         startButton.setFont(GUIConstants.DEFAULT_FONT);
-        startButton.addActionListener( e -> LOG.debug("Button startGame clicked"));
+        startButton.addActionListener(e -> LOG.debug("Button startGame clicked"));
         startButton.setVisible(true);
 
     }
 
-    public void setMessage(String text){
+    public void setMessage(String text) {
         messages.setText(text);
     }
 

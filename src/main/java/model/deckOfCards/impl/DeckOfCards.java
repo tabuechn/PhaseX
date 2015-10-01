@@ -15,11 +15,11 @@ import java.util.List;
 @Component
 public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards {
 
-    public DeckOfCards(){
+    public DeckOfCards() {
         super();
     }
 
-    public DeckOfCards(List<ICard> cards){
+    public DeckOfCards(List<ICard> cards) {
         super(cards);
     }
 

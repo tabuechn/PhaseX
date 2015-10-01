@@ -21,24 +21,24 @@ public class StreetStackTest {
     public void setUp() throws Exception {
         DeckOfCards cardList = new DeckOfCards();
         cardList.add(new Card(1, CardColor.BLUE));
-        cardList.add(new Card(2,CardColor.BLUE));
-        cardList.add(new Card(3,CardColor.BLUE));
+        cardList.add(new Card(2, CardColor.BLUE));
+        cardList.add(new Card(3, CardColor.BLUE));
         ss = new StreetStack(cardList);
     }
 
     @Test
     public void ssTest() {
-        assertEquals(ss.getList().size(),3);
+        assertEquals(ss.getList().size(), 3);
         assertEquals(ss.getHighestCardNumber(), 3);
         assertEquals(ss.getLowestCardNumber(), 1);
         assertTrue(ss.checkCardMatching(new Card(4, CardColor.GREEN)));
         assertTrue(ss.checkCardMatching(new Card(0, CardColor.GREEN)));
         assertFalse(ss.checkCardMatching(new Card(9, CardColor.GREEN)));
     }
-    
+
     @Test
     public void addCardToStackTest() {
-        assertEquals(ss.getList().size(),3);
+        assertEquals(ss.getList().size(), 3);
         assertEquals(ss.getHighestCardNumber(), 3);
         assertEquals(ss.getLowestCardNumber(), 1);
         ss.addCardToStack(new Card(4, CardColor.GREEN));

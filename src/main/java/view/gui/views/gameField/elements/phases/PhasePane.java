@@ -1,4 +1,4 @@
-package view.GUI.views.gameField.elements.phases;
+package view.gui.views.gameField.elements.phases;
 
 import javax.swing.*;
 
@@ -7,5 +7,5 @@ import javax.swing.*;
  * created by Konraifen88 on 29.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class PhasePane extends JPanel{
+public class PhasePane extends JPanel {
 }

@@ -1,9 +1,9 @@
-package view.GUI.views.gameField.elements.Piles;
+package view.gui.views.gameField.elements.Piles;
 
 import model.card.CardColor;
 import model.card.ICard;
 import model.card.impl.Card;
-import view.GUI.cardDrawer.DrawnCard;
+import view.gui.cardDrawer.DrawnCard;
 
 import javax.swing.*;
 
@@ -16,7 +16,7 @@ public class OpenPile extends JPanel {
 
     private DrawnCard drawn;
 
-    public OpenPile(){
+    public OpenPile() {
         drawn = new DrawnCard(new Card(0, CardColor.BLANK));
         this.add(drawn);
         this.setOpaque(false);

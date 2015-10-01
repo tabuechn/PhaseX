@@ -24,8 +24,8 @@ import java.util.List;
 public class Phase2 implements IPhase {
 
     public static final int SIZE_OF_PHASE = 6;
-    private static final String DESCRIPTION_PHASE_2 = "street of six numbers";
     public static final int PHASE_NUMBER = 2;
+    private static final String DESCRIPTION_PHASE_2 = "street of six numbers";
 
     @Override
     public String getDescription() {
@@ -35,11 +35,6 @@ public class Phase2 implements IPhase {
     @Override
     public boolean checkIfDeckFitsToPhase(IDeckOfCards phase) {
         return phase.size() == SIZE_OF_PHASE && streetOfSix(phase);
-    }
-
-    @Override
-    public int getPhaseNumber() {
-        return PHASE_NUMBER;
     }
 
     @Override
@@ -53,6 +48,11 @@ public class Phase2 implements IPhase {
     @Override
     public IPhase getNextPhase() {
         return new Phase3();
+    }
+
+    @Override
+    public int getPhaseNumber() {
+        return PHASE_NUMBER;
     }
 
     private boolean streetOfSix(IDeckOfCards phase) {

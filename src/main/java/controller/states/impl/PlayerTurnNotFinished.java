@@ -11,17 +11,16 @@ import model.deckOfCards.IDeckOfCards;
 public class PlayerTurnNotFinished extends AbstractState {
 
     @Override
-    public void discard(IController controller,ICard card) {
+    public void discard(IController controller, ICard card) {
         controller.discardCard(card);
         controller.nextPlayer();
         controller.setRoundState(new DrawPhase());
     }
 
 
-
     @Override
-    public void playPhase(final IController controller,IDeckOfCards phase) {
-        if(controller.deckMatchesCurrentPlayersPhase(phase)) {
+    public void playPhase(final IController controller, IDeckOfCards phase) {
+        if (controller.deckMatchesCurrentPlayersPhase(phase)) {
             controller.addPhase(phase);
             controller.setRoundState(new PlayerTurnFinished());
         }

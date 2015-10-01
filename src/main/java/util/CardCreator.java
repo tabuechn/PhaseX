@@ -24,8 +24,7 @@ public class CardCreator {
 
     private static IDeckOfCards giveDeckOfCardsByList(List<?> range) {
         IDeckOfCards deck = new DeckOfCards();
-        range.stream()
-                .filter(entry -> entry instanceof Number)
+        range.stream().filter(entry -> entry instanceof Number)
                 .forEach(card -> deck.addAll(createCardsOfAllColors((Number) card)));
         return deck;
     }

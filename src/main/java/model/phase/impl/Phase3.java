@@ -24,8 +24,8 @@ import java.util.List;
 public class Phase3 implements IPhase {
 
     public static final int PHASE_SIZE = 6;
-    private static final String DESCRIPTION_PHASE_3 = "six cards of one color";
     public static final int PHASE_NUMBER = 3;
+    private static final String DESCRIPTION_PHASE_3 = "six cards of one color";
 
     @Override
     public String getDescription() {
@@ -50,6 +50,11 @@ public class Phase3 implements IPhase {
         return new Phase4();
     }
 
+    @Override
+    public int getPhaseNumber() {
+        return PHASE_NUMBER;
+    }
+
     private boolean sixOfOneColor(IDeckOfCards phase) {
         CardColor color = phase.get(0).getColor();
         for (ICard card : phase) {
@@ -58,10 +63,5 @@ public class Phase3 implements IPhase {
             }
         }
         return true;
-    }
-
-    @Override
-    public int getPhaseNumber() {
-        return PHASE_NUMBER;
     }
 }

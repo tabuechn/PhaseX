@@ -1,4 +1,4 @@
-package view.GUI.specialViews;
+package view.gui.specialViews;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,17 +9,17 @@ import java.awt.*;
  * If it doesn't work I don't know who the hell wrote it.
  */
 public class CenteredLabel extends JLabel {
-    public CenteredLabel(){
+    public CenteredLabel() {
         super();
         setCentered();
     }
 
-    public CenteredLabel(ImageIcon image){
+    public CenteredLabel(ImageIcon image) {
         super(image);
         setCentered();
     }
 
-    public CenteredLabel(String text){
+    public CenteredLabel(String text) {
         super(text);
         setCentered();
     }
@@ -30,7 +30,7 @@ public class CenteredLabel extends JLabel {
         this.setVerticalAlignment(JLabel.CENTER);
     }
 
-    public void setFixDimension(Dimension dimension){
+    public void setFixDimension(Dimension dimension) {
         setAllDimensions(dimension, dimension);
     }
 

@@ -19,14 +19,14 @@ public class CardComparatorTest {
     public void setUp() throws Exception {
         cc = new CardComparator();
         compare4 = new Card(4, CardColor.BLUE);
-        compare7 = new Card(7,CardColor.BLUE);
+        compare7 = new Card(7, CardColor.BLUE);
     }
 
     @Test
     public void compareTest() {
-        assertTrue(cc.compare(compare4,compare7) != 0);
-        assertTrue(cc.compare(compare4,compare7) < 0);
-        assertTrue(cc.compare(compare7,compare4) != 0);
-        assertTrue(cc.compare(compare7,compare4) > 0);
+        assertTrue(cc.compare(compare4, compare7) != 0);
+        assertTrue(cc.compare(compare4, compare7) < 0);
+        assertTrue(cc.compare(compare7, compare4) != 0);
+        assertTrue(cc.compare(compare7, compare4) > 0);
     }
 }

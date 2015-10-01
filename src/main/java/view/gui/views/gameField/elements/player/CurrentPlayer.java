@@ -1,9 +1,9 @@
-package view.GUI.views.gameField.elements.player;
+package view.gui.views.gameField.elements.player;
 
 import model.card.ICard;
-import view.GUI.GUIConstants;
-import view.GUI.cardDrawer.CardPanel;
-import view.GUI.cardDrawer.DrawnCard;
+import view.gui.GUIConstants;
+import view.gui.cardDrawer.CardPanel;
+import view.gui.cardDrawer.DrawnCard;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -19,7 +19,7 @@ public class CurrentPlayer extends CardPanel {
 
     private SpringLayout layout;
 
-    public CurrentPlayer(){
+    public CurrentPlayer() {
         super(GUIConstants.PLAYER_CARD_PANEL_SIZE);
         layout = getLayout();
     }
@@ -29,7 +29,7 @@ public class CurrentPlayer extends CardPanel {
         card.getComponentsInLayer(0)[0].addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(card.isChosen()){
+                if (card.isChosen()) {
                     shiftCardUp(card, GUIConstants.CARD_POSITION_TOP_BORDER);
                     card.setChosen(false);
                 } else {
@@ -40,14 +40,14 @@ public class CurrentPlayer extends CardPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                if(!card.isChosen()){
+                if (!card.isChosen()) {
                     shiftCardUp(card, GUIConstants.CARD_POSITION_TOP_BORDER - 25);
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if(!card.isChosen()){
+                if (!card.isChosen()) {
                     shiftCardUp(card, GUIConstants.CARD_POSITION_TOP_BORDER);
                 }
             }
@@ -65,13 +65,13 @@ public class CurrentPlayer extends CardPanel {
         addPossibilityToShiftCardUp(card);
     }
 
-    public void addMultipleICards(List<ICard> cards){
+    public List<ICard> getChosenCards() {
+        return super.getChosenCards();
+    }
+
+    public void addMultipleICards(List<ICard> cards) {
         for (ICard card : cards) {
             addCard(new DrawnCard(card));
         }
-    }
-
-    public List<ICard> getChosenCards(){
-        return super.getChosenCards();
     }
 }

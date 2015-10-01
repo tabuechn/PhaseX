@@ -1,4 +1,4 @@
-package view.GUI.views.gameField.elements.phases;
+package view.gui.views.gameField.elements.phases;
 
 import javax.swing.*;
 
@@ -11,14 +11,14 @@ public class PhaseDescription extends JPanel {
 
     private JTextPane textPane;
 
-    public PhaseDescription(){
+    public PhaseDescription() {
         textPane = new JTextPane();
         this.add(textPane);
         this.setOpaque(false);
         this.setVisible(true);
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         textPane.setText(text);
     }
 }

@@ -21,15 +21,15 @@ public class PairStackTest {
     public void setUp() throws Exception {
         DeckOfCards cardList = new DeckOfCards();
         cardList.add(new Card(4, CardColor.BLUE));
-        cardList.add(new Card(4,CardColor.GREEN));
-        cardList.add(new Card(4,CardColor.RED));
+        cardList.add(new Card(4, CardColor.GREEN));
+        cardList.add(new Card(4, CardColor.RED));
         ps = new PairStack(cardList);
     }
 
     @Test
     public void csTest() {
         assertTrue(ps.getList().size() == 3);
-        assertTrue(ps.getStackNumber()== 4);
+        assertTrue(ps.getStackNumber() == 4);
         ps.addCardToStack(new Card(4, CardColor.BLUE));
         assertTrue(ps.getList().size() == 4);
         assertTrue(ps.checkCardMatching(new Card(4, CardColor.BLUE)));

@@ -9,7 +9,7 @@ import controller.states.AbstractState;
 public class StartPhase extends AbstractState {
 
     @Override
-     public void start(final IController controller) {
+    public void start(final IController controller) {
         controller.initGame();
         controller.newRound();
     }

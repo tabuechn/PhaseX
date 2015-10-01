@@ -34,6 +34,7 @@ public interface UI {
 
     /**
      * Method to add a card to the desired stack.
+     *
      * @param desiredStack the stack, where the card should be added.
      */
     void addToStack(ICardStack desiredStack);

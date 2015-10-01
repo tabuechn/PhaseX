@@ -1,7 +1,7 @@
-package view.GUI.views.menu.elements;
+package view.gui.views.menu.elements;
 
-import view.GUI.GUIConstants;
-import view.GUI.specialViews.CenteredLabel;
+import view.gui.GUIConstants;
+import view.gui.specialViews.CenteredLabel;
 
 import javax.swing.*;
 

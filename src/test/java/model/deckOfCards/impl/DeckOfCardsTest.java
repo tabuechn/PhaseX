@@ -19,11 +19,11 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class DeckOfCardsTest {
 
-    private IDeckOfCards testee;
     private static final ICard CARD_1 = new Card(1, CardColor.BLUE);
     private static final ICard CARD_2 = new Card(2, CardColor.GREEN);
     private static final ICard CARD_3 = new Card(3, CardColor.YELLOW);
     private static final ICard CARD_4 = new Card(4, CardColor.RED);
+    private IDeckOfCards testee;
 
     @Before
     public void setUp() throws Exception {
@@ -31,14 +31,14 @@ public class DeckOfCardsTest {
     }
 
     @Test
-    public void removeCardFromDeck(){
+    public void removeCardFromDeck() {
         assertTrue(testee.contains(CARD_1));
         testee.remove(CARD_1);
         assertTrue(!testee.contains(CARD_1));
     }
 
     @Test
-    public void onlyOneCardShouldBeRemovedIfMoreThanOneOfTheSameCardIsInTheDeck(){
+    public void onlyOneCardShouldBeRemovedIfMoreThanOneOfTheSameCardIsInTheDeck() {
         testee.add(CARD_1);
         testee.remove(CARD_1);
         assertTrue(testee.contains(CARD_1));

@@ -1,4 +1,4 @@
-package view.GUI;
+package view.gui.mainWindow;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,11 +12,11 @@ import java.awt.event.WindowEvent;
  * created by Konraifen88 on 01.10.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame {
 
     private static final Logger LOG = LogManager.getLogger(MainWindow.class);
 
-    public MainWindow(){
+    public MainWindow() {
         super();
         setDefaultLookAndFeelDecorated(true);
         setResizable(false);

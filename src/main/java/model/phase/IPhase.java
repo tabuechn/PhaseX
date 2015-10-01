@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * edited: merged phase checker & getter
- *
+ * <p>
  * If everything works right this class was
  * created by Konraifen88 on 30.09.2015.
  * If it doesn't work I don't know who the hell wrote it.

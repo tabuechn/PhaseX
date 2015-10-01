@@ -21,7 +21,7 @@ public class AbstractStateTest {
 
     @Test
     public void testAllButStart() {
-        abstractTest.addToFinishedPhase(null,null,null);
+        abstractTest.addToFinishedPhase(null, null, null);
         abstractTest.discard(null, null);
         abstractTest.drawHidden(null);
         abstractTest.drawOpen(null);

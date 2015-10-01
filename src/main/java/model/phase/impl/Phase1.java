@@ -38,11 +38,6 @@ public class Phase1 implements IPhase {
     }
 
     @Override
-    public int getPhaseNumber() {
-        return PHASE_NUMBER;
-    }
-
-    @Override
     public String getDescription() {
         return DESCRIPTION_PHASE_1;
     }
@@ -77,6 +72,11 @@ public class Phase1 implements IPhase {
     @Override
     public IPhase getNextPhase() {
         return new Phase2();
+    }
+
+    @Override
+    public int getPhaseNumber() {
+        return PHASE_NUMBER;
     }
 
     private boolean only2Numbers(IDeckOfCards phase) {

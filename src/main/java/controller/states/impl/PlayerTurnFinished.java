@@ -10,14 +10,8 @@ import model.stack.ICardStack;
  */
 public class PlayerTurnFinished extends AbstractState {
 
-    @Override
-    public void discard(final IController controller, ICard card) {
-        controller.discardCard(card);
-        checkFinishedDiscard(controller);
-    }
-
     private void checkFinishedDiscard(IController controller) {
-        if(controller.currentPlayerHasNoCards()) {
+        if (controller.currentPlayerHasNoCards()) {
             endOfTurn(controller);
         } else {
             controller.nextPlayer();
@@ -26,7 +20,7 @@ public class PlayerTurnFinished extends AbstractState {
     }
 
     private void endOfTurn(IController controller) {
-        if(controller.isGameFinished()) {
+        if (controller.isGameFinished()) {
             controller.setRoundState(new EndPhase());
             controller.setStatusMessage("Player " + controller.getCurrentPlayer().getPlayerName() + " has won");
         } else {
@@ -38,7 +32,7 @@ public class PlayerTurnFinished extends AbstractState {
     }
 
     @Override
-    public void addToFinishedPhase(final IController controller,ICard card, ICardStack stack) {
+    public void addToFinishedPhase(final IController controller, ICard card, ICardStack stack) {
         if (stack.checkCardMatching(card)) {
             stack.addCardToStack(card);
             controller.getCurrentPlayersHand().remove(card);
@@ -46,14 +40,20 @@ public class PlayerTurnFinished extends AbstractState {
         }
     }
 
-    private void checkFinishedPlayPhase(IController controller) {
-        if(controller.currentPlayerHasNoCards()) {
-            endOfTurn(controller);
-        }
+    @Override
+    public void discard(final IController controller, ICard card) {
+        controller.discardCard(card);
+        checkFinishedDiscard(controller);
     }
 
     @Override
     public String toString() {
         return "PlayerTurnFinished";
+    }
+
+    private void checkFinishedPlayPhase(IController controller) {
+        if (controller.currentPlayerHasNoCards()) {
+            endOfTurn(controller);
+        }
     }
 }

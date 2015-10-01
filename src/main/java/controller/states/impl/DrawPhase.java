@@ -6,11 +6,11 @@ import controller.states.AbstractState;
 /**
  * Created by Tarek on 25.09.2015. Be grateful for this superior Code!
  */
-public class DrawPhase extends AbstractState{
+public class DrawPhase extends AbstractState {
 
     @Override
     public void drawOpen(final IController controller) {
-        if(controller.getDiscardPile().size() > 0) {
+        if (controller.getDiscardPile().size() > 0) {
             controller.drawOpenCard();
         }
     }

@@ -69,6 +69,11 @@ public class Phase4 implements IPhase {
         return new Phase5();
     }
 
+    @Override
+    public int getPhaseNumber() {
+        return PHASE_NUMBER;
+    }
+
     private boolean only2Numbers(IDeckOfCards phase) {
         Set<Integer> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
         return presentNumbers.size() == PAIR_SIZE || presentNumbers.size() == SAME_PAIRS;
@@ -96,10 +101,5 @@ public class Phase4 implements IPhase {
 
     private boolean pairAndQuadrupleChecker(int pair1Size, int pair2Size) {
         return pair1Size == PAIR_SIZE && pair2Size == QUADRUPLE_SIZE;
-    }
-
-    @Override
-    public int getPhaseNumber() {
-        return PHASE_NUMBER;
     }
 }

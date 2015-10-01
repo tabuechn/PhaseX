@@ -1,9 +1,9 @@
-package view.GUI.views.menu.elements;
+package view.gui.views.menu.elements;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import view.GUI.GUIConstants;
-import view.GUI.specialViews.CenteredLabel;
+import view.gui.GUIConstants;
+import view.gui.specialViews.CenteredLabel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +20,7 @@ public class LogoLabel extends CenteredLabel {
 
     private static final Logger LOG = LogManager.getLogger(LogoLabel.class);
 
-    public LogoLabel(){
+    public LogoLabel() {
         super();
         this.setFixDimension(GUIConstants.LOGO_LABEL_SIZE);
         addLogoImage();
@@ -32,10 +32,10 @@ public class LogoLabel extends CenteredLabel {
         BufferedImage image;
         try {
             image = ImageIO.read(new File(GUIConstants.LOGO_IMAGE_PATH));
-            if(image != null){
+            if (image != null) {
                 this.setIcon(new ImageIcon(image));
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             LOG.error("Logo image can not be found!", e);
         }
     }

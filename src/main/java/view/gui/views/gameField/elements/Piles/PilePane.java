@@ -1,8 +1,8 @@
-package view.GUI.views.gameField.elements.Piles;
+package view.gui.views.gameField.elements.Piles;
 
 import controller.IController;
 import model.card.ICard;
-import view.GUI.specialViews.BackgroundPanel;
+import view.gui.specialViews.BackgroundPanel;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
  * created by Konraifen88 on 29.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class PilePane extends BackgroundPanel{
+public class PilePane extends BackgroundPanel {
 
     private HiddenPile hidden;
 
@@ -26,7 +26,7 @@ public class PilePane extends BackgroundPanel{
         hidden = new HiddenPile();
         open = new OpenPile();
 
-        this.setLayout(new GridLayout(2,1, 5, 5));
+        this.setLayout(new GridLayout(2, 1, 5, 5));
         this.add(hidden);
         this.add(open);
         this.setVisible(true);
@@ -47,7 +47,8 @@ public class PilePane extends BackgroundPanel{
             public void mouseClicked(MouseEvent e) {
                 if (("DrawPhase").equals(controller.getRoundState().toString())) {
                     controller.drawOpen();
-                } else if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
+                } else //noinspection StatementWithEmptyBody
+                    if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
                         "PlayerTurnNotFinished".equals(controller.getRoundState().toString()))) {
                     //TODO: What to do when discard phase
                 }

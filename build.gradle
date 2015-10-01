@@ -29,8 +29,6 @@ dependencies {
     compile 'cglib:cglib:3.1'
     testCompile 'org.springframework:spring-test:4.2.1.RELEASE'
 
-
-
     //Adding other Artifacts
     compile 'com.google.collections:google-collections:1.0'
     compile 'com.google.guava:guava:18.0'

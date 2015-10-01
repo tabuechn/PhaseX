@@ -51,26 +51,6 @@ public class Controller extends util.Observable implements IController {
     }
 
     @Override
-    public IDeckOfCards getDrawPile() {
-        return this.drawPile;
-    }
-
-    @Override
-    public IDeckOfCards getDiscardPile() {
-        return this.discardPile;
-    }
-
-    @Override
-    public IPlayer getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    @Override
-    public void exitEvent() {
-        System.exit(0);
-    }
-
-    @Override
     public void startGame() {
         roundState.start(this);
         notifyObservers();
@@ -114,7 +94,6 @@ public class Controller extends util.Observable implements IController {
         }
     }
 
-
     @Override
     public IDeckOfCards getCurrentPlayersHand() {
         return currentPlayer.getDeckOfCards();
@@ -131,6 +110,26 @@ public class Controller extends util.Observable implements IController {
         return playerMap;
     }
 
+    public void initGame() {
+        initPlayers();
+    }
+
+    public void newRound() {
+        drawPile = new DeckOfCards();
+        discardPile = new DeckOfCards();
+        allPhases = new LinkedList<>();
+        addCards();
+        drawForPlayers();
+        currentPlayerIndex = 0;
+        currentPlayer = players[currentPlayerIndex];
+        roundState = new DrawPhase();
+    }
+
+    @Override
+    public void endRound() {
+        getAllLosers().forEach(this::calcAndAddPoints);
+        incrementPhases();
+    }
 
     @Override
     public List<ICardStack> getAllStacks() {
@@ -159,6 +158,82 @@ public class Controller extends util.Observable implements IController {
         discardPile.add(card);
     }
 
+    public AbstractState getRoundState() {
+        return roundState;
+    }
+
+    public void setRoundState(AbstractState roundState) {
+        this.roundState = roundState;
+    }
+
+    @Override
+    public boolean currentPlayerHasNoCards() {
+        return currentPlayer.getDeckOfCards().size() == 0;
+    }
+
+    @Override
+    public void nextPlayer() {
+        if (currentPlayerIndex == playerCount - 1) {
+            currentPlayerIndex = 0;
+            currentPlayer = players[currentPlayerIndex];
+        } else {
+            currentPlayerIndex++;
+            currentPlayer = players[currentPlayerIndex];
+        }
+    }
+
+    @Override
+    public boolean deckMatchesCurrentPlayersPhase(IDeckOfCards phase) {
+        return currentPlayer.getPhase().checkIfDeckFitsToPhase(phase);
+    }
+
+    @Override
+    public void addPhase(IDeckOfCards phase) {
+        currentPlayer.setPhaseDone(true);
+        removePhaseFromCurrentPlayer(phase);
+        List<ICardStack> phases = currentPlayer.getPhase().splitPhaseIntoStacks(phase);
+        putDownStacks(phases);
+    }
+
+    @Override
+    public IDeckOfCards getDrawPile() {
+        return this.drawPile;
+    }
+
+    @Override
+    public IDeckOfCards getDiscardPile() {
+        return this.discardPile;
+    }
+
+    @Override
+    public IPlayer getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    @Override
+    public void exitEvent() {
+        System.exit(0);
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
+    @Override
+    public String getCurrentPhaseDescription() {
+        return currentPlayer.getPhase().getDescription();
+    }
+
+    @Override
+    public boolean isGameFinished() {
+        return currentPlayer.isPhaseDone() && (currentPlayer.getPhase().getPhaseNumber() == Phase5.PHASE_NUMBER);
+        //return gameFinished;
+    }
+
     private void afterDraw() {
         if (currentPlayer.isPhaseDone()) {
             roundState = new PlayerTurnFinished();
@@ -183,28 +258,6 @@ public class Controller extends util.Observable implements IController {
         this.discardPile = newDiscardPile;
     }
 
-    public void initGame() {
-        initPlayers();
-    }
-
-
-    public void newRound() {
-        drawPile = new DeckOfCards();
-        discardPile = new DeckOfCards();
-        allPhases = new LinkedList<>();
-        addCards();
-        drawForPlayers();
-        currentPlayerIndex = 0;
-        currentPlayer = players[currentPlayerIndex];
-        roundState = new DrawPhase();
-    }
-
-    @Override
-    public void endRound() {
-        getAllLosers().forEach(this::calcAndAddPoints);
-        incrementPhases();
-    }
-
     private void incrementPhases() {
         for (IPlayer player : players) {
             checkAndIncrementPhases(player);
@@ -219,7 +272,6 @@ public class Controller extends util.Observable implements IController {
             player.setPhaseDone(false);
         }
     }
-
 
     private void calcAndAddPoints(IPlayer player) {
         for (ICard leftOverCard : player.getDeckOfCards()) {
@@ -263,71 +315,12 @@ public class Controller extends util.Observable implements IController {
         Collections.shuffle(drawPile);
     }
 
-
-    public AbstractState getRoundState() {
-        return roundState;
-    }
-
-    public void setRoundState(AbstractState roundState) {
-        this.roundState = roundState;
-    }
-
-    @Override
-    public boolean currentPlayerHasNoCards() {
-        return currentPlayer.getDeckOfCards().size() == 0;
-    }
-
-    @Override
-    public void nextPlayer() {
-        if (currentPlayerIndex == playerCount - 1) {
-            currentPlayerIndex = 0;
-            currentPlayer = players[currentPlayerIndex];
-        } else {
-            currentPlayerIndex++;
-            currentPlayer = players[currentPlayerIndex];
-        }
-    }
-
-    @Override
-    public boolean deckMatchesCurrentPlayersPhase(IDeckOfCards phase) {
-        return currentPlayer.getPhase().checkIfDeckFitsToPhase(phase);
-    }
-
-
-    @Override
-    public void addPhase(IDeckOfCards phase) {
-        currentPlayer.setPhaseDone(true);
-        removePhaseFromCurrentPlayer(phase);
-        List<ICardStack> phases = currentPlayer.getPhase().splitPhaseIntoStacks(phase);
-        putDownStacks(phases);
-    }
-
     private void putDownStacks(List<ICardStack> phases) {
         this.allPhases.addAll(phases.stream().collect(Collectors.toList()));
     }
 
-
     private void removePhaseFromCurrentPlayer(IDeckOfCards phase) {
         IDeckOfCards playerDeck = currentPlayer.getDeckOfCards();
         phase.forEach(playerDeck::remove);
-    }
-
-    public String getStatusMessage() {
-        return statusMessage;
-    }
-
-    public void setStatusMessage(String statusMessage) {
-        this.statusMessage = statusMessage;
-    }
-
-    @Override
-    public String getCurrentPhaseDescription() {
-        return currentPlayer.getPhase().getDescription();
-    }
-
-    @Override
-    public boolean isGameFinished() {
-        return currentPlayer.isPhaseDone() && (currentPlayer.getPhase().getPhaseNumber() == Phase5.PHASE_NUMBER);
-        //return gameFinished;
     }
 }

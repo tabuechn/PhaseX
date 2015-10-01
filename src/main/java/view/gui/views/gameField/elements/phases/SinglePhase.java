@@ -1,4 +1,4 @@
-package view.GUI.views.gameField.elements.phases;
+package view.gui.views.gameField.elements.phases;
 
 /**
  * If everything works right this class was

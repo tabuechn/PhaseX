@@ -1,9 +1,9 @@
-package view.GUI.cardDrawer;
+package view.gui.cardDrawer;
 
 import model.card.CardColor;
 import model.card.ICard;
 import org.apache.commons.lang3.StringUtils;
-import view.GUI.GUIConstants;
+import view.gui.GUIConstants;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,11 +20,11 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
 
     private ICard card;
 
-    public DrawnCard(){
+    public DrawnCard() {
         //Do nothing
     }
 
-    public DrawnCard(ICard card){
+    public DrawnCard(ICard card) {
         this.card = card;
         setMinimumSize(GUIConstants.CARD_DIMENSION);
         setPreferredSize(GUIConstants.CARD_DIMENSION);

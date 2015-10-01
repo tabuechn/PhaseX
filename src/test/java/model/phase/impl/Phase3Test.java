@@ -37,7 +37,7 @@ public class Phase3Test {
 
     @Test
     public void nextPhaseReturnsPhase4() {
-        assertEquals(testee.getNextPhase().getPhaseNumber(),Phase4.PHASE_NUMBER);
+        assertEquals(testee.getNextPhase().getPhaseNumber(), Phase4.PHASE_NUMBER);
     }
 
     @Test

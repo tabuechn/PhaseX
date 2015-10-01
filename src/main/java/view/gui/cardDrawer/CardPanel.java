@@ -1,8 +1,8 @@
-package view.GUI.cardDrawer;
+package view.gui.cardDrawer;
 
 import model.card.ICard;
-import view.GUI.GUIConstants;
-import view.GUI.specialViews.BackgroundPanel;
+import view.gui.GUIConstants;
+import view.gui.specialViews.BackgroundPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,7 +75,7 @@ public class CardPanel extends BackgroundPanel {
     }
 
     private void addChosenCardToList(DrawnCard card) {
-        if(card.isChosen()){
+        if (card.isChosen()) {
             chosenCards.add(card.getCard());
         }
     }
