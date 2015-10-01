@@ -1,0 +1,57 @@
+group 'de.htwg.se.CardGame.PhaseX'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'sonar-runner'
+apply plugin: 'jacoco'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //adding test only dependencies
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
+
+    //Adding logger
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.6.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.2'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.2'
+
+    //Adding Spring integration
+    compile 'org.springframework:spring-core:4.2.1.RELEASE'
+    compile 'org.springframework:spring-beans:4.2.1.RELEASE'
+    compile 'org.springframework:spring-context:4.2.1.RELEASE'
+    compile 'org.springframework.integration:spring-integration-core:4.2.0.RELEASE'
+    compile 'cglib:cglib:3.1'
+    testCompile 'org.springframework:spring-test:4.2.1.RELEASE'
+
+
+
+    //Adding other Artifacts
+    compile 'com.google.collections:google-collections:1.0'
+    compile 'com.google.guava:guava:18.0'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.google.code.findbugs:annotations:3.0.0'
+
+}
+
+//Configuration for the sonarRunner plugin
+sonarRunner {
+    sonarProperties {
+        property "sonar.host.url", "http://lenny2.in.htwg-konstanz.de:9000/"
+        property "sonar.jdbc.url", "jdbc:h2:tcp://lenny2.in.htwg-konstanz.de:9092/sonar"
+        property "sonar.jdbc.driverClassName", "org.h2.Driver"
+        property "sonar.jdbc.username", "sonar"
+        property "sonar.jdbc.password", "sonar"
+    }
+}
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+

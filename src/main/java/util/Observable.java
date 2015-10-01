@@ -1,0 +1,36 @@
+package util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Tarek on 29.09.2015. Be grateful for this superior Code!
+ */
+public class Observable implements IObservable {
+    private List<IObserver> subscribers = new ArrayList<>(2);
+
+    @Override
+    public void addObserver(IObserver s) {
+        subscribers.add(s);
+    }
+
+    public void removeObserver(IObserver s) {
+        subscribers.remove(s);
+    }
+
+    public void removeAllObservers() {
+        subscribers.clear();
+    }
+
+    public void notifyObservers() {
+        notifyObservers(null);
+    }
+
+    @Override
+    public void notifyObservers(Event e) {
+        for (IObserver observer : subscribers) {
+            observer.update(e);
+        }
+    }
+}
+
