@@ -56,11 +56,14 @@ public final class GUIConstants {
     public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 100);
     public static final Dimension MINIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 100);
     public static final Dimension LOGO_LABEL_SIZE = new Dimension(WINDOW_WIDTH, 250);
-    public static final Dimension BUTTON_LABEL_MIN_SIZE = new Dimension(GUIConstants.WINDOW_WIDTH, 600);
-    public static final Dimension BUTTON_LABEL_MAX_SIZE = new Dimension(GUIConstants.WINDOW_WIDTH, 775);
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 50);
     public static final Card BLANK_CARD = new Card(0, CardColor.BLANK);
+    public static final Card BACK_CARD = new Card(0, CardColor.BACK);
 
+
+    /**
+     * Empty private constructor
+     */
     private GUIConstants() {
     }
 }

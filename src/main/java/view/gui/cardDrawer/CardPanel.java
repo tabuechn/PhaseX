@@ -1,6 +1,8 @@
 package view.gui.cardDrawer;
 
 import model.card.ICard;
+import model.deckOfCards.IDeckOfCards;
+import model.deckOfCards.impl.DeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
 
@@ -16,19 +18,20 @@ import java.util.List;
  */
 public class CardPanel extends BackgroundPanel {
 
-    private List<DrawnCard> cards;
+    private List<DrawnCard> allDrawnCards;
 
-    private List<ICard> chosenCards;
+    private IDeckOfCards allCards;
+
+    private IDeckOfCards chosenCards;
 
     private SpringLayout layout;
 
-    public CardPanel(Dimension dimension) {
-        cards = new LinkedList<>();
+    public CardPanel() {
+        allCards = new DeckOfCards();
+        chosenCards = new DeckOfCards();
+        allDrawnCards = new LinkedList<>();
         layout = new SpringLayout();
         this.setLayout(layout);
-        this.setMinimumSize(dimension);
-        this.setPreferredSize(dimension);
-        this.setMaximumSize(dimension);
         this.setVisible(true);
     }
 
@@ -37,10 +40,16 @@ public class CardPanel extends BackgroundPanel {
         return layout;
     }
 
-    public void addCard(DrawnCard card) {
-        cards.add(card);
-        this.add(card);
+    public void addCard(ICard card) {
+        allCards.add(card);
+        DrawnCard drawnCard = new DrawnCard(card);
+        allDrawnCards.add(drawnCard);
+        this.add(drawnCard);
         updateView();
+    }
+
+    public void addMultipleCards(IDeckOfCards cards) {
+        cards.forEach(this::addCard);
     }
 
 
@@ -49,34 +58,40 @@ public class CardPanel extends BackgroundPanel {
     }
 
     private void applyDeferral(double deferral) {
-        for (JComponent card : cards) {
+        for (JComponent card : allDrawnCards) {
             setDeferral(card, deferral);
         }
     }
 
     private void setDeferral(JComponent card, double deferral) {
-        if (card == cards.get(0)) {
+        if (card == allCards.get(0)) {
             layout.putConstraint(SpringLayout.WEST, card, GUIConstants.CARD_POSITION_LEFT_BORDER, SpringLayout.WEST,
                     this);
             layout.putConstraint(SpringLayout.NORTH, card, GUIConstants.CARD_POSITION_TOP_BORDER, SpringLayout.NORTH,
                     this);
         } else {
-            @SuppressWarnings("SuspiciousMethodCalls") int pos = cards.indexOf(card);
-            layout.putConstraint(SpringLayout.WEST, card, (int) deferral, SpringLayout.EAST, cards.get(pos - 1));
+            @SuppressWarnings("SuspiciousMethodCalls") int pos = allCards.indexOf(card);
+            layout.putConstraint(SpringLayout.WEST, card, (int) deferral, SpringLayout.EAST,
+                    (Component) allCards.get(pos - 1));
             layout.putConstraint(SpringLayout.NORTH, card, GUIConstants.CARD_POSITION_TOP_BORDER, SpringLayout.NORTH,
                     this);
         }
     }
 
 
-    public List<ICard> getChosenCards() {
-        cards.forEach(this::addChosenCardToList);
+    public IDeckOfCards getChosenCards() {
+        return getAllChosenCards();
+    }
+
+    private IDeckOfCards getAllChosenCards() {
+        chosenCards = new DeckOfCards();
+        allDrawnCards.forEach(this::addCardIfChosen);
         return chosenCards;
     }
 
-    private void addChosenCardToList(DrawnCard card) {
-        if (card.isChosen()) {
-            chosenCards.add(card.getCard());
+    private void addCardIfChosen(DrawnCard drawnCard) {
+        if (drawnCard.isChosen()) {
+            chosenCards.add(drawnCard.getCard());
         }
     }
 }
