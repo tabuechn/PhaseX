@@ -1,10 +1,7 @@
 package view.gui.views.gameField.elements.player;
 
-import model.card.CardColor;
-import model.card.impl.Card;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
-import view.gui.cardDrawer.DrawnCard;
 
 /**
  * If everything works right this class was
@@ -14,9 +11,9 @@ import view.gui.cardDrawer.DrawnCard;
 public class HiddenPlayer extends CardPanel {
 
     public HiddenPlayer(int numberOfCards) {
-        super(GUIConstants.PLAYER_CARD_PANEL_SIZE);
+        super();
         for (int i = 0; i < numberOfCards; i++) {
-            addCard(new DrawnCard(new Card(0, CardColor.BACK)));
+            addCard(GUIConstants.BACK_CARD);
         }
     }
 }

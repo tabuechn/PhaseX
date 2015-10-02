@@ -19,17 +19,11 @@ import java.awt.*;
 public class GameField extends BackgroundPanel {
 
     private PilePane pile;
-
     private CurrentPlayer currentPlayer;
-
     private HiddenPlayer hiddenPlayer;
-
     private IController controller;
-
     private PhasePane phase;
-
     private NotificationLabel notification;
-
     private PhaseDescription phaseDescription;
 
     public GameField(IController controller) {
@@ -65,5 +59,9 @@ public class GameField extends BackgroundPanel {
         pile.setEnabled(true);
         currentPlayer.setEnabled(true);
         phase.setEnabled(false);
+    }
+
+    public CurrentPlayer getCurrentPlayer() {
+        return currentPlayer;
     }
 }

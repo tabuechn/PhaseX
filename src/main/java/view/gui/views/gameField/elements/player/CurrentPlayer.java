@@ -1,6 +1,7 @@
 package view.gui.views.gameField.elements.player;
 
 import model.card.ICard;
+import model.deckOfCards.IDeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
 import view.gui.cardDrawer.DrawnCard;
@@ -8,7 +9,6 @@ import view.gui.cardDrawer.DrawnCard;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 /**
  * If everything works right this class was
@@ -19,8 +19,10 @@ public class CurrentPlayer extends CardPanel {
 
     private SpringLayout layout;
 
+    private IDeckOfCards cards;
+
     public CurrentPlayer() {
-        super(GUIConstants.PLAYER_CARD_PANEL_SIZE);
+        super();
         layout = getLayout();
     }
 
@@ -60,18 +62,21 @@ public class CurrentPlayer extends CardPanel {
     }
 
     @Override
-    public void addCard(DrawnCard card) {
+    public void addCard(ICard card) {
         super.addCard(card);
-        addPossibilityToShiftCardUp(card);
+        addPossibilityToShiftCardUp(new DrawnCard(card));
     }
 
-    public List<ICard> getChosenCards() {
+    public IDeckOfCards getChosenCards() {
         return super.getChosenCards();
     }
 
-    public void addMultipleICards(List<ICard> cards) {
-        for (ICard card : cards) {
-            addCard(new DrawnCard(card));
-        }
+    public void addMultipleICards(IDeckOfCards cards) {
+        this.cards = cards;
+        cards.forEach(this::addCard);
+    }
+
+    public IDeckOfCards getCards() {
+        return cards;
     }
 }
