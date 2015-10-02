@@ -181,7 +181,19 @@ public interface IController extends IObservable {
 
     void setStatusMessage(String statusMessage);
 
+    /**
+     * Getter for the phase description
+     *
+     * @return description of the current phase
+     */
     String getCurrentPhaseDescription();
 
     boolean isGameFinished();
+
+    /**
+     * getter for the current number of players
+     *
+     * @return the current amount of players
+     */
+    int getPlayerCount();
 }

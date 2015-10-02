@@ -27,19 +27,18 @@ public class Controller extends util.Observable implements IController {
 
     private final int playerCount;
 
-
     private AbstractState roundState;
 
     private IPlayer[] players;
-    private IPlayer currentPlayer;
 
+    private IPlayer currentPlayer;
     private int currentPlayerIndex;
 
     private List<ICardStack> allPhases;
 
     private IDeckOfCards drawPile;
-    private IDeckOfCards discardPile;
 
+    private IDeckOfCards discardPile;
     private String statusMessage;
 
     public Controller(int numberOfPlayers) {
@@ -232,6 +231,11 @@ public class Controller extends util.Observable implements IController {
     public boolean isGameFinished() {
         return currentPlayer.isPhaseDone() && (currentPlayer.getPhase().getPhaseNumber() == Phase5.PHASE_NUMBER);
         //return gameFinished;
+    }
+
+    @Override
+    public int getPlayerCount() {
+        return playerCount;
     }
 
     private void afterDraw() {
