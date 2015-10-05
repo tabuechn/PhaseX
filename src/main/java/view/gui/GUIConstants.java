@@ -12,8 +12,8 @@ import java.awt.*;
  */
 public final class GUIConstants {
 
-    public static final int WINDOW_WIDTH = 1000;
-    public static final int WINDOW_HEIGHT = 800;
+    public static final int WINDOW_WIDTH = 900;
+    public static final int WINDOW_HEIGHT = 1024;
     /**
      * Universal used constants
      */
@@ -48,10 +48,10 @@ public final class GUIConstants {
     /**
      * Resized Card Dimensions
      */
-    public static final int RESIZED_CARD_WIDTH = 75;
+    public static final int RESIZED_CARD_WIDTH = 150;
     public static final int CARD_ADJUSTMENT = (int) (GUIConstants.RESIZED_CARD_WIDTH * 0.75 * (-1));
     public static final int CARD_POSITION_LEFT_BORDER = (int) (GUIConstants.RESIZED_CARD_WIDTH * 0.1);
-    public static final int RESIZED_CARD_HEIGHT = 100;
+    public static final int RESIZED_CARD_HEIGHT = 200;
     public static final int CARD_POSITION_TOP_BORDER = (int) (GUIConstants.RESIZED_CARD_HEIGHT * 0.1);
     /**
      * Constants needed for the creation of cards

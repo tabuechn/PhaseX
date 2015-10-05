@@ -63,24 +63,28 @@ public class GUI implements IObserver {
     private void playerTurnFinished() {
         gameField.updateGameField();
         window.setContentPane(gameField);
+        window.repaint();
         gameField.activatePlayerTurnFinishedPhase();
     }
 
     private void playerTurnNotFinished() {
         gameField.updateGameField();
         window.setContentPane(gameField);
+        window.repaint();
         gameField.activatePlayerTurnNotFinished();
     }
 
     private void drawPhase() {
         gameField.updateGameField();
         window.setContentPane(gameField);
+        window.repaint();
         gameField.activateDrawPhase();
     }
 
     private void endPhase() {
         menu.setMessage(controller.getCurrentPlayer().getPlayerName() + " has won!");
         window.setContentPane(menu);
+        window.repaint();
     }
 
     private void startPhase() {

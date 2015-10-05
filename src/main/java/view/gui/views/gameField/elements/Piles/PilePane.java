@@ -2,9 +2,9 @@ package view.gui.views.gameField.elements.Piles;
 
 import controller.IController;
 import model.card.ICard;
-import view.gui.specialViews.BackgroundPanel;
 import view.gui.views.gameField.elements.player.CurrentPlayer;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
  * created by Konraifen88 on 29.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class PilePane extends BackgroundPanel {
+public class PilePane extends JPanel {
 
     private HiddenPile hidden;
 
@@ -29,6 +29,7 @@ public class PilePane extends BackgroundPanel {
         hidden = new HiddenPile();
         open = new OpenPile();
 
+        this.setOpaque(false);
         this.setLayout(new GridLayout(2, 1, 5, 5));
         this.add(hidden);
         this.add(open);

@@ -30,6 +30,7 @@ public class MenuPanel extends BackgroundPanel {
     public MenuPanel(IController controller) {
         super();
         this.controller = controller;
+        this.setPreferredSize(GUIConstants.WINDOW_SIZE);
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(getLogoAndMessagePanel());
 
