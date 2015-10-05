@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import view.gui.GUIConstants;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,7 @@ import java.awt.event.ActionListener;
 public class DrawnCard extends JLayeredPane implements ActionListener {
 
     private boolean chosen;
+
 
     private ICard card;
 
@@ -43,7 +45,9 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         if (StringUtils.isBlank(path)) {
             label.setText(color.name());
         } else {
-            label.setIcon(new ImageIcon(path));
+            ImageIcon ii = new ImageIcon(path);
+            ii.setImage(ii.getImage().getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH,GUIConstants.RESIZED_CARD_HEIGHT, Image.SCALE_DEFAULT));
+            label.setIcon(ii);
         }
         label.setVisible(true);
         return label;

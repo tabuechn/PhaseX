@@ -62,6 +62,12 @@ public final class GUIConstants {
 
 
     /**
+     * Resized Card Dimensions
+     */
+    public static final int RESIZED_CARD_WIDTH = 75;
+    public static final int RESIZED_CARD_HEIGHT= 100;
+
+    /**
      * Empty private constructor
      */
     private GUIConstants() {
