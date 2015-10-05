@@ -9,6 +9,7 @@ import view.gui.cardDrawer.DrawnCard;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 /**
  * If everything works right this class was
@@ -19,11 +20,15 @@ public class CurrentPlayer extends CardPanel {
 
     private SpringLayout layout;
 
-    private IDeckOfCards cards;
+    private IDeckOfCards allCards;
 
     public CurrentPlayer() {
         super();
+        this.setOpaque(false);
         layout = getLayout();
+
+        this.setVisible(true);
+
     }
 
 
@@ -67,16 +72,25 @@ public class CurrentPlayer extends CardPanel {
         addPossibilityToShiftCardUp(new DrawnCard(card));
     }
 
+    @Override
+    public void addMultipleCards(IDeckOfCards cards) {
+        this.allCards = cards;
+        cards.forEach(this::addCard);
+    }
+
     public IDeckOfCards getChosenCards() {
         return super.getChosenCards();
     }
 
-    public void addMultipleICards(IDeckOfCards cards) {
-        this.cards = cards;
-        cards.forEach(this::addCard);
+    public ICard getChosenCard() {
+        List<ICard> cardList = super.getChosenCards();
+        if (cardList.size() == 1) {
+            return cardList.get(0);
+        }
+        return null;
     }
 
-    public IDeckOfCards getCards() {
-        return cards;
+    public IDeckOfCards getAllCards() {
+        return allCards;
     }
 }

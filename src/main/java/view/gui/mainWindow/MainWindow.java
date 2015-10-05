@@ -2,6 +2,7 @@ package view.gui.mainWindow;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import view.gui.GUIConstants;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -19,7 +20,8 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super();
         setDefaultLookAndFeelDecorated(true);
-        setResizable(false);
+        setPreferredSize(GUIConstants.WINDOW_SIZE);
+//        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override

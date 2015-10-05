@@ -3,6 +3,7 @@ package view.gui.views.gameField.elements.Piles;
 import controller.IController;
 import model.card.ICard;
 import view.gui.specialViews.BackgroundPanel;
+import view.gui.views.gameField.elements.player.CurrentPlayer;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -21,6 +22,8 @@ public class PilePane extends BackgroundPanel {
 
     private IController controller;
 
+    private CurrentPlayer player;
+
     public PilePane(IController controller) {
         this.controller = controller;
         hidden = new HiddenPile();
@@ -34,7 +37,7 @@ public class PilePane extends BackgroundPanel {
         addListeners();
     }
 
-    public void addListeners() {
+    private void addListeners() {
         hidden.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -43,16 +46,24 @@ public class PilePane extends BackgroundPanel {
         });
 
         open.addMouseListener(new MouseAdapter() {
+            private void checkIfOnlyOneCardIsSelected(ICard card) {
+                if (card == null) {
+                    player.addMultipleCards(controller.getCurrentPlayersHand());
+                }
+                controller.discardCard(card);
+            }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (("DrawPhase").equals(controller.getRoundState().toString())) {
                     controller.drawOpen();
-                } else //noinspection StatementWithEmptyBody
-                    if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
+                } else if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
                         "PlayerTurnNotFinished".equals(controller.getRoundState().toString()))) {
-                    //TODO: What to do when discard phase
+                    checkIfOnlyOneCardIsSelected(player.getChosenCard());
                 }
             }
+
+
         });
     }
 
@@ -60,4 +71,15 @@ public class PilePane extends BackgroundPanel {
         open.setOpenCard(card);
     }
 
+    public void setOpenEnabled(boolean enabled) {
+        open.setEnabled(enabled);
+    }
+
+    public void setHiddenEnabled(boolean enabled) {
+        hidden.setEnabled(enabled);
+    }
+
+    public void setPlayer(CurrentPlayer player) {
+        this.player = player;
+    }
 }

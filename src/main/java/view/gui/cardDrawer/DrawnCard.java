@@ -20,7 +20,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
 
     private ICard card;
 
-    public DrawnCard() {
+    private DrawnCard() {
         //Do nothing
     }
 

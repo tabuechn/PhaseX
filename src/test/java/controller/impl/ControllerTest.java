@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -251,9 +250,7 @@ public class ControllerTest {
     public void getAllPlayersMap() {
         testee.startGame();
         testee.drawHidden();
-        Map<String, Integer> playersAndCards = testee.getNumberOfCardsForAllPlayers();
-        assertTrue(playersAndCards.containsKey("Player2"));
-        playersAndCards.containsValue(10);
+        assertEquals(testee.getNumberOfCardsForNextPlayer(), 10);
     }
 
     @Test

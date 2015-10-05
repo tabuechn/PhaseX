@@ -8,7 +8,6 @@ import model.stack.ICardStack;
 import util.IObservable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
@@ -65,11 +64,11 @@ public interface IController extends IObservable {
     IDeckOfCards getCurrentPlayersHand();
 
     /**
-     * Returns a Map with the players names and their number of cards
+     * Returns the number of cards for the next player
      *
-     * @return map with the players names and their number of cards
+     * @return number of cards for the next player
      */
-    Map<String, Integer> getNumberOfCardsForAllPlayers();
+    int getNumberOfCardsForNextPlayer();
 
     /**
      * Initialises the Game

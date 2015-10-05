@@ -9,6 +9,7 @@ import view.gui.views.gameField.elements.phases.PhasePane;
 import view.gui.views.gameField.elements.player.CurrentPlayer;
 import view.gui.views.gameField.elements.player.HiddenPlayer;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -22,20 +23,42 @@ public class GameField extends BackgroundPanel {
     private CurrentPlayer currentPlayer;
     private HiddenPlayer hiddenPlayer;
     private IController controller;
-    private PhasePane phase;
+    private PhasePane phases;
     private NotificationLabel notification;
     private PhaseDescription phaseDescription;
 
     public GameField(IController controller) {
         this.controller = controller;
         controller.startGame();
-
-        pile = new PilePane(controller);
-        currentPlayer = new CurrentPlayer();
-        currentPlayer.addMultipleICards(controller.getCurrentPlayersHand());
         this.setLayout(new BorderLayout());
+
+        //Add Piles
+        pile = new PilePane(controller);
         this.add(pile, BorderLayout.EAST);
+
+        //Add current player
+        currentPlayer = new CurrentPlayer();
+        currentPlayer.addMultipleCards(controller.getCurrentPlayersHand());
         this.add(currentPlayer, BorderLayout.SOUTH);
+
+        //Add hiddenPlayer, phaseDescription and notificationLabel
+        JPanel upper = new JPanel();
+        upper.setLayout(new BorderLayout(5, 5));
+        upper.setOpaque(false);
+        hiddenPlayer = new HiddenPlayer(controller.getNumberOfCardsForNextPlayer());
+        notification = new NotificationLabel();
+        phaseDescription = new PhaseDescription();
+        upper.add(phaseDescription, BorderLayout.NORTH);
+        upper.add(hiddenPlayer, BorderLayout.CENTER);
+        upper.add(phaseDescription, BorderLayout.EAST);
+        this.add(upper, BorderLayout.NORTH);
+        upper.setVisible(true);
+
+        //Add phases Panel
+        phases = new PhasePane(4, controller);
+        this.add(phases);
+
+
         this.setVisible(true);
     }
 
@@ -46,19 +69,19 @@ public class GameField extends BackgroundPanel {
     public void activateDrawPhase() {
         pile.setEnabled(true);
         currentPlayer.setEnabled(false);
-        phase.setEnabled(false);
+        phases.setEnabled(false);
     }
 
     public void activatePlayerTurnFinishedPhase() {
         pile.setEnabled(true);
         currentPlayer.setEnabled(true);
-        phase.setEnabled(true);
+        phases.setEnabled(true);
     }
 
     public void activatePlayerTurnNotFinished() {
         pile.setEnabled(true);
         currentPlayer.setEnabled(true);
-        phase.setEnabled(false);
+        phases.setEnabled(false);
     }
 
     public CurrentPlayer getCurrentPlayer() {

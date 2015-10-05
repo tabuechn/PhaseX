@@ -19,12 +19,12 @@ public class PhasePane extends JPanel {
 
     private IController controller;
 
-    private PhasePane phases;
-
     public PhasePane(int sumOfSinglePhasesToCreate, IController controller) {
         this.controller = controller;
         this.setLayout(new GridLayout(2, 2, 5, 5));
+        this.setOpaque(false);
         addPhases(sumOfSinglePhasesToCreate);
+        this.setVisible(true);
     }
 
     private void addPhases(int sum) {

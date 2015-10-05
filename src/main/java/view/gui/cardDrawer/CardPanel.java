@@ -7,7 +7,6 @@ import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,15 +63,15 @@ public class CardPanel extends BackgroundPanel {
     }
 
     private void setDeferral(JComponent card, double deferral) {
-        if (card == allCards.get(0)) {
+        if (card == allDrawnCards.get(0)) {
             layout.putConstraint(SpringLayout.WEST, card, GUIConstants.CARD_POSITION_LEFT_BORDER, SpringLayout.WEST,
                     this);
             layout.putConstraint(SpringLayout.NORTH, card, GUIConstants.CARD_POSITION_TOP_BORDER, SpringLayout.NORTH,
                     this);
         } else {
-            @SuppressWarnings("SuspiciousMethodCalls") int pos = allCards.indexOf(card);
+            @SuppressWarnings("SuspiciousMethodCalls") int pos = allDrawnCards.indexOf(card);
             layout.putConstraint(SpringLayout.WEST, card, (int) deferral, SpringLayout.EAST,
-                    (Component) allCards.get(pos - 1));
+                    allDrawnCards.get(pos - 1));
             layout.putConstraint(SpringLayout.NORTH, card, GUIConstants.CARD_POSITION_TOP_BORDER, SpringLayout.NORTH,
                     this);
         }

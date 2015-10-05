@@ -12,6 +12,7 @@ public class HiddenPlayer extends CardPanel {
 
     public HiddenPlayer(int numberOfCards) {
         super();
+        this.setPreferredSize(GUIConstants.HIDDEN_PLAYER_CARD_PANEL_SIZE);
         for (int i = 0; i < numberOfCards; i++) {
             addCard(GUIConstants.BACK_CARD);
         }
