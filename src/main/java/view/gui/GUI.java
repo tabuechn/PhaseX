@@ -20,13 +20,14 @@ public class GUI implements IObserver {
 
     private GameField gameField;
 
-    private MenuPanel menu = new MenuPanel();
+    private MenuPanel menu;
 
     public GUI(IController controller) {
         this.controller = controller;
         gameField = new GameField(controller);
+        menu = new MenuPanel(controller);
         controller.addObserver(this);
-        window.setContentPane(gameField);
+        window.setContentPane(menu);
         window.pack();
         window.setVisible(true);
     }

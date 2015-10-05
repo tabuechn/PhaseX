@@ -2,6 +2,10 @@ package view.gui.views.gameField.elements.player;
 
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
+import view.gui.cardDrawer.DrawnCard;
+
+import javax.swing.*;
+import java.util.List;
 
 /**
  * If everything works right this class was
@@ -10,11 +14,22 @@ import view.gui.cardDrawer.CardPanel;
  */
 public class HiddenPlayer extends CardPanel {
 
+    private SpringLayout layout;
+
     public HiddenPlayer(int numberOfCards) {
         super();
+        this.layout = super.getLayout();
         this.setPreferredSize(GUIConstants.HIDDEN_PLAYER_CARD_PANEL_SIZE);
         for (int i = 0; i < numberOfCards; i++) {
             addCard(GUIConstants.BACK_CARD);
+        }
+        shiftCardsUp();
+    }
+
+    private void shiftCardsUp() {
+        List<DrawnCard> tmp = getAllDrawnCards();
+        for (DrawnCard drawnCard : tmp) {
+            layout.putConstraint(SpringLayout.NORTH, drawnCard, 0, SpringLayout.NORTH, this);
         }
     }
 }

@@ -68,7 +68,7 @@ public class GameField extends BackgroundPanel {
 
     public void activateDrawPhase() {
         pile.setEnabled(true);
-        currentPlayer.setEnabled(false);
+        currentPlayer.setEnabled(true);
         phases.setEnabled(false);
     }
 

@@ -1,5 +1,6 @@
 package view.gui.views.menu;
 
+import controller.IController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import view.gui.GUIConstants;
@@ -18,6 +19,7 @@ import java.awt.*;
 public class MenuPanel extends BackgroundPanel {
 
     private static final Logger LOG = LogManager.getLogger(MenuPanel.class);
+    private final IController controller;
 
     private JLabel messages = new NotificationLabel();
 
@@ -25,8 +27,9 @@ public class MenuPanel extends BackgroundPanel {
 
     private JButton startButton;
 
-    public MenuPanel() {
+    public MenuPanel(IController controller) {
         super();
+        this.controller = controller;
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(getLogoAndMessagePanel());
 
@@ -62,7 +65,7 @@ public class MenuPanel extends BackgroundPanel {
         startButton.setMaximumSize(GUIConstants.BUTTON_SIZE);
         startButton.setPreferredSize(GUIConstants.BUTTON_SIZE);
         startButton.setFont(GUIConstants.DEFAULT_FONT);
-        startButton.addActionListener(e -> LOG.debug("Button startGame clicked"));
+        startButton.addActionListener(e -> controller.startGame());
         startButton.setVisible(true);
 
     }

@@ -14,7 +14,7 @@ public final class GUIConstants {
 
     public static final int CARD_ADJUSTMENT = -150;
     public static final int CARD_POSITION_LEFT_BORDER = 10;
-    public static final int CARD_POSITION_TOP_BORDER = 100;
+    public static final int CARD_POSITION_TOP_BORDER = 50;
     public static final int WINDOW_WIDTH = 1280;
     public static final int WINDOW_HEIGHT = 1024;
     /**
@@ -46,12 +46,11 @@ public final class GUIConstants {
     /**
      * Constants needed for the creation of cards
      */
-    public static final int AMOUNT_OF_TEXT_LABELS = 4;
     public static final Dimension CARD_DIMENSION = new Dimension(200, 300);
     /**
      * Dimension of the labels
      */
-    public static final Dimension PLAYER_CARD_PANEL_SIZE = new Dimension(750, CARD_DIMENSION.height + 100);
+    public static final Dimension PLAYER_CARD_PANEL_SIZE = new Dimension(750, CARD_DIMENSION.height + 50);
     public static final Dimension HIDDEN_PLAYER_CARD_PANEL_SIZE = new Dimension(700, CARD_DIMENSION.height);
     public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 100);
     public static final Dimension MINIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 100);

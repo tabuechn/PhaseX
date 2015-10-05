@@ -24,6 +24,7 @@ public class CurrentPlayer extends CardPanel {
 
     public CurrentPlayer() {
         super();
+        this.setPreferredSize(GUIConstants.PLAYER_CARD_PANEL_SIZE);
         this.setOpaque(false);
         layout = getLayout();
 
@@ -48,7 +49,7 @@ public class CurrentPlayer extends CardPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (!card.isChosen()) {
-                    shiftCardUp(card, GUIConstants.CARD_POSITION_TOP_BORDER - 25);
+                    shiftCardUp(card, 0);
                 }
             }
 

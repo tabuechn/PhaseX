@@ -51,10 +51,10 @@ public class CardPanel extends BackgroundPanel {
         cards.forEach(this::addCard);
     }
 
-
     private void updateView() {
         applyDeferral(GUIConstants.CARD_ADJUSTMENT);
     }
+
 
     private void applyDeferral(double deferral) {
         for (JComponent card : allDrawnCards) {
@@ -77,10 +77,10 @@ public class CardPanel extends BackgroundPanel {
         }
     }
 
-
     public IDeckOfCards getChosenCards() {
         return getAllChosenCards();
     }
+
 
     private IDeckOfCards getAllChosenCards() {
         chosenCards = new DeckOfCards();
@@ -92,5 +92,9 @@ public class CardPanel extends BackgroundPanel {
         if (drawnCard.isChosen()) {
             chosenCards.add(drawnCard.getCard());
         }
+    }
+
+    protected List<DrawnCard> getAllDrawnCards() {
+        return allDrawnCards;
     }
 }
