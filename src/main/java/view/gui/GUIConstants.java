@@ -12,11 +12,8 @@ import java.awt.*;
  */
 public final class GUIConstants {
 
-    public static final int CARD_ADJUSTMENT = -150;
-    public static final int CARD_POSITION_LEFT_BORDER = 10;
-    public static final int CARD_POSITION_TOP_BORDER = 50;
-    public static final int WINDOW_WIDTH = 1280;
-    public static final int WINDOW_HEIGHT = 1024;
+    public static final int WINDOW_WIDTH = 1000;
+    public static final int WINDOW_HEIGHT = 800;
     /**
      * Universal used constants
      */
@@ -43,28 +40,29 @@ public final class GUIConstants {
     public static final String CARD_NUMBER_EIGHT_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card8.png";
     public static final String CARD_NUMBER_NINE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card9.png";
     public static final String CARD_NO_NUMBER_IMAGE_PATH = "src/main/resources/view/gui/cards/number/noNumber.png";
-    /**
-     * Constants needed for the creation of cards
-     */
-    public static final Dimension CARD_DIMENSION = new Dimension(200, 300);
-    /**
-     * Dimension of the labels
-     */
-    public static final Dimension PLAYER_CARD_PANEL_SIZE = new Dimension(750, CARD_DIMENSION.height + 50);
-    public static final Dimension HIDDEN_PLAYER_CARD_PANEL_SIZE = new Dimension(700, CARD_DIMENSION.height);
-    public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 100);
-    public static final Dimension MINIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 100);
+    public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 50);
     public static final Dimension LOGO_LABEL_SIZE = new Dimension(WINDOW_WIDTH, 250);
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 50);
     public static final Card BLANK_CARD = new Card(0, CardColor.BLANK);
     public static final Card BACK_CARD = new Card(0, CardColor.BACK);
-
-
     /**
      * Resized Card Dimensions
      */
     public static final int RESIZED_CARD_WIDTH = 75;
-    public static final int RESIZED_CARD_HEIGHT= 100;
+    public static final int CARD_ADJUSTMENT = (int) (GUIConstants.RESIZED_CARD_WIDTH * 0.75 * (-1));
+    public static final int CARD_POSITION_LEFT_BORDER = (int) (GUIConstants.RESIZED_CARD_WIDTH * 0.1);
+    public static final int RESIZED_CARD_HEIGHT = 100;
+    public static final int CARD_POSITION_TOP_BORDER = (int) (GUIConstants.RESIZED_CARD_HEIGHT * 0.1);
+    /**
+     * Constants needed for the creation of cards
+     */
+    public static final Dimension CARD_DIMENSION =
+            new Dimension(GUIConstants.RESIZED_CARD_WIDTH, GUIConstants.RESIZED_CARD_HEIGHT);
+    /**
+     * Dimension of the labels
+     */
+    public static final Dimension PLAYER_CARD_PANEL_SIZE = new Dimension(500, GUIConstants.RESIZED_CARD_HEIGHT + 50);
+    public static final Dimension HIDDEN_PLAYER_CARD_PANEL_SIZE = new Dimension(400, GUIConstants.RESIZED_CARD_HEIGHT);
 
     /**
      * Empty private constructor

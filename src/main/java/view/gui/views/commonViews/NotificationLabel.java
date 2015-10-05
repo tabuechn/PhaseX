@@ -18,9 +18,7 @@ public class NotificationLabel extends CenteredLabel {
         this.setFont(GUIConstants.DEFAULT_FONT);
         this.setVerticalTextPosition(JLabel.CENTER);
         this.setHorizontalTextPosition(JLabel.CENTER);
-        this.setMinimumSize(GUIConstants.MINIMUM_NOTIFICATION_SIZE);
         this.setPreferredSize(GUIConstants.MAXIMUM_NOTIFICATION_SIZE);
-        this.setMaximumSize(GUIConstants.MAXIMUM_NOTIFICATION_SIZE);
         this.setVisible(true);
     }
 
