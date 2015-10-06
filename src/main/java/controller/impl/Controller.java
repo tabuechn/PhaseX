@@ -260,6 +260,7 @@ public class Controller extends util.Observable implements IController {
         newDiscardPile.add(discardPile.removeLast());
         DeckOfCards newDrawPile = new DeckOfCards(discardPile);
         Collections.shuffle(newDrawPile);
+        Collections.shuffle(newDrawPile);
         this.drawPile = newDrawPile;
         this.discardPile = newDiscardPile;
     }
