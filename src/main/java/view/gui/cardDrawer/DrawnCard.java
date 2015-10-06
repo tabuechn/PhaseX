@@ -19,12 +19,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
 
     private boolean chosen;
 
-
     private ICard card;
-
-    private DrawnCard() {
-        //Do nothing
-    }
 
     public DrawnCard(ICard card) {
         this.card = card;

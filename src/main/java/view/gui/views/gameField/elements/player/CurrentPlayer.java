@@ -21,7 +21,7 @@ public class CurrentPlayer extends CardPanel {
 
     List<DrawnCard> drawnCards;
     private SpringLayout layout;
-    private IDeckOfCards allCards;
+    private IDeckOfCards chosenCards;
 
     public CurrentPlayer() {
         super();
@@ -40,9 +40,11 @@ public class CurrentPlayer extends CardPanel {
                 if (card.isChosen()) {
                     shiftCardUp(card, GUIConstants.CARD_POSITION_TOP_BORDER);
                     card.setChosen(false);
+                    chosenCards.remove(card.getCard());
                 } else {
                     shiftCardUp(card, 0);
                     card.setChosen(true);
+                    chosenCards.add(card.getCard());
                 }
             }
 
@@ -69,24 +71,16 @@ public class CurrentPlayer extends CardPanel {
 
     @Override
     public List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
-        this.allCards = cards;
+        this.chosenCards = new DeckOfCards();
         this.drawnCards = new LinkedList<>();
-        for (DrawnCard card : super.setMultipleCards(cards)) {
-            addPossibilityToShiftCardUp(card);
-        }
+        super.setMultipleCards(cards).forEach(this::addPossibilityToShiftCardUp);
         this.updateUI();
         this.repaint();
         return this.drawnCards;
     }
 
     public IDeckOfCards getChosenCards() {
-        IDeckOfCards chosen = new DeckOfCards();
-        for (DrawnCard card : drawnCards) {
-            if (card.isChosen()) {
-                chosen.add(card.getCard());
-            }
-        }
-        return chosen;
+        return chosenCards;
     }
 
 }
