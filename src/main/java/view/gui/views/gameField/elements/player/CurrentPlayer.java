@@ -9,6 +9,7 @@ import view.gui.cardDrawer.DrawnCard;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,11 +19,9 @@ import java.util.List;
  */
 public class CurrentPlayer extends CardPanel {
 
+    List<DrawnCard> drawnCards;
     private SpringLayout layout;
-
     private IDeckOfCards allCards;
-
-    private List<DrawnCard> allDrawnCards;
 
     public CurrentPlayer() {
         super();
@@ -31,11 +30,10 @@ public class CurrentPlayer extends CardPanel {
         layout = getLayout();
 
         this.setVisible(true);
-
     }
 
-
     private void addPossibilityToShiftCardUp(DrawnCard card) {
+        drawnCards.add(card);
         card.getComponentsInLayer(0)[0].addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -72,16 +70,18 @@ public class CurrentPlayer extends CardPanel {
     @Override
     public List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
         this.allCards = cards;
-        allDrawnCards = super.setMultipleCards(cards);
-        allDrawnCards.forEach(this::addPossibilityToShiftCardUp);
+        this.drawnCards = new LinkedList<>();
+        for (DrawnCard card : super.setMultipleCards(cards)) {
+            addPossibilityToShiftCardUp(card);
+        }
         this.updateUI();
         this.repaint();
-        return allDrawnCards;
+        return this.drawnCards;
     }
 
     public IDeckOfCards getChosenCards() {
         IDeckOfCards chosen = new DeckOfCards();
-        for (DrawnCard card : allDrawnCards) {
+        for (DrawnCard card : drawnCards) {
             if (card.isChosen()) {
                 chosen.add(card.getCard());
             }
