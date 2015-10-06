@@ -32,7 +32,7 @@ public class SinglePhase extends JPanel {
         this.phase = cards;
         this.remove(empty);
         panel = new CardPanel();
-        panel.addMultipleCards(cards.getList());
+        panel.setMultipleCards(cards.getList());
 
 
     }

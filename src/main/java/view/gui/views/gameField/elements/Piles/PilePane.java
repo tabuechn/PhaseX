@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 /**
  * If everything works right this class was
@@ -24,8 +25,9 @@ public class PilePane extends JPanel {
 
     private CurrentPlayer player;
 
-    public PilePane(IController controller) {
+    public PilePane(IController controller, CurrentPlayer player) {
         this.controller = controller;
+        this.player = player;
         hidden = new HiddenPile();
         open = new OpenPile();
 
@@ -47,11 +49,11 @@ public class PilePane extends JPanel {
         });
 
         open.addMouseListener(new MouseAdapter() {
-            private void checkIfOnlyOneCardIsSelected(ICard card) {
-                if (card == null) {
-                    player.addMultipleCards(controller.getCurrentPlayersHand());
+            private void checkIfOnlyOneCardIsSelected(List<ICard> cards) {
+                if (cards.size() > 1) {
+                    player.setMultipleCards(controller.getCurrentPlayersHand());
                 }
-                controller.discardCard(card);
+                controller.discard(cards.get(0));
             }
 
             @Override
@@ -60,7 +62,7 @@ public class PilePane extends JPanel {
                     controller.drawOpen();
                 } else if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
                         "PlayerTurnNotFinished".equals(controller.getRoundState().toString()))) {
-                    checkIfOnlyOneCardIsSelected(player.getChosenCard());
+                    checkIfOnlyOneCardIsSelected(player.getChosenCards());
                 }
             }
 
@@ -80,7 +82,4 @@ public class PilePane extends JPanel {
         hidden.setEnabled(enabled);
     }
 
-    public void setPlayer(CurrentPlayer player) {
-        this.player = player;
-    }
 }

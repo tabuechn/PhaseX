@@ -1,5 +1,7 @@
 package view.gui.views.gameField.elements.player;
 
+import model.deckOfCards.IDeckOfCards;
+import model.deckOfCards.impl.DeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
 import view.gui.cardDrawer.DrawnCard;
@@ -20,9 +22,11 @@ public class HiddenPlayer extends CardPanel {
         super();
         this.layout = super.getLayout();
         this.setPreferredSize(GUIConstants.HIDDEN_PLAYER_CARD_PANEL_SIZE);
+        IDeckOfCards hiddenCards = new DeckOfCards();
         for (int i = 0; i < numberOfCards; i++) {
-            addCard(GUIConstants.BACK_CARD);
+            hiddenCards.add(GUIConstants.BACK_CARD);
         }
+        setMultipleCards(hiddenCards);
         shiftCardsUp();
     }
 

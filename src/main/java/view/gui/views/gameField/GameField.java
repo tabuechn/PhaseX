@@ -32,14 +32,14 @@ public class GameField extends BackgroundPanel {
         controller.startGame();
         this.setLayout(new BorderLayout());
 
-        //Add Piles
-        pile = new PilePane(controller);
-        this.add(pile, BorderLayout.EAST);
-
         //Add current player
         currentPlayer = new CurrentPlayer();
-        currentPlayer.addMultipleCards(controller.getCurrentPlayersHand());
+        currentPlayer.setMultipleCards(controller.getCurrentPlayersHand());
         this.add(currentPlayer, BorderLayout.SOUTH);
+
+        //Add Piles
+        pile = new PilePane(controller, currentPlayer);
+        this.add(pile, BorderLayout.EAST);
 
         //Add hiddenPlayer, phaseDescription and notificationLabel
         JPanel upper = new JPanel();
@@ -63,12 +63,13 @@ public class GameField extends BackgroundPanel {
     }
 
     public void updateGameField() {
-
+        currentPlayer.setMultipleCards(controller.getCurrentPlayersHand());
+        this.updateUI();
     }
 
     public void activateDrawPhase() {
         pile.setEnabled(true);
-        currentPlayer.setEnabled(true);
+        currentPlayer.setEnabled(false);
         phases.setEnabled(false);
     }
 

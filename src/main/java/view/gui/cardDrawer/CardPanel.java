@@ -39,16 +39,17 @@ public class CardPanel extends BackgroundPanel {
         return layout;
     }
 
-    public void addCard(ICard card) {
-        allCards.add(card);
+    private void addCard(ICard card) {
         DrawnCard drawnCard = new DrawnCard(card);
         allDrawnCards.add(drawnCard);
         this.add(drawnCard);
         updateView();
     }
 
-    public void addMultipleCards(IDeckOfCards cards) {
+    public List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
+        allDrawnCards = new LinkedList<>();
         cards.forEach(this::addCard);
+        return allDrawnCards;
     }
 
     private void updateView() {

@@ -1,6 +1,5 @@
 package view.gui.views.gameField.elements.player;
 
-import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
@@ -21,6 +20,8 @@ public class CurrentPlayer extends CardPanel {
     private SpringLayout layout;
 
     private IDeckOfCards allCards;
+
+    private List<DrawnCard> allDrawnCards;
 
     public CurrentPlayer() {
         super();
@@ -68,30 +69,17 @@ public class CurrentPlayer extends CardPanel {
     }
 
     @Override
-    public void addCard(ICard card) {
-        super.addCard(card);
-        addPossibilityToShiftCardUp(new DrawnCard(card));
-    }
-
-    @Override
-    public void addMultipleCards(IDeckOfCards cards) {
+    public List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
         this.allCards = cards;
-        cards.forEach(this::addCard);
+        allDrawnCards = super.setMultipleCards(cards);
+        allDrawnCards.forEach(this::addPossibilityToShiftCardUp);
+        this.updateUI();
+        this.repaint();
+        return allDrawnCards;
     }
 
     public IDeckOfCards getChosenCards() {
         return super.getChosenCards();
     }
 
-    public ICard getChosenCard() {
-        List<ICard> cardList = super.getChosenCards();
-        if (cardList.size() == 1) {
-            return cardList.get(0);
-        }
-        return null;
-    }
-
-    public IDeckOfCards getAllCards() {
-        return allCards;
-    }
 }
