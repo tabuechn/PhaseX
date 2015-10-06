@@ -74,10 +74,6 @@ public class PilePane extends JPanel {
         open.setOpenCard(card);
     }
 
-    public void setOpenEnabled(boolean enabled) {
-        open.setEnabled(enabled);
-    }
-
     public void setHiddenEnabled(boolean enabled) {
         hidden.setEnabled(enabled);
     }

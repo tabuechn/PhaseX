@@ -63,20 +63,20 @@ public class GUI implements IObserver {
 
     private void playerTurnFinished() {
         window.setContentPane(gameField);
-        window.repaint();
         gameField.activatePlayerTurnFinishedPhase();
+        window.repaint();
     }
 
     private void playerTurnNotFinished() {
         window.setContentPane(gameField);
-        window.repaint();
         gameField.activatePlayerTurnNotFinished();
+        window.repaint();
     }
 
     private void drawPhase() {
         window.setContentPane(gameField);
-        window.repaint();
         gameField.activateDrawPhase();
+        window.repaint();
     }
 
     private void endPhase() {
@@ -87,6 +87,7 @@ public class GUI implements IObserver {
 
     private void startPhase() {
         window.setContentPane(menu);
+        window.repaint();
     }
 
 }

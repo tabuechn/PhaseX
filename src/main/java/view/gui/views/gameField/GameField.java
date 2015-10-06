@@ -1,6 +1,9 @@
 package view.gui.views.gameField;
 
 import controller.IController;
+import model.card.ICard;
+import model.deckOfCards.IDeckOfCards;
+import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
 import view.gui.views.commonViews.NotificationLabel;
 import view.gui.views.gameField.elements.Piles.PilePane;
@@ -64,28 +67,34 @@ public class GameField extends BackgroundPanel {
 
     public void updateGameField() {
         currentPlayer.setMultipleCards(controller.getCurrentPlayersHand());
+        pile.setOpenPileCard(getOpenPileOrBlankCard());
         this.updateUI();
     }
 
     public void activateDrawPhase() {
-        pile.setEnabled(true);
+        pile.setHiddenEnabled(true);
         currentPlayer.setEnabled(false);
         phases.setEnabled(false);
     }
 
     public void activatePlayerTurnFinishedPhase() {
-        pile.setEnabled(true);
+        pile.setHiddenEnabled(false);
         currentPlayer.setEnabled(true);
         phases.setEnabled(true);
     }
 
     public void activatePlayerTurnNotFinished() {
-        pile.setEnabled(true);
+        pile.setHiddenEnabled(false);
         currentPlayer.setEnabled(true);
         phases.setEnabled(false);
     }
 
-    public CurrentPlayer getCurrentPlayer() {
-        return currentPlayer;
+    private ICard getOpenPileOrBlankCard() {
+        IDeckOfCards tmp = controller.getDiscardPile();
+        if (tmp.size() > 0) {
+            return tmp.get(0);
+        } else {
+            return GUIConstants.BLANK_CARD;
+        }
     }
 }

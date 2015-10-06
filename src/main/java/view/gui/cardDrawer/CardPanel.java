@@ -77,23 +77,6 @@ public class CardPanel extends BackgroundPanel {
                     this);
         }
     }
-//
-//    public IDeckOfCards getChosenCards() {
-//        return getAllChosenCards();
-//    }
-//
-//
-//    private IDeckOfCards getAllChosenCards() {
-//        chosenCards = new DeckOfCards();
-//        allDrawnCards.forEach(this::addCardIfChosen);
-//        return chosenCards;
-//    }
-//
-//    private void addCardIfChosen(DrawnCard drawnCard) {
-//        if (drawnCard.isChosen()) {
-//            chosenCards.add(drawnCard.getCard());
-//        }
-//    }
 
     protected List<DrawnCard> getAllDrawnCards() {
         return allDrawnCards;
