@@ -68,6 +68,7 @@ public class GameField extends BackgroundPanel {
     public void updateGameField() {
         currentPlayer.setMultipleCards(controller.getCurrentPlayersHand());
         pile.setOpenPileCard(getOpenPileOrBlankCard());
+        phaseDescription.setText(controller.getCurrentPhaseDescription());
         this.updateUI();
     }
 

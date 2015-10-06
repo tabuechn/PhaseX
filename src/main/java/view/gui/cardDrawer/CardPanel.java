@@ -48,6 +48,7 @@ public class CardPanel extends BackgroundPanel {
 
     public List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
         allDrawnCards = new LinkedList<>();
+        this.removeAll();
         cards.forEach(this::addCard);
         return allDrawnCards;
     }
