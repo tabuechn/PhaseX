@@ -119,6 +119,7 @@ public class Controller extends util.Observable implements IController {
         discardPile = new DeckOfCards();
         allPhases = new LinkedList<>();
         addCards();
+        discardPile.add(drawPile.removeLast());
         drawForPlayers();
         currentPlayerIndex = 0;
         currentPlayer = players[currentPlayerIndex];

@@ -54,8 +54,8 @@ public class ControllerTest {
     @Test
     public void testCardDecks() {
         testee.startGame();
-        assertEquals(testee.getDiscardPile().size(), 0);
-        assertEquals(testee.getDrawPile().size(), (9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS);
+        assertEquals(testee.getDiscardPile().size(), 1);
+        assertEquals(testee.getDrawPile().size(), ((9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS)-1);
     }
 
     @Test
@@ -63,16 +63,17 @@ public class ControllerTest {
         testee.startGame();
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        assertEquals(testee.getDrawPile().size(), (9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS - 1);
+        assertEquals(testee.getDrawPile().size(),( (9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS - 1)-1);
         assertEquals(testee.getRoundState().toString(), "PlayerTurnNotFinished");
     }
 
     @Test
     public void drawOpenWithEmptyPileTest() {
         testee.startGame();
+        testee.getDiscardPile().removeLast();
         testee.drawOpen();
         assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        assertEquals(testee.getDrawPile().size(), (9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS);
+        assertEquals(testee.getDrawPile().size(), ((9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS)-1);
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
     }
 
@@ -84,7 +85,7 @@ public class ControllerTest {
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
         testee.discard(cardToDiscard);
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
-        assertEquals(testee.getDiscardPile().size(), 1);
+        assertEquals(testee.getDiscardPile().size(), 2);
 
     }
 
@@ -96,7 +97,7 @@ public class ControllerTest {
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
         testee.discard(cardToDiscard);
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
-        assertEquals(testee.getDiscardPile().size(), 1);
+        assertEquals(testee.getDiscardPile().size(), 2);
         testee.drawOpen();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         assertEquals(testee.getRoundState().toString(), "PlayerTurnNotFinished");
