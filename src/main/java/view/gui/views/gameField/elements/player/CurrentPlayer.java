@@ -1,6 +1,7 @@
 package view.gui.views.gameField.elements.player;
 
 import model.deckOfCards.IDeckOfCards;
+import model.deckOfCards.impl.DeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
 import view.gui.cardDrawer.DrawnCard;
@@ -79,7 +80,13 @@ public class CurrentPlayer extends CardPanel {
     }
 
     public IDeckOfCards getChosenCards() {
-        return super.getChosenCards();
+        IDeckOfCards chosen = new DeckOfCards();
+        for (DrawnCard card : allDrawnCards) {
+            if (card.isChosen()) {
+                chosen.add(card.getCard());
+            }
+        }
+        return chosen;
     }
 
 }
