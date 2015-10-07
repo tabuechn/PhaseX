@@ -53,7 +53,4 @@ public class PhasePane extends JPanel {
         this.add(phase);
     }
 
-    public void setRoundDependedValues(CurrentPlayer currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
 }

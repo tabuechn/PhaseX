@@ -14,14 +14,10 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- */
-
-/**
- * edited: merged phase checker & getter
- * <p>
- * If everything works right this class was
- * created by Konraifen88 on 30.09.2015.
- * If it doesn't work I don't know who the hell wrote it.
+ *
+ * edited: Konraifen88
+ * date: 30.09.2015
+ * merged phase checker and getter
  */
 public class Phase4 implements IPhase {
 
