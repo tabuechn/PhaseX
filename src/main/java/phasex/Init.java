@@ -19,6 +19,7 @@ public final class Init {
     private Init() {
     }
 
+    @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public static void main(String[] argv) {
 
         scanner = new Scanner(System.in);

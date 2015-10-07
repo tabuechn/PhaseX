@@ -180,20 +180,26 @@ public class TUI implements IObserver {
     }
 
     private void printSingleStack(IDeckOfCards list) {
-        String output = "";
+        StringBuilder out = new StringBuilder();
         for (ICard card : list) {
-            output += Integer.toString(card.getNumber()) + card.getColor().toString() + " ";
+            out.append(Integer.toString(card.getNumber()));
+            out.append(" ");
+            out.append(card.getColor().toString());
+            out.append(", ");
         }
-        LOGGER.info(output);
+        LOGGER.info(out.toString());
     }
 
     private void printCurrentPlayersHand() {
         LOGGER.info("This is the current players hand:");
-        String hand = "";
+        StringBuilder out = new StringBuilder();
         for (ICard card : controller.getCurrentPlayersHand()) {
-            hand += Integer.toString(card.getNumber()) + card.getColor().toString() + " ";
+            out.append(Integer.toString(card.getNumber()));
+            out.append(" ");
+            out.append(card.getColor().toString());
+            out.append(", ");
         }
-        LOGGER.info(hand);
+        LOGGER.info(out);
     }
 
     private void printStart() {
