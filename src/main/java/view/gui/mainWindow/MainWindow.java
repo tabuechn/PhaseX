@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
         super();
         setDefaultLookAndFeelDecorated(true);
         setPreferredSize(GUIConstants.WINDOW_SIZE);
-//        setResizable(false);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override

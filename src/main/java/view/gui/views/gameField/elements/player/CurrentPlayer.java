@@ -25,7 +25,7 @@ public class CurrentPlayer extends CardPanel {
 
     public CurrentPlayer() {
         super();
-        this.setPreferredSize(GUIConstants.HIDDEN_PLAYER_CARD_PANEL_SIZE);
+        this.setPreferredSize(GUIConstants.PLAYER_CARD_PANEL_SIZE);
         this.setOpaque(false);
         layout = getLayout();
 
