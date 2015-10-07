@@ -57,7 +57,7 @@ public class GameField extends BackgroundPanel {
         upper.add(phaseDescription, BorderLayout.EAST);
         this.add(upper, BorderLayout.NORTH);
         upper.setVisible(true);
-
+        //test
         //Add phases Panel
         phases = new PhasePane(4, controller);
         this.add(phases);
