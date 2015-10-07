@@ -18,21 +18,21 @@ public class SinglePhase extends JPanel {
 
     private CardPanel panel;
 
-    private DrawnCard empty;
-
-    public SinglePhase() {
-        this.setPreferredSize(GUIConstants.CARD_DIMENSION);
-        empty = new DrawnCard(GUIConstants.BLANK_CARD);
-        this.add(empty);
+    public SinglePhase(ICardStack stack) {
+        addAlreadyPlayedPhase(stack);
         this.setOpaque(false);
         this.setVisible(true);
     }
 
-    public void addAlreadyPlayedPhase(ICardStack cards) {
+    private void addAlreadyPlayedPhase(ICardStack cards) {
         this.phase = cards;
-        this.remove(empty);
-        panel = new CardPanel();
-        panel.setMultipleCards(cards.getList());
+        if (cards == null) {
+            this.add(new DrawnCard(GUIConstants.BLANK_CARD));
+        } else {
+            panel = new CardPanel();
+            panel.setMultipleCards(cards.getList());
+            this.add(panel);
+        }
 
 
     }

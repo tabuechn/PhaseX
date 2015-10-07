@@ -2,6 +2,7 @@ package view.gui.views.gameField;
 
 import controller.IController;
 import model.card.ICard;
+import model.card.impl.CardComparator;
 import model.deckOfCards.IDeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
@@ -51,7 +52,7 @@ public class GameField extends BackgroundPanel {
         hiddenPlayer = new HiddenPlayer(controller.getNumberOfCardsForNextPlayer());
         notification = new NotificationLabel();
         phaseDescription = new PhaseDescription();
-        phaseDescription.setFont(new Font("Serif",Font.BOLD,20));
+        phaseDescription.setFont(new Font("Serif", Font.BOLD, 20));
         upper.add(phaseDescription, BorderLayout.NORTH);
         upper.add(hiddenPlayer, BorderLayout.CENTER);
         upper.add(phaseDescription, BorderLayout.EAST);
@@ -59,7 +60,7 @@ public class GameField extends BackgroundPanel {
         upper.setVisible(true);
         //test
         //Add phases Panel
-        phases = new PhasePane(4, controller);
+        phases = new PhasePane(controller);
         this.add(phases);
 
 
@@ -67,10 +68,19 @@ public class GameField extends BackgroundPanel {
     }
 
     public void updateGameField() {
-        currentPlayer.setMultipleCards(controller.getCurrentPlayersHand());
+        setSortedPlayerCards();
+        phases.setCurrentPlayer(currentPlayer);
+        phases.setAlreadyPlayedPhases(controller.getAllStacks());
         pile.setOpenPileCard(getOpenPileOrBlankCard());
-        phaseDescription.setText(controller.getCurrentPlayer().getPlayerName() + ": " + "Phase: " + controller.getCurrentPhaseDescription());
+        phaseDescription.setText(controller.getCurrentPlayer().getPlayerName() + ": " + "Phase: " +
+                controller.getCurrentPhaseDescription());
         this.updateUI();
+    }
+
+    private void setSortedPlayerCards() {
+        IDeckOfCards cards = controller.getCurrentPlayersHand();
+        cards.sort(new CardComparator());
+        currentPlayer.setMultipleCards(cards);
     }
 
     public void activateDrawPhase() {
@@ -94,7 +104,7 @@ public class GameField extends BackgroundPanel {
     private ICard getOpenPileOrBlankCard() {
         IDeckOfCards tmp = controller.getDiscardPile();
         if (tmp.size() > 0) {
-            return tmp.get(0);
+            return tmp.get(tmp.size() - 1);
         } else {
             return GUIConstants.BLANK_CARD;
         }
