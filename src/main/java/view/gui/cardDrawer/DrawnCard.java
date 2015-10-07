@@ -26,7 +26,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         setMinimumSize(GUIConstants.CARD_DIMENSION);
         setPreferredSize(GUIConstants.CARD_DIMENSION);
         setMaximumSize(GUIConstants.CARD_DIMENSION);
-        add(getBackgroundLabel(card.getColor()), -1);
+        add(getBackgroundLabel(card.getColor()), -GUIConstants.ONE);
         add(getNumberLabel(card.getNumber()), 0);
 
         setVisible(true);
@@ -41,7 +41,9 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
             label.setText(color.name());
         } else {
             ImageIcon ii = new ImageIcon(path);
-            ii.setImage(ii.getImage().getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH,GUIConstants.RESIZED_CARD_HEIGHT, Image.SCALE_DEFAULT));
+            ii.setImage(ii.getImage()
+                    .getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH, GUIConstants.RESIZED_CARD_HEIGHT,
+                            Image.SCALE_DEFAULT));
             label.setIcon(ii);
         }
         label.setVisible(true);
@@ -81,7 +83,9 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
             label.setText(Integer.toString(number));
         } else {
             ImageIcon ii = new ImageIcon(path);
-            ii.setImage(ii.getImage().getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH,GUIConstants.RESIZED_CARD_HEIGHT, Image.SCALE_DEFAULT));
+            ii.setImage(ii.getImage()
+                    .getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH, GUIConstants.RESIZED_CARD_HEIGHT,
+                            Image.SCALE_DEFAULT));
             label.setIcon(ii);
         }
         label.setVisible(true);
@@ -91,31 +95,31 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
     private String getCardNumberImagePath(int number) {
         String path;
         switch (number) {
-            case 1:
+            case GUIConstants.ONE:
                 path = GUIConstants.CARD_NUMBER_ONE_IMAGE_PATH;
                 break;
-            case 2:
+            case GUIConstants.TWO:
                 path = GUIConstants.CARD_NUMBER_TWO_IMAGE_PATH;
                 break;
-            case 3:
+            case GUIConstants.THREE:
                 path = GUIConstants.CARD_NUMBER_THREE_IMAGE_PATH;
                 break;
-            case 4:
+            case GUIConstants.FOUR:
                 path = GUIConstants.CARD_NUMBER_FOUR_IMAGE_PATH;
                 break;
-            case 5:
+            case GUIConstants.FIVE:
                 path = GUIConstants.CARD_NUMBER_FIVE_IMAGE_PATH;
                 break;
-            case 6:
+            case GUIConstants.SIX:
                 path = GUIConstants.CARD_NUMBER_SIX_IMAGE_PATH;
                 break;
-            case 7:
+            case GUIConstants.SEVEN:
                 path = GUIConstants.CARD_NUMBER_SEVEN_IMAGE_PATH;
                 break;
-            case 8:
+            case GUIConstants.EIGHT:
                 path = GUIConstants.CARD_NUMBER_EIGHT_IMAGE_PATH;
                 break;
-            case 9:
+            case GUIConstants.NINE:
                 path = GUIConstants.CARD_NUMBER_NINE_IMAGE_PATH;
                 break;
             default:

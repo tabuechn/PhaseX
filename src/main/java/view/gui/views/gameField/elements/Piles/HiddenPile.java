@@ -13,10 +13,8 @@ import javax.swing.*;
  */
 public class HiddenPile extends JPanel {
 
-    private DrawnCard drawn;
-
     public HiddenPile() {
-        drawn = new DrawnCard(new Card(0, CardColor.BACK));
+        DrawnCard drawn = new DrawnCard(new Card(0, CardColor.BACK));
         this.add(drawn);
         this.setOpaque(false);
         this.setVisible(true);

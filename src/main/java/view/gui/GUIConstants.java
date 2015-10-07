@@ -61,8 +61,24 @@ public final class GUIConstants {
     /**
      * Dimension of the labels
      */
-    public static final Dimension PLAYER_CARD_PANEL_SIZE = new Dimension(500, GUIConstants.RESIZED_CARD_HEIGHT + 50);
+    public static final Dimension PLAYER_CARD_PANEL_SIZE =
+            new Dimension(500, GUIConstants.RESIZED_CARD_HEIGHT + CARD_POSITION_TOP_BORDER);
     public static final Dimension HIDDEN_PLAYER_CARD_PANEL_SIZE = new Dimension(400, GUIConstants.RESIZED_CARD_HEIGHT);
+    public static final BorderLayout DEFAULT_BORDER_LAYOUT = new BorderLayout(5, 5);
+
+    /**
+     * Numbers
+     */
+    public static final int ONE = 1;
+    public static final int TWO = 2;
+    public static final int THREE = 3;
+    public static final int FOUR = 4;
+    public static final int FIVE = 5;
+    public static final int SIX = 6;
+    public static final int SEVEN = 7;
+    public static final int EIGHT = 8;
+    public static final int NINE = 9;
+    public static final int ZERO = 0;
 
     /**
      * Empty private constructor

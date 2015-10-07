@@ -47,7 +47,7 @@ public class GameField extends BackgroundPanel {
 
         //Add hiddenPlayer, phaseDescription and notificationLabel
         JPanel upper = new JPanel();
-        upper.setLayout(new BorderLayout(5, 5));
+        upper.setLayout(GUIConstants.DEFAULT_BORDER_LAYOUT);
         upper.setOpaque(false);
         hiddenPlayer = new HiddenPlayer(controller.getNumberOfCardsForNextPlayer());
         notification = new NotificationLabel();
@@ -105,8 +105,8 @@ public class GameField extends BackgroundPanel {
 
     private ICard getOpenPileOrBlankCard() {
         IDeckOfCards tmp = controller.getDiscardPile();
-        if (tmp.size() > 0) {
-            return tmp.get(tmp.size() - 1);
+        if (tmp.size() > GUIConstants.ZERO) {
+            return tmp.get(tmp.size() - GUIConstants.ONE);
         } else {
             return GUIConstants.BLANK_CARD;
         }

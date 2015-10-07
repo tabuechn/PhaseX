@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class PilePane extends JPanel {
 
+    private static final GridLayout PILE_PANE_LAYOUT = new GridLayout(2, 1, 5, 5);
+
     private HiddenPile hidden;
 
     private OpenPile open;
@@ -32,7 +34,7 @@ public class PilePane extends JPanel {
         open = new OpenPile();
 
         this.setOpaque(false);
-        this.setLayout(new GridLayout(2, 1, 5, 5));
+        this.setLayout(PILE_PANE_LAYOUT);
         this.add(hidden);
         this.add(open);
         this.setVisible(true);
