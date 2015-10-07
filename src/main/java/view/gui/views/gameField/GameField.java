@@ -52,7 +52,7 @@ public class GameField extends BackgroundPanel {
         hiddenPlayer = new HiddenPlayer(controller.getNumberOfCardsForNextPlayer());
         notification = new NotificationLabel();
         phaseDescription = new PhaseDescription();
-        phaseDescription.setFont(new Font("Serif", Font.BOLD, 20));
+        phaseDescription.setFont(GUIConstants.FONT_PHASE_DESCRIPTION);
         upper.add(phaseDescription, BorderLayout.NORTH);
         upper.add(hiddenPlayer, BorderLayout.CENTER);
         upper.add(phaseDescription, BorderLayout.EAST);
@@ -74,9 +74,13 @@ public class GameField extends BackgroundPanel {
         pile.setOpenPileCard(getOpenPileOrBlankCard());
         hiddenPlayer.setNewNumberOfCards(controller.getNumberOfCardsForNextPlayer());
         notification.setText(controller.getStatusMessage());
-        phaseDescription.setText(controller.getCurrentPlayer().getPlayerName() + ": " + "Phase: " +
-                controller.getCurrentPhaseDescription());
+        phaseDescription.setText(getDescriptionText());
         this.updateUI();
+    }
+
+    private String getDescriptionText() {
+        return "Player: " + controller.getCurrentPlayer().getPlayerName() + ", " + "Phase: " +
+                controller.getCurrentPhaseDescription();
     }
 
     private void setSortedPlayerCards() {

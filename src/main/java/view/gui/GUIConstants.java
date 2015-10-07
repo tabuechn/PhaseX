@@ -79,6 +79,7 @@ public final class GUIConstants {
     public static final int EIGHT = 8;
     public static final int NINE = 9;
     public static final int ZERO = 0;
+    public static final Font FONT_PHASE_DESCRIPTION = new Font("Serif", Font.BOLD, 20);
 
     /**
      * Empty private constructor
