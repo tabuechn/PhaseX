@@ -1,5 +1,6 @@
 package view.tui;
 
+import com.google.inject.Inject;
 import controller.IController;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
@@ -23,6 +24,7 @@ public class TUI implements IObserver {
     private static final Logger LOGGER = LogManager.getLogger(TUI.class);
     private IController controller;
 
+    @Inject
     public TUI(IController pController) {
         this.controller = pController;
         controller.addObserver(this);

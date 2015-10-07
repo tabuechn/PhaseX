@@ -1,5 +1,6 @@
 package view.gui;
 
+import com.google.inject.Inject;
 import controller.IController;
 import util.Event;
 import util.IObserver;
@@ -22,6 +23,7 @@ public class GUI implements IObserver {
 
     private MenuPanel menu;
 
+    @Inject
     public GUI(IController controller) {
         this.controller = controller;
         gameField = new GameField(controller);
