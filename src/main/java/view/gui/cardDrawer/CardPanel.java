@@ -2,7 +2,6 @@ package view.gui.cardDrawer;
 
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
 
@@ -19,15 +18,9 @@ public class CardPanel extends BackgroundPanel {
 
     private List<DrawnCard> allDrawnCards;
 
-    private IDeckOfCards allCards;
-
-    private IDeckOfCards chosenCards;
-
     private SpringLayout layout;
 
     public CardPanel() {
-        allCards = new DeckOfCards();
-        chosenCards = new DeckOfCards();
         allDrawnCards = new LinkedList<>();
         layout = new SpringLayout();
         this.setLayout(layout);
@@ -39,7 +32,7 @@ public class CardPanel extends BackgroundPanel {
         return layout;
     }
 
-    private void addCard(ICard card) {
+    protected void addCard(ICard card) {
         DrawnCard drawnCard = new DrawnCard(card);
         allDrawnCards.add(drawnCard);
         this.add(drawnCard);

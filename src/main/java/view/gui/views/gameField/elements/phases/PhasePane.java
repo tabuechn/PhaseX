@@ -69,11 +69,10 @@ public class PhasePane extends JPanel {
     }
 
     private List<ICardStack> addPossibleEmptyPhases(List<ICardStack> phases) {
-        List<ICardStack> stacks = new LinkedList<>();
         int phasesToAdd = 4 - phases.size();
         for (int i = 0; i < phasesToAdd; i++) {
-            stacks.add(null);
+            phases.add(null);
         }
-        return stacks;
+        return phases;
     }
 }
