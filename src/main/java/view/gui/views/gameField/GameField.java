@@ -73,6 +73,7 @@ public class GameField extends BackgroundPanel {
         phases.setAlreadyPlayedPhases(controller.getAllStacks());
         pile.setOpenPileCard(getOpenPileOrBlankCard());
         hiddenPlayer.setNewNumberOfCards(controller.getNumberOfCardsForNextPlayer());
+        notification.setText(controller.getStatusMessage());
         phaseDescription.setText(controller.getCurrentPlayer().getPlayerName() + ": " + "Phase: " +
                 controller.getCurrentPhaseDescription());
         this.updateUI();
