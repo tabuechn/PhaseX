@@ -2,7 +2,6 @@ package phasex;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import controller.IController;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import view.gui.GUI;
 import view.tui.TUI;
@@ -25,7 +24,7 @@ public final class Init {
 
         scanner = new Scanner(System.in);
 
-        Injector in = Guice.createInjector(new PhaseXModul());
+        Injector in = Guice.createInjector(new PhaseXModule());
 
         TUI tui = in.getInstance(TUI.class);
 

@@ -9,7 +9,7 @@ import controller.impl.Controller;
 /**
  * Created by tabuechn on 07.10.2015.
  */
-public class PhaseXModul extends AbstractModule {
+public class PhaseXModule extends AbstractModule {
 
     @Override
     protected void configure() {
