@@ -22,6 +22,11 @@ public class HiddenPlayer extends CardPanel {
         super();
         this.layout = super.getLayout();
         this.setPreferredSize(GUIConstants.HIDDEN_PLAYER_CARD_PANEL_SIZE);
+        addHiddenCards(numberOfCards);
+    }
+
+    private void addHiddenCards(int numberOfCards) {
+        this.removeAll();
         IDeckOfCards hiddenCards = new DeckOfCards();
         for (int i = 0; i < numberOfCards; i++) {
             hiddenCards.add(GUIConstants.BACK_CARD);
@@ -35,5 +40,9 @@ public class HiddenPlayer extends CardPanel {
         for (DrawnCard drawnCard : tmp) {
             layout.putConstraint(SpringLayout.NORTH, drawnCard, 0, SpringLayout.NORTH, this);
         }
+    }
+
+    public void setNewNumberOfCards(int num) {
+        addHiddenCards(num);
     }
 }
