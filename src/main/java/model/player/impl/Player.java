@@ -4,7 +4,6 @@ import model.deckOfCards.IDeckOfCards;
 import model.phase.IPhase;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * If everything works right this class was
@@ -19,7 +18,7 @@ public class Player implements IPlayer {
     private IPhase phase;
     private int playerNumber;
 
-    @Autowired
+
     private IDeckOfCards deck;
 
     public Player(String name, int number) {

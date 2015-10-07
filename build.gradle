@@ -21,13 +21,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.2'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.2'
 
-    //Adding Spring integration
-    compile 'org.springframework:spring-core:4.2.1.RELEASE'
-    compile 'org.springframework:spring-beans:4.2.1.RELEASE'
-    compile 'org.springframework:spring-context:4.2.1.RELEASE'
-    compile 'org.springframework.integration:spring-integration-core:4.2.0.RELEASE'
-    compile 'cglib:cglib:3.1'
-    testCompile 'org.springframework:spring-test:4.2.1.RELEASE'
+    //Google guice
+    compile 'com.google.inject:guice:3.0'
 
     //Adding other Artifacts
     compile 'com.google.collections:google-collections:1.0'

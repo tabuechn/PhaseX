@@ -1,7 +1,8 @@
 package phasex;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import controller.IController;
-import controller.impl.Controller;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import view.gui.GUI;
 import view.tui.TUI;
@@ -23,12 +24,12 @@ public final class Init {
 
         scanner = new Scanner(System.in);
 
-        IController controller = new Controller(2);
+        Injector in = Guice.createInjector(new PhaseXModul());
 
-        TUI tui = new TUI(controller);
+        TUI tui = in.getInstance(TUI.class);
 
         @SuppressWarnings("unused")
-        GUI gui = new GUI(controller);
+        GUI gui = in.getInstance(GUI.class);
 
         //noinspection InfiniteLoopStatement
         while (true) {

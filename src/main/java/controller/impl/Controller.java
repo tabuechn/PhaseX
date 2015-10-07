@@ -1,5 +1,6 @@
 package controller.impl;
 
+import com.google.inject.Inject;
 import controller.IController;
 import controller.states.AbstractState;
 import controller.states.impl.DrawPhase;
@@ -43,12 +44,18 @@ public class Controller extends util.Observable implements IController {
     private IDeckOfCards discardPile;
     private String statusMessage;
 
+
     public Controller(int numberOfPlayers) {
         playerCount = numberOfPlayers;
         drawPile = new DeckOfCards();
         discardPile = new DeckOfCards();
         roundState = new StartPhase();
         statusMessage = "";
+    }
+
+
+    public Controller() {
+        this(2);
     }
 
     @Override
