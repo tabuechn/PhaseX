@@ -55,7 +55,7 @@ public class ControllerTest {
     public void testCardDecks() {
         testee.startGame();
         assertEquals(testee.getDiscardPile().size(), 1);
-        assertEquals(testee.getDrawPile().size(), ((9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS)-1);
+        assertEquals(testee.getDrawPile().size(), ((9 * 4 * 4) - 10 * NUMBER_OF_PLAYERS)-1);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ControllerTest {
         testee.startGame();
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        assertEquals(testee.getDrawPile().size(),( (9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS - 1)-1);
+        assertEquals(testee.getDrawPile().size(),( (9 * 4 * 4) - 10 * NUMBER_OF_PLAYERS - 1)-1);
         assertEquals(testee.getRoundState().toString(), "PlayerTurnNotFinished");
     }
 
@@ -73,7 +73,7 @@ public class ControllerTest {
         testee.getDiscardPile().removeLast();
         testee.drawOpen();
         assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        assertEquals(testee.getDrawPile().size(), ((9 * 4 * 2) - 10 * NUMBER_OF_PLAYERS)-1);
+        assertEquals(testee.getDrawPile().size(), ((9 * 4 * 4) - 10 * NUMBER_OF_PLAYERS)-1);
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
     }
 
