@@ -33,6 +33,6 @@ dependencies {
 
 jacoco {
     toolVersion = "0.7.1.201405082137"
-    destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+    reportsDir = file("$buildDir/jacoco/jacocoTest.exec")
 }
 
