@@ -11,6 +11,8 @@ public class PhaseDescription extends JLabel {
 
 
     public PhaseDescription() {
+        this.setHorizontalTextPosition(JLabel.CENTER);
+        this.setVerticalTextPosition(JLabel.CENTER);
         this.setOpaque(false);
         this.setVisible(true);
     }

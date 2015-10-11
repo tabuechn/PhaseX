@@ -3,7 +3,6 @@ package view.gui.cardDrawer;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import view.gui.GUIConstants;
-import view.gui.specialViews.BackgroundPanel;
 
 import javax.swing.*;
 import java.util.LinkedList;
@@ -14,7 +13,7 @@ import java.util.List;
  * created by Konraifen88 on 30.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class CardPanel extends BackgroundPanel {
+public class CardPanel extends JPanel {
 
     private List<DrawnCard> allDrawnCards;
 
@@ -24,6 +23,7 @@ public class CardPanel extends BackgroundPanel {
         allDrawnCards = new LinkedList<>();
         layout = new SpringLayout();
         this.setLayout(layout);
+        this.setOpaque(false);
         this.setVisible(true);
     }
 

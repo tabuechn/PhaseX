@@ -79,8 +79,8 @@ public class GameField extends BackgroundPanel {
     }
 
     private String getDescriptionText() {
-        return "Player: " + controller.getCurrentPlayer().getPlayerName() + ", " + "Phase: " +
-                controller.getCurrentPhaseDescription();
+        return "<html>Player: " + controller.getCurrentPlayer().getPlayerName() + "<br><br>Phase: " +
+                controller.getCurrentPhaseDescription() + "</html>";
     }
 
     private void setSortedPlayerCards() {
