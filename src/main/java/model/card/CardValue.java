@@ -21,6 +21,14 @@ public enum CardValue {
     ELEVEN(11),
     TWELVE(12);
 
+//    Owl(2) {
+//        public String speak() {
+//            return "Hoo";
+//        }
+//    };
+//
+//    abstract public String speak();
+
     int valueOrdinal = 0;
 
     CardValue(int ord) {
