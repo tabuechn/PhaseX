@@ -2,6 +2,7 @@ package controller.impl;
 
 import com.google.inject.Inject;
 import controller.IController;
+import controller.UIController;
 import controller.states.AbstractState;
 import controller.states.impl.DrawPhase;
 import controller.states.impl.PlayerTurnFinished;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
  */
-public class Controller extends util.Observable implements IController {
+public class Controller extends util.Observable implements IController, UIController {
     public static final int PLAYER_STARTING_DECK_SIZE = 10;
 
     private final int playerCount;
