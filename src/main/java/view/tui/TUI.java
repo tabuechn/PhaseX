@@ -155,7 +155,7 @@ public class TUI implements IObserver {
         printStacks();
         if (controller.getDiscardPile().size() > 0) {
             ICard discardPileCard = controller.getDiscardPile().get(controller.getDiscardPile().size() - 1);
-            LOGGER.info("The Card on the Discard Pile is: " + Integer.toString(discardPileCard.getNumber()) +
+            LOGGER.info("The Card on the Discard Pile is: " + discardPileCard.getNumber().toString() +
                     discardPileCard.getColor().toString());
             LOGGER.info("Enter DrawHidden to draw from the draw pile");
             LOGGER.info("Enter DrawDiscard to draw from the discard pile");
@@ -184,7 +184,7 @@ public class TUI implements IObserver {
     private void printSingleStack(IDeckOfCards list) {
         StringBuilder out = new StringBuilder();
         for (ICard card : list) {
-            out.append(Integer.toString(card.getNumber()));
+            out.append(card.getNumber().toString());
             out.append(" ");
             out.append(card.getColor().toString());
             out.append(", ");
@@ -196,7 +196,7 @@ public class TUI implements IObserver {
         LOGGER.info("This is the current players hand:");
         StringBuilder out = new StringBuilder();
         for (ICard card : controller.getCurrentPlayersHand()) {
-            out.append(Integer.toString(card.getNumber()));
+            out.append(card.getNumber().toString());
             out.append(" ");
             out.append(card.getColor().toString());
             out.append(", ");

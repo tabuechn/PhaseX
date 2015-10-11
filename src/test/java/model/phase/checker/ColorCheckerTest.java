@@ -1,6 +1,7 @@
 package model.phase.checker;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class ColorCheckerTest {
 
     private static final int NUMBER_OF_CARDS = 6;
+    public static final CardValue CARD_NUMBER_OUT_OF_RANGE = CardValue.byOrdinal(NUMBER_OF_CARDS + 2);
 
     private IPhaseChecker testee;
 
@@ -44,20 +46,20 @@ public class ColorCheckerTest {
 
     @Test
     public void aDeckWithTooGreatSizeShouldReturnFalse() {
-        cards.add(new Card(NUMBER_OF_CARDS + 1, CardColor.BLUE));
+        cards.add(new Card(CARD_NUMBER_OUT_OF_RANGE, CardColor.BLUE));
         assertFalse(testee.check(cards));
     }
 
     @Test
     public void aDeckWithCorrectSizeAndMultipleColoursShouldReturnFalse() {
         cards.removeFirst();
-        cards.add(new Card(NUMBER_OF_CARDS + 2, CardColor.RED));
+        cards.add(new Card(CARD_NUMBER_OUT_OF_RANGE, CardColor.RED));
         assertFalse(testee.check(cards));
     }
 
     private void addCardsToDeck() {
         for (int i = 0; i < NUMBER_OF_CARDS; i++) {
-            cards.add(new Card(i, CardColor.BLUE));
+            cards.add(new Card(CardValue.byOrdinal(i), CardColor.BLUE));
         }
     }
 

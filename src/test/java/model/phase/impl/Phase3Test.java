@@ -1,6 +1,7 @@
 package model.phase.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
@@ -94,7 +95,7 @@ public class Phase3Test {
     private ICard[] createOneCards(CardColor[] colors) {
         ICard[] returnValue = new ICard[colors.length];
         for (int i = 0; i < colors.length; i++) {
-            returnValue[i] = new Card(1, colors[i]);
+            returnValue[i] = new Card(CardValue.ONE, colors[i]);
         }
         return returnValue;
     }

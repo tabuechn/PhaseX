@@ -1,5 +1,6 @@
 package model.stack.impl;
 
+import model.card.CardValue;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import model.stack.ICardStack;
@@ -8,7 +9,7 @@ import model.stack.ICardStack;
  * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
  */
 public class PairStack implements ICardStack {
-    private int stackNumber;
+    private CardValue stackNumber;
 
     private IDeckOfCards list;
 
@@ -32,7 +33,7 @@ public class PairStack implements ICardStack {
         return list;
     }
 
-    public int getStackNumber() {
+    public CardValue getStackNumber() {
         return stackNumber;
     }
 }

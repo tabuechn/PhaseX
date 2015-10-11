@@ -1,6 +1,7 @@
 package model.phase.checker;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class ValueCheckerTest {
 
-    public static final int TESTEE_NUMBER = 1;
+    public static final CardValue TESTEE_NUMBER = CardValue.byOrdinal(1);
     private static final int NUMBER_OF_CARDS = CardColor.values().length;
     private IPhaseChecker testee;
 
@@ -51,7 +52,7 @@ public class ValueCheckerTest {
     @Test
     public void aDeckWithCorrectSizeAndMultipleValuesShouldReturnFalse() {
         cards.removeFirst();
-        cards.add(new Card(TESTEE_NUMBER + 1, CardColor.RED));
+        cards.add(new Card(CardValue.byOrdinal(TESTEE_NUMBER.ordinal() + 1), CardColor.RED));
         assertFalse(testee.check(cards));
     }
 

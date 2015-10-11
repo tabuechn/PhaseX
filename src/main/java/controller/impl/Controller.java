@@ -289,7 +289,7 @@ public class Controller extends util.Observable implements IController, UIContro
 
     private void calcAndAddPoints(IPlayer player) {
         for (ICard leftOverCard : player.getDeckOfCards()) {
-            player.addPoints(leftOverCard.getNumber());
+            player.addPoints(leftOverCard.getNumber().ordinal());
         }
     }
 

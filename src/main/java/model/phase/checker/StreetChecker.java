@@ -1,5 +1,6 @@
 package model.phase.checker;
 
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
@@ -47,7 +48,7 @@ public class StreetChecker implements IPhaseChecker {
     }
 
     private void compareCards(ICard smaller, ICard greater) {
-        if (smaller.getNumber() + 1 == greater.getNumber()) {
+        if (greater.getNumber().equals(CardValue.byOrdinal(smaller.getNumber().ordinal() + 1))) {
             return;
         }
         isStreet = false;

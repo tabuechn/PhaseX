@@ -1,6 +1,7 @@
 package util;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
@@ -32,10 +33,10 @@ public class CardCreator {
     private static List<ICard> createCardsOfAllColors(Number number) {
         List<ICard> tmp = new LinkedList<>();
         for (int i = 0; i < SIZE_OF_DECK_MULTIPLIER; i++) {
-            tmp.add(new Card(number.intValue(), CardColor.GREEN));
-            tmp.add(new Card(number.intValue(), CardColor.RED));
-            tmp.add(new Card(number.intValue(), CardColor.BLUE));
-            tmp.add(new Card(number.intValue(), CardColor.YELLOW));
+            tmp.add(new Card(CardValue.byOrdinal(number.intValue()), CardColor.GREEN));
+            tmp.add(new Card(CardValue.byOrdinal(number.intValue()), CardColor.RED));
+            tmp.add(new Card(CardValue.byOrdinal(number.intValue()), CardColor.BLUE));
+            tmp.add(new Card(CardValue.byOrdinal(number.intValue()), CardColor.YELLOW));
         }
         return tmp;
     }

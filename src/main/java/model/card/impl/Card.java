@@ -1,30 +1,38 @@
 package model.card.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import javax.annotation.Nonnull;
 
 /**
  * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
  */
 public class Card implements ICard {
-    private int number;
+    private CardValue number;
     private CardColor color;
 
-    public Card(int cardNumber, CardColor cardColor) {
+    public Card(CardValue cardNumber, CardColor cardColor) {
         this.number = cardNumber;
         this.color = cardColor;
     }
 
     @Override
-    public int getNumber() {
+    public CardValue getNumber() {
         return number;
     }
 
     @Override
     public CardColor getColor() {
         return color;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICard other) {
+        return this.number.ordinal() - other.getNumber().ordinal();
     }
 
     @Override

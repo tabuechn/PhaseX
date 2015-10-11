@@ -1,6 +1,7 @@
 package model.phase.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
@@ -88,14 +89,14 @@ public class Phase2Test {
         IDeckOfCards firstStreet = testStacks.get(0).getList();
         assertEquals(firstStreet.size(), 6);
         for (int i = 0; i < 6; i++) {
-            assertEquals(firstStreet.get(i).getNumber(), i + 1);
+            assertEquals(firstStreet.get(i).getNumber(), CardValue.byOrdinal(i + 1));
         }
     }
 
     private ICard[] createYellowCards(int[] numbers) {
         ICard[] returnValue = new ICard[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            returnValue[i] = new Card(numbers[i], CardColor.YELLOW);
+            returnValue[i] = new Card(CardValue.byOrdinal(numbers[i]), CardColor.YELLOW);
         }
         return returnValue;
     }

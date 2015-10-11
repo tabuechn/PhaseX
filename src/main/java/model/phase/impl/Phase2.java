@@ -1,5 +1,6 @@
 package model.phase.impl;
 
+import model.card.CardValue;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.phase.IPhase;
@@ -53,9 +54,9 @@ public class Phase2 implements IPhase {
 
     private boolean streetOfSix(IDeckOfCards phase) {
         Collections.sort(phase, new CardValueComparator());
-        int counter = phase.get(0).getNumber();
+        CardValue counter = phase.get(0).getNumber();
         for (int i = 1; i < phase.size(); i++) {
-            if (phase.get(i).getNumber() != (counter + 1)) {
+            if (!phase.get(i).getNumber().equals(CardValue.byOrdinal(counter.ordinal() + 1))) {
                 return false;
             }
             counter = phase.get(i).getNumber();

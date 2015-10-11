@@ -1,5 +1,6 @@
 package model.phase.impl;
 
+import model.card.CardValue;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
@@ -42,7 +43,7 @@ public class Phase4 implements IPhase {
 
     @Override
     public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) {
-        int firstNumber = phase.get(0).getNumber();
+        CardValue firstNumber = phase.get(0).getNumber();
         IDeckOfCards firstStack = new DeckOfCards();
         for (int i = 0; i < phase.size(); i++) {
             ICard card = phase.get(i);
@@ -71,16 +72,16 @@ public class Phase4 implements IPhase {
     }
 
     private boolean only2Numbers(IDeckOfCards phase) {
-        Set<Integer> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
+        Set<CardValue> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
         return presentNumbers.size() == PAIR_SIZE || presentNumbers.size() == SAME_PAIRS;
     }
 
     private boolean checkQuadrupleAndPair(IDeckOfCards phase) {
-        int tripleNumber = phase.get(0).getNumber();
+        CardValue tripleNumber = phase.get(0).getNumber();
         List<ICard> pair1 = new LinkedList<>();
         List<ICard> pair2 = new LinkedList<>();
         for (ICard card : phase) {
-            if (card.getNumber() == tripleNumber) {
+            if (card.getNumber().equals(tripleNumber)) {
                 pair1.add(card);
             } else {
                 pair2.add(card);

@@ -1,5 +1,6 @@
 package model.phase.impl;
 
+import model.card.CardValue;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
@@ -71,13 +72,13 @@ public class Phase5 implements IPhase {
     }
 
     private boolean only2Numbers(IDeckOfCards phase) {
-        Set<Integer> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
+        Set<CardValue> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
         return presentNumbers.size() == NUMBER_OF_QUADRUPLES || presentNumbers.size() == SAME_PAIR;
     }
 
     private boolean checkQuadruple(IDeckOfCards phase) {
-        int quadrupleNumber = phase.get(0).getNumber();
-        List<ICard> quadruple = phase.stream().filter(card -> card.getNumber() == quadrupleNumber)
+        CardValue quadrupleNumber = phase.get(0).getNumber();
+        List<ICard> quadruple = phase.stream().filter(card -> card.getNumber().equals(quadrupleNumber))
                 .collect(Collectors.toCollection(LinkedList::new));
         return quadruple.size() == QUADRUPLE_SIZE || quadruple.size() == QUADRUPLE_SIZE * 2;
     }

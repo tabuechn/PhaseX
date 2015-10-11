@@ -1,6 +1,7 @@
 package model.deckOfCards.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
@@ -19,10 +20,10 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class DeckOfCardsTest {
 
-    private static final ICard CARD_1 = new Card(1, CardColor.BLUE);
-    private static final ICard CARD_2 = new Card(2, CardColor.GREEN);
-    private static final ICard CARD_3 = new Card(3, CardColor.YELLOW);
-    private static final ICard CARD_4 = new Card(4, CardColor.RED);
+    private static final ICard CARD_1 = new Card(CardValue.ONE, CardColor.BLUE);
+    private static final ICard CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
+    private static final ICard CARD_3 = new Card(CardValue.THREE, CardColor.YELLOW);
+    private static final ICard CARD_4 = new Card(CardValue.FOUR, CardColor.RED);
     private IDeckOfCards testee;
 
     @Before

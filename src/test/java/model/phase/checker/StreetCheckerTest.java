@@ -1,6 +1,7 @@
 package model.phase.checker;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class StreetCheckerTest {
 
     private static final int NUMBER_OF_CARDS = 6;
+    public static final CardValue CARD_VALUE_OUT_OF_RANGE = CardValue.byOrdinal(NUMBER_OF_CARDS + 1);
 
     private IPhaseChecker testee = new StreetChecker(NUMBER_OF_CARDS);
 
@@ -45,7 +47,7 @@ public class StreetCheckerTest {
 
     @Test
     public void aSortedDeckWithARemovedCardFromTheMiddleShouldRemoveFalse() {
-        deck.add(new Card(NUMBER_OF_CARDS + 1, CardColor.BLUE));
+        deck.add(new Card(CARD_VALUE_OUT_OF_RANGE, CardColor.BLUE));
         deck.remove(NUMBER_OF_CARDS / 2);
         assertTrue(deck.size() == NUMBER_OF_CARDS);
         assertFalse(testee.check(deck));
@@ -53,7 +55,7 @@ public class StreetCheckerTest {
 
     @Test
     public void anUnsortedDeckWithARemovedCardFromTheMiddleShouldRemoveFalse() {
-        deck.add(new Card(NUMBER_OF_CARDS + 1, CardColor.BLUE));
+        deck.add(new Card(CARD_VALUE_OUT_OF_RANGE, CardColor.BLUE));
         deck.remove(NUMBER_OF_CARDS / 2);
         Collections.shuffle(deck);
         assertTrue(deck.size() == NUMBER_OF_CARDS);
@@ -68,13 +70,13 @@ public class StreetCheckerTest {
 
     @Test
     public void aDeckWhichIsTooLongShouldReturnFalse() {
-        deck.add(new Card(NUMBER_OF_CARDS + 1, CardColor.BLUE));
+        deck.add(new Card(CARD_VALUE_OUT_OF_RANGE, CardColor.BLUE));
         assertFalse(testee.check(deck));
     }
 
     private void createAndAddCards() {
         for (int i = 0; i < NUMBER_OF_CARDS; i++) {
-            deck.add(new Card(i, CardColor.BLUE));
+            deck.add(new Card(CardValue.byOrdinal(i), CardColor.BLUE));
         }
     }
 

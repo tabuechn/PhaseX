@@ -1,6 +1,7 @@
 package model.card.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.player.impl.Player;
 import org.junit.Test;
@@ -12,16 +13,20 @@ import static org.junit.Assert.*;
  */
 public class CardTest {
 
-    private static final ICard CARD_1 = new Card(1, CardColor.YELLOW);
-    private static final ICard CARD_2 = new Card(1, CardColor.YELLOW);
-    private static final ICard CARD_3 = new Card(2, CardColor.YELLOW);
-    private static final ICard CARD_4 = new Card(1, CardColor.GREEN);
+    public static final CardValue CARD_NUMBER_ONE = CardValue.ONE;
+    public static final CardValue CARD_NUMBER_TWO = CardValue.TWO;
+    public static final CardValue CARD_NUMBER_FIVE = CardValue.FIVE;
+
+    private static final ICard CARD_1 = new Card(CARD_NUMBER_ONE, CardColor.YELLOW);
+    private static final ICard CARD_2 = new Card(CARD_NUMBER_ONE, CardColor.YELLOW);
+    private static final ICard CARD_3 = new Card(CARD_NUMBER_TWO, CardColor.YELLOW);
+    private static final ICard CARD_4 = new Card(CARD_NUMBER_ONE, CardColor.GREEN);
 
     @Test
     public void cardTest() {
-        Card x = new Card(5, CardColor.YELLOW);
+        Card x = new Card(CARD_NUMBER_FIVE, CardColor.YELLOW);
         assertTrue(x.getColor() == CardColor.YELLOW);
-        assertTrue(x.getNumber() == 5);
+        assertTrue(x.getNumber().equals(CardValue.FIVE));
     }
 
     @Test

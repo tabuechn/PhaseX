@@ -13,6 +13,6 @@ public class CardValueComparator implements Comparator<ICard> {
 
     @Override
     public int compare(ICard o1, ICard o2) {
-        return o1.getNumber() - o2.getNumber();
+        return o1.getNumber().ordinal() - o2.getNumber().ordinal();
     }
 }

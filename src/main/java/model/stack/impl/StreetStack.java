@@ -1,5 +1,6 @@
 package model.stack.impl;
 
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
@@ -10,39 +11,40 @@ import model.stack.ICardStack;
  */
 public class StreetStack implements ICardStack {
 
-    private int lowestCardNumber;
-    private int highestCardNumber;
+    private ICard lowestCard;
+    private ICard highestCard;
 
     private IDeckOfCards list;
 
     public StreetStack(IDeckOfCards cards) {
         list = cards;
         list.sort(new CardValueComparator());
-        lowestCardNumber = list.get(0).getNumber();
-        highestCardNumber = list.get(list.size() - 1).getNumber();
+        this.lowestCard = list.get(0);
+        this.highestCard = list.get(list.size() - 1);
     }
 
-    public int getHighestCardNumber() {
-        return highestCardNumber;
+    public CardValue getHighestCardNumber() {
+        return highestCard.getNumber();
     }
 
-    public int getLowestCardNumber() {
-        return lowestCardNumber;
+    public CardValue getLowestCardNumber() {
+        return lowestCard.getNumber();
     }
 
     @Override
     public boolean checkCardMatching(ICard card) {
-        return (card.getNumber() == (lowestCardNumber - 1) || card.getNumber() == (highestCardNumber + 1));
+        return (card.getNumber().equals(CardValue.byOrdinal(lowestCard.getNumber().ordinal() - 1))
+                || card.getNumber().equals(CardValue.byOrdinal(highestCard.getNumber().ordinal() + 1)));
     }
 
     @Override
     public void addCardToStack(ICard card) {
         list.add(card);
         list.sort(new CardValueComparator());
-        if (card.getNumber() > this.highestCardNumber) {
-            increaseHighestCardNumber();
+        if (card.compareTo(this.highestCard) > 0) {
+            this.highestCard = card;
         } else {
-            decreaseLowestCardNumber();
+            this.lowestCard = card;
         }
     }
 
@@ -51,11 +53,4 @@ public class StreetStack implements ICardStack {
         return this.list;
     }
 
-    private void decreaseLowestCardNumber() {
-        this.lowestCardNumber--;
-    }
-
-    private void increaseHighestCardNumber() {
-        this.highestCardNumber++;
-    }
 }

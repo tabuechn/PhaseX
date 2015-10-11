@@ -1,6 +1,7 @@
 package util;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import org.junit.Before;
@@ -30,14 +31,14 @@ public class CardCreatorTest {
     @Test
     public void cardLowerThanMinValueShouldNotExist() {
         for (CardColor color : CardColor.values()) {
-            assertFalse(testee.contains(new Card(CardCreator.LOWEST_CARD - 1, color)));
+            assertFalse(testee.contains(new Card(CardValue.byOrdinal(CardCreator.LOWEST_CARD - 1), color)));
         }
     }
 
     @Test
     public void cardHigherThanMaxValueShouldNotExist() {
         for (CardColor color : CardColor.values()) {
-            assertFalse(testee.contains(new Card(CardCreator.HIGHEST_CARD + 1, color)));
+            assertFalse(testee.contains(new Card(CardValue.byOrdinal(CardCreator.HIGHEST_CARD + 1), color)));
         }
     }
 

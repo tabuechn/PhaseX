@@ -1,5 +1,6 @@
 package model.phase.checker;
 
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
@@ -28,9 +29,9 @@ public class ValueChecker implements IPhaseChecker {
     }
 
     private boolean allCardsHasTheSameValue(IDeckOfCards cards) {
-        int valueOfDeck = cards.get(0).getNumber();
+        CardValue valueOfDeck = cards.get(0).getNumber();
         for (ICard card : cards) {
-            if (card.getNumber() != valueOfDeck) {
+            if (!card.getNumber().equals(valueOfDeck)) {
                 return false;
             }
         }

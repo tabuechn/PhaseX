@@ -1,6 +1,7 @@
 package controller.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
@@ -220,7 +221,7 @@ public class ControllerTest {
         assertEquals(testee.getCurrentPlayersHand().size(), 4);
         assertEquals(testee.getAllStacks().size(), 2);
         ICardStack testStack = testee.getAllStacks().get(0);
-        int testNumber = testStack.getList().get(0).getNumber();
+        CardValue testNumber = testStack.getList().get(0).getNumber();
         assertEquals(testee.getCurrentPlayersHand().size(), 4);
         testee.addToFinishedPhase(new Card(testNumber, CardColor.YELLOW), testStack);
         assertEquals(testee.getAllStacks().get(0).getList().size(), 4);
@@ -239,12 +240,14 @@ public class ControllerTest {
         assertEquals(testee.getCurrentPlayersHand().size(), 4);
         assertEquals(testee.getAllStacks().size(), 2);
         ICardStack testStack = testee.getAllStacks().get(0);
-        int testNumber = testStack.getList().get(0).getNumber();
+        CardValue testNumber = testStack.getList().get(0).getNumber();
         assertEquals(testee.getCurrentPlayersHand().size(), 4);
         testee.addToFinishedPhase(new Card(testNumber, CardColor.YELLOW), testStack);
         assertEquals(testee.getAllStacks().get(0).getList().size(), 4);
         assertEquals(testee.getCurrentPlayersHand().size(), 3);
-        testee.discard(new Card(6, CardColor.YELLOW));
+        testee.discard(new Card(CardValue.SIX, CardColor.YELLOW));
+
+        //TODO: @Tarek Why a discard and after that no assert?
     }
 
     @Test
@@ -262,7 +265,7 @@ public class ControllerTest {
                 .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 3, 4, 5, 6})));
         testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
         assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        testee.discard(new Card(3, CardColor.YELLOW));
+        testee.discard(new Card(CardValue.THREE, CardColor.YELLOW));
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
         testee.drawHidden();
         testee.discard(testee.getCurrentPlayersHand().get(0));
@@ -278,7 +281,7 @@ public class ControllerTest {
         testee.getCurrentPlayer().setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 6})));
         testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
         assertEquals(testee.getCurrentPlayersHand().size(), 1);
-        testee.discard(new Card(6, CardColor.YELLOW));
+        testee.discard(new Card(CardValue.SIX, CardColor.YELLOW));
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
         assertEquals(testee.getCurrentPlayer().getPhase().getPhaseNumber(), Phase2.PHASE_NUMBER);
     }
@@ -297,7 +300,7 @@ public class ControllerTest {
         assertEquals(testee.getCurrentPlayer().getPhase().getPhaseNumber(), Phase5.PHASE_NUMBER);
         testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2})));
         assertEquals(testee.getCurrentPlayersHand().size(), 1);
-        testee.discard(new Card(6, CardColor.YELLOW));
+        testee.discard(new Card(CardValue.SIX, CardColor.YELLOW));
         assertEquals(testee.getRoundState().toString(), "EndPhase");
         testee.startGame();
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
@@ -318,7 +321,7 @@ public class ControllerTest {
         assertEquals(testee.getCurrentPlayer().getPhase().getPhaseNumber(), Phase5.PHASE_NUMBER);
         testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2})));
         assertEquals(testee.getCurrentPlayersHand().size(), 1);
-        testee.addToFinishedPhase(new Card(2, CardColor.YELLOW), testee.getAllStacks().get(1));
+        testee.addToFinishedPhase(new Card(CardValue.TWO, CardColor.YELLOW), testee.getAllStacks().get(1));
         assertEquals(testee.getRoundState().toString(), "EndPhase");
     }
 
@@ -333,7 +336,7 @@ public class ControllerTest {
         ICard testCard2 = testee.getCurrentPlayersHand().get(0);
         testee.getDiscardPile().addAll(testee.getDrawPile());
         testee.getDrawPile().removeAll(testee.getDrawPile());
-        testee.getDrawPile().add(new Card(1, CardColor.GREEN));
+        testee.getDrawPile().add(new Card(CardValue.ONE, CardColor.GREEN));
         testee.discard(testCard2);
         testee.drawHidden();
         assertEquals(testee.getDiscardPile().size(), 1);
@@ -350,7 +353,7 @@ public class ControllerTest {
     private ICard[] createYellowCards(int[] numbers) {
         ICard[] returnValue = new ICard[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            returnValue[i] = new Card(numbers[i], CardColor.YELLOW);
+            returnValue[i] = new Card(CardValue.byOrdinal(numbers[i]), CardColor.YELLOW);
         }
         return returnValue;
     }

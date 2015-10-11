@@ -22,7 +22,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.2'
 
     //Google guice
-    compile 'com.google.inject:guice:4.0'
+    compile 'com.google.inject:guice:3.0'
 
     //Adding other Artifacts
     compile 'com.google.collections:google-collections:1.0'
