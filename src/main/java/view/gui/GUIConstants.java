@@ -39,6 +39,9 @@ public final class GUIConstants {
     public static final String CARD_NUMBER_SEVEN_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card7.png";
     public static final String CARD_NUMBER_EIGHT_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card8.png";
     public static final String CARD_NUMBER_NINE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card9.png";
+    public static final String CARD_NUMBER_TEN_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card10.png";
+    public static final String CARD_NUMBER_ELEVEN_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card11.png";
+    public static final String CARD_NUMBER_TWELVE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card12.png";
     public static final String CARD_NO_NUMBER_IMAGE_PATH = "src/main/resources/view/gui/cards/number/noNumber.png";
     public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 50);
     public static final Dimension LOGO_LABEL_SIZE = new Dimension(WINDOW_WIDTH, 250);
@@ -78,6 +81,9 @@ public final class GUIConstants {
     public static final int SEVEN = 7;
     public static final int EIGHT = 8;
     public static final int NINE = 9;
+    public static final int TEN = 10;
+    public static final int ELEVEN = 11;
+    public static final int TWELVE = 12;
     public static final int ZERO = 0;
     public static final Font FONT_PHASE_DESCRIPTION = new Font("Serif", Font.BOLD, 20);
 

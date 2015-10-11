@@ -20,7 +20,7 @@ public class CardCreator {
 
     public static final int SIZE_OF_DECK_MULTIPLIER = 4;
     public static final int LOWEST_CARD = 1;
-    public static final int HIGHEST_CARD = 9;
+    public static final int HIGHEST_CARD = 12;
 
     private static IDeckOfCards giveDeckOfCardsByList(List<?> range) {
         IDeckOfCards deck = new DeckOfCards();

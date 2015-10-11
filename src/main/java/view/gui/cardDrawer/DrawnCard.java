@@ -122,6 +122,15 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
             case GUIConstants.NINE:
                 path = GUIConstants.CARD_NUMBER_NINE_IMAGE_PATH;
                 break;
+            case GUIConstants.TEN:
+                path = GUIConstants.CARD_NUMBER_TEN_IMAGE_PATH;
+                break;
+            case GUIConstants.ELEVEN:
+                path = GUIConstants.CARD_NUMBER_ELEVEN_IMAGE_PATH;
+                break;
+            case GUIConstants.TWELVE:
+                path = GUIConstants.CARD_NUMBER_TWELVE_IMAGE_PATH;
+                break;
             default:
                 path = GUIConstants.CARD_NO_NUMBER_IMAGE_PATH;
         }
