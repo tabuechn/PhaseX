@@ -68,8 +68,6 @@ public class PilePane extends JPanel {
                     checkIfOnlyOneCardIsSelected(player.getChosenCards());
                 }
             }
-
-
         });
     }
 
