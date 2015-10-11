@@ -1,6 +1,6 @@
 package model.phase.impl;
 
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.phase.IPhase;
 import model.stack.ICardStack;
@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- *
+ * <p>
  * edited: Konraifen88
  * date: 30.09.2015
  * merged phase checker and getter
@@ -52,7 +52,7 @@ public class Phase2 implements IPhase {
     }
 
     private boolean streetOfSix(IDeckOfCards phase) {
-        Collections.sort(phase, new CardComparator());
+        Collections.sort(phase, new CardValueComparator());
         int counter = phase.get(0).getNumber();
         for (int i = 1; i < phase.size(); i++) {
             if (phase.get(i).getNumber() != (counter + 1)) {

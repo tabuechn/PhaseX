@@ -1,7 +1,7 @@
 package model.stack.impl;
 
 import model.card.ICard;
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.stack.ICardStack;
 
@@ -17,7 +17,7 @@ public class StreetStack implements ICardStack {
 
     public StreetStack(IDeckOfCards cards) {
         list = cards;
-        list.sort(new CardComparator());
+        list.sort(new CardValueComparator());
         lowestCardNumber = list.get(0).getNumber();
         highestCardNumber = list.get(list.size() - 1).getNumber();
     }
@@ -38,7 +38,7 @@ public class StreetStack implements ICardStack {
     @Override
     public void addCardToStack(ICard card) {
         list.add(card);
-        list.sort(new CardComparator());
+        list.sort(new CardValueComparator());
         if (card.getNumber() > this.highestCardNumber) {
             increaseHighestCardNumber();
         } else {

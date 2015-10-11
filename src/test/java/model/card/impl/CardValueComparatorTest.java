@@ -9,15 +9,15 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
  */
-public class CardComparatorTest {
+public class CardValueComparatorTest {
 
-    CardComparator cc;
+    CardValueComparator cc;
     Card compare4;
     Card compare7;
 
     @Before
     public void setUp() throws Exception {
-        cc = new CardComparator();
+        cc = new CardValueComparator();
         compare4 = new Card(4, CardColor.BLUE);
         compare7 = new Card(7, CardColor.BLUE);
     }

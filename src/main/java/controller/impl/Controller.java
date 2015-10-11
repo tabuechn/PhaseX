@@ -8,7 +8,7 @@ import controller.states.impl.PlayerTurnFinished;
 import controller.states.impl.PlayerTurnNotFinished;
 import controller.states.impl.StartPhase;
 import model.card.ICard;
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
 import model.phase.impl.Phase5;
@@ -96,7 +96,7 @@ public class Controller extends util.Observable implements IController, UIContro
 
     @Override
     public void addMultipleCardsToFinishedPhase(List<ICard> cards, ICardStack stack) {
-        cards.sort(new CardComparator());
+        cards.sort(new CardValueComparator());
         for (ICard card : cards) {
             addToFinishedPhase(card, stack);
         }

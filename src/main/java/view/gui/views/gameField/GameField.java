@@ -2,7 +2,7 @@ package view.gui.views.gameField;
 
 import controller.UIController;
 import model.card.ICard;
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
@@ -85,7 +85,7 @@ public class GameField extends BackgroundPanel {
 
     private void setSortedPlayerCards() {
         IDeckOfCards cards = controller.getCurrentPlayersHand();
-        cards.sort(new CardComparator());
+        cards.sort(new CardValueComparator());
         currentPlayer.setMultipleCards(cards);
     }
 

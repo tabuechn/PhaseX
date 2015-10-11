@@ -1,0 +1,39 @@
+package model.phase.checker;
+
+import model.card.ICard;
+import model.card.impl.CardValueComparator;
+import model.deckOfCards.IDeckOfCards;
+import model.phase.IPhaseChecker;
+
+/**
+ * If everything works right this class was
+ * created by Konraifen88 on 11.10.2015.
+ * If it doesn't work I don't know who the hell wrote it.
+ */
+public class ValueChecker implements IPhaseChecker {
+
+    private final int size;
+
+    public ValueChecker(int size) {
+        this.size = size;
+    }
+
+    @Override
+    public boolean check(IDeckOfCards cards) {
+        if (cards.size() != this.size) {
+            return false;
+        }
+        cards.sort(new CardValueComparator());
+        return allCardsHasTheSameValue(cards);
+    }
+
+    private boolean allCardsHasTheSameValue(IDeckOfCards cards) {
+        int valueOfDeck = cards.get(0).getNumber();
+        for (ICard card : cards) {
+            if (card.getNumber() != valueOfDeck) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
