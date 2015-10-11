@@ -86,6 +86,7 @@ public final class GUIConstants {
     public static final int TWELVE = 12;
     public static final int ZERO = 0;
     public static final Font FONT_PHASE_DESCRIPTION = new Font("Serif", Font.BOLD, 20);
+    public static int MAX_SHOWN_CARDS = 6;
 
     /**
      * Empty private constructor

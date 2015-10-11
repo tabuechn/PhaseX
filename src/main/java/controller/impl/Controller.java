@@ -1,6 +1,5 @@
 package controller.impl;
 
-import com.google.inject.Inject;
 import controller.IController;
 import controller.UIController;
 import controller.states.AbstractState;

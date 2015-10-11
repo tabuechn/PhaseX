@@ -1,7 +1,6 @@
 package view.gui;
 
 import com.google.inject.Inject;
-import controller.IController;
 import controller.UIController;
 import util.Event;
 import util.IObserver;

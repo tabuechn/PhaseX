@@ -32,7 +32,7 @@ public class SinglePhase extends CardPanel {
 
     private IDeckOfCards removeSomeCardsIfGreaterThanSix(ICardStack cards) {
         IDeckOfCards min = new DeckOfCards();
-        if (cards.getList().size() > 6) {
+        if (cards.getList().size() > GUIConstants.MAX_SHOWN_CARDS) {
             min.addAll(cards.getList().subList(0, 3));
             min.addAll(cards.getList().subList(cards.getList().size() - 3, cards.getList().size()));
         } else {

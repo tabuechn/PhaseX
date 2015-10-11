@@ -1,6 +1,5 @@
 package view.gui.views.gameField;
 
-import controller.IController;
 import controller.UIController;
 import model.card.ICard;
 import model.card.impl.CardComparator;

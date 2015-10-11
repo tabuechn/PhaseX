@@ -1,6 +1,5 @@
 package view.gui.views.gameField.elements.Piles;
 
-import controller.IController;
 import controller.UIController;
 import model.card.ICard;
 import view.gui.views.gameField.elements.player.CurrentPlayer;

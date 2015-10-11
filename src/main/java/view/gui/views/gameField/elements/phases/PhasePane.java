@@ -1,6 +1,5 @@
 package view.gui.views.gameField.elements.phases;
 
-import controller.IController;
 import controller.UIController;
 import model.stack.ICardStack;
 import view.gui.views.gameField.elements.player.CurrentPlayer;

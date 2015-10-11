@@ -1,7 +1,6 @@
 package view.tui;
 
 import com.google.inject.Inject;
-import controller.IController;
 import controller.UIController;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;

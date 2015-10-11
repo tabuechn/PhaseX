@@ -3,7 +3,6 @@ package model.deckOfCards.impl;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 
-
 import java.util.LinkedList;
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package view.gui.views.menu;
 
-import controller.IController;
 import controller.UIController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
