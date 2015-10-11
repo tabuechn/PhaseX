@@ -1,5 +1,7 @@
 package view.gui.views.gameField.elements.phases;
 
+import model.deckOfCards.IDeckOfCards;
+import model.deckOfCards.impl.DeckOfCards;
 import model.stack.ICardStack;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
@@ -24,8 +26,19 @@ public class SinglePhase extends CardPanel {
         if (cards == null) {
             this.addCard(GUIConstants.BLANK_CARD);
         } else {
-            setMultipleCards(cards.getList());
+            setMultipleCards(removeSomeCardsIfGreaterThanSix(cards));
         }
+    }
+
+    private IDeckOfCards removeSomeCardsIfGreaterThanSix(ICardStack cards) {
+        IDeckOfCards min = new DeckOfCards();
+        if (cards.getList().size() > 6) {
+            min.addAll(cards.getList().subList(0, 2));
+            min.addAll(cards.getList().subList(cards.getList().size() - 2, cards.getList().size()));
+        } else {
+            min.addAll(cards.getList());
+        }
+        return min;
     }
 
     public ICardStack getPhase() {
