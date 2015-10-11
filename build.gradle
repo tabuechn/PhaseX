@@ -32,7 +32,6 @@ dependencies {
 }
 
 jacoco {
-    toolVersion = "0.7.1.201405082137"
-    reportsDir = file("$buildDir/customJacocoReportDir")
+    toolVersion = "0.7.5.201505241946"
 }
 
