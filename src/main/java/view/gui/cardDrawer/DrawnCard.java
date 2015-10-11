@@ -94,6 +94,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         return label;
     }
 
+    //CHECKSTYLE:OFF
     private String getCardNumberImagePath(int number) {
         String path;
         switch (number) {
@@ -138,6 +139,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         }
         return path;
     }
+    //CHECKSTYLE:ON
 
     @Override
     public void actionPerformed(ActionEvent e) {
