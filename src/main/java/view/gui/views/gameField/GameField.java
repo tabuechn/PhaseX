@@ -1,6 +1,7 @@
 package view.gui.views.gameField;
 
 import controller.IController;
+import controller.UIController;
 import model.card.ICard;
 import model.card.impl.CardComparator;
 import model.deckOfCards.IDeckOfCards;
@@ -26,12 +27,12 @@ public class GameField extends BackgroundPanel {
     private PilePane pile;
     private CurrentPlayer currentPlayer;
     private HiddenPlayer hiddenPlayer;
-    private IController controller;
+    private UIController controller;
     private PhasePane phases;
     private NotificationLabel notification;
     private PhaseDescription phaseDescription;
 
-    public GameField(IController controller) {
+    public GameField(UIController controller) {
         this.controller = controller;
         controller.startGame();
         this.setLayout(new BorderLayout());

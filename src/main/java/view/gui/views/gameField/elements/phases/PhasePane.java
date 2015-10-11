@@ -1,6 +1,7 @@
 package view.gui.views.gameField.elements.phases;
 
 import controller.IController;
+import controller.UIController;
 import model.stack.ICardStack;
 import view.gui.views.gameField.elements.player.CurrentPlayer;
 
@@ -20,9 +21,9 @@ public class PhasePane extends JPanel {
 
     private CurrentPlayer currentPlayer;
 
-    private IController controller;
+    private UIController controller;
 
-    public PhasePane(IController controller) {
+    public PhasePane(UIController controller) {
         this.controller = controller;
         this.setLayout(new GridLayout(2, 2, 5, 5));
         this.setOpaque(false);

@@ -2,6 +2,7 @@ package view.tui;
 
 import com.google.inject.Inject;
 import controller.IController;
+import controller.UIController;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
@@ -22,10 +23,10 @@ import java.util.Set;
 public class TUI implements IObserver {
 
     private static final Logger LOGGER = LogManager.getLogger(TUI.class);
-    private IController controller;
+    private UIController controller;
 
     @Inject
-    public TUI(IController pController) {
+    public TUI(UIController pController) {
         this.controller = pController;
         controller.addObserver(this);
         printStart();

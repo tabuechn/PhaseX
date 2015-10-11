@@ -1,6 +1,7 @@
 package view.gui.views.gameField.elements.Piles;
 
 import controller.IController;
+import controller.UIController;
 import model.card.ICard;
 import view.gui.views.gameField.elements.player.CurrentPlayer;
 
@@ -23,11 +24,11 @@ public class PilePane extends JPanel {
 
     private OpenPile open;
 
-    private IController controller;
+    private UIController controller;
 
     private CurrentPlayer player;
 
-    public PilePane(IController controller, CurrentPlayer player) {
+    public PilePane(UIController controller, CurrentPlayer player) {
         this.controller = controller;
         this.player = player;
         hidden = new HiddenPile();

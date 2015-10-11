@@ -1,6 +1,7 @@
 package view.gui.views.menu;
 
 import controller.IController;
+import controller.UIController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import view.gui.GUIConstants;
@@ -19,7 +20,7 @@ import java.awt.*;
 public class MenuPanel extends BackgroundPanel {
 
     private static final Logger LOG = LogManager.getLogger(MenuPanel.class);
-    private final IController controller;
+    private final UIController controller;
 
     private JLabel messages = new NotificationLabel();
 
@@ -27,7 +28,7 @@ public class MenuPanel extends BackgroundPanel {
 
     private JButton startButton;
 
-    public MenuPanel(IController controller) {
+    public MenuPanel(UIController controller) {
         super();
         this.controller = controller;
         this.setPreferredSize(GUIConstants.WINDOW_SIZE);
