@@ -52,10 +52,11 @@ public class PilePane extends JPanel {
 
         open.addMouseListener(new MouseAdapter() {
             private void checkIfOnlyOneCardIsSelected(List<ICard> cards) {
-                if (cards.size() >= 1) {
+                if (cards.size() != 1) {
                     player.setMultipleCards(controller.getCurrentPlayersHand());
+                } else {
+                    controller.discard(cards.get(0));
                 }
-                controller.discard(cards.get(0));
             }
 
             @Override
