@@ -19,6 +19,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
 
     private boolean chosen;
 
+
     private ICard card;
 
     public DrawnCard(ICard card) {
@@ -50,6 +51,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         return label;
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     private String getCardColorPath(CardColor color) {
         String path;
         switch (color) {
