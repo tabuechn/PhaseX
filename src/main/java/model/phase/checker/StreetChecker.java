@@ -1,6 +1,5 @@
 package model.phase.checker;
 
-import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
@@ -17,8 +16,6 @@ public class StreetChecker implements IPhaseChecker {
 
     private final int size;
 
-    private boolean isStreet;
-
     public StreetChecker(int size) {
         this.size = size;
     }
@@ -26,31 +23,20 @@ public class StreetChecker implements IPhaseChecker {
     @Override
     public boolean check(IDeckOfCards cards) {
         Collections.sort(cards, new CardValueComparator());
-        if (cards.size() != this.size) {
-            return false;
-        }
-        isStreet = true;
-        return checkStreet(cards.removeFirst(), cards);
+        return cards.size() == this.size && checkStreet(cards.removeFirst(), cards);
     }
 
     private boolean checkStreet(ICard smaller, IDeckOfCards rest) {
+        boolean isStreet;
         ICard greater = rest.removeFirst();
-        callMethodTillDeckIsEmpty(rest, greater);
-
-        compareCards(smaller, greater);
+        isStreet = compareCards(smaller, greater);
+        if (!rest.isEmpty()) {
+            isStreet = checkStreet(greater, rest);
+        }
         return isStreet;
     }
 
-    private void callMethodTillDeckIsEmpty(IDeckOfCards rest, ICard greater) {
-        if (!rest.isEmpty()) {
-            checkStreet(greater, rest);
-        }
-    }
-
-    private void compareCards(ICard smaller, ICard greater) {
-        if (greater.getNumber().equals(CardValue.byOrdinal(smaller.getNumber().ordinal() + 1))) {
-            return;
-        }
-        isStreet = false;
+    private boolean compareCards(ICard smaller, ICard greater) {
+        return greater.compareTo(smaller) == 1;
     }
 }
