@@ -22,11 +22,10 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.2'
 
     //Google guice
-    compile 'com.google.inject:guice:3.0'
+    compile 'com.google.inject:guice:4.0'
+    compile 'com.google.guava:guava:19.0-rc2'
 
     //Adding other Artifacts
-    compile 'com.google.collections:google-collections:1.0'
-    compile 'com.google.guava:guava:18.0'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.code.findbugs:annotations:3.0.0'
 }
