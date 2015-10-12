@@ -7,14 +7,9 @@ import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
 import model.phase.impl.Phase2;
 import model.phase.impl.Phase5;
-import model.player.impl.Player;
 import model.stack.ICardStack;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
@@ -24,16 +19,11 @@ import static org.mockito.MockitoAnnotations.initMocks;
 /**
  * Created by Tarek on 26.09.2015. Be grateful for this superior Code!
  */
-@RunWith(MockitoJUnitRunner.class)
 public class ControllerTest {
 
     private final int NUMBER_OF_PLAYERS = 2;
 
-    @InjectMocks
     private Controller testee = new Controller(NUMBER_OF_PLAYERS);
-
-    @Mock
-    private Player playerInPhase2;
 
     @Before
     public void setUp() throws Exception {
