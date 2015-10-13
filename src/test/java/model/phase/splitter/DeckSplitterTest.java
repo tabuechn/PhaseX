@@ -33,8 +33,8 @@ public class DeckSplitterTest {
 
     public static final int SPLITTED = 2;
     public static final int STACK_SIZE = 3;
-    private static final ICard TEST_CARD_1 = new Card(CardValue.FIVE, CardColor.BLUE);
-    private static final ICard TEST_CARD_2 = new Card(CardValue.FOUR, CardColor.GREEN);
+    private static final ICard TEST_CARD_1 = new Card(CardValue.ONE, CardColor.BLUE);
+    private static final ICard TEST_CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
     private DeckSplitter testee;
 
     private IDeckOfCards testDeck;
@@ -76,6 +76,18 @@ public class DeckSplitterTest {
         testDeck.add(TEST_CARD_1);
         List<IDeckOfCards> tmp = testee.split(testDeck);
         assertEquals(STACK_SIZE, tmp.get(0).size());
+    }
+
+    @Test
+    public void onlyOneDeckShouldBeExtractedIfMoreAreInTheGivenDeck() {
+        testDeck.add(TEST_CARD_1);
+        testDeck.add(TEST_CARD_1);
+        testDeck.add(TEST_CARD_2);
+        List<IDeckOfCards> tmp = testee.split(testDeck);
+        assertEquals(SPLITTED, tmp.size());
+        assertEquals(CardValue.ONE, tmp.get(0).get(0).getNumber());
+        assertEquals(CardColor.BLUE, tmp.get(0).get(0).getColor());
+        assertEquals(4, tmp.get(1).size());
     }
 
     @Test
