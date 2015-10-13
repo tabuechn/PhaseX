@@ -6,7 +6,7 @@ import model.card.ICard;
 import java.util.Comparator;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 @SuppressFBWarnings("SE_COMPARATOR_SHOULD_BE_SERIALIZABLE")
 public class CardValueComparator implements Comparator<ICard> {

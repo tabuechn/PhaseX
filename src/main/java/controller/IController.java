@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface IController extends IObservable {
 
-
     void notifyObservers();
 
     /**
@@ -81,12 +80,12 @@ public interface IController extends IObservable {
     void newRound();
 
     /**
-     * End the Round by adding Points for the Players with remaining cards and incrementing their phasecounter
+     * End the Round by adding Points for the Players with remaining cards and incrementing their phaseCounter
      */
     void endRound();
 
     /**
-     * Getter for the UIs to get all dtacks which are played in the current Round
+     * Getter for the UIs to get all stacks which are played in the current Round
      *
      * @return List of all stacks
      */

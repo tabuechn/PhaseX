@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class HiddenPlayer extends CardPanel {
 
-    private SpringLayout layout;
+    private final SpringLayout layout;
 
     public HiddenPlayer(int numberOfCards) {
         super();

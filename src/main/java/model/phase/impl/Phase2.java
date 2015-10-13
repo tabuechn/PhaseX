@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class Phase2 implements IPhase {
 
-    public static final int SIZE_OF_PHASE = 6;
     public static final int PHASE_NUMBER = 2;
+    private static final int SIZE_OF_PHASE = 6;
     private static final String DESCRIPTION_PHASE_2 = "street of six numbers";
 
     @Override

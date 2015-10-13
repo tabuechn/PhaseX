@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 24.09.2015. Be grateful for this superior Code
  */
 public class CardValueComparatorTest {
 

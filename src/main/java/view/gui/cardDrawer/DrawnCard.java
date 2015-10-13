@@ -18,10 +18,8 @@ import java.awt.event.ActionListener;
  */
 public class DrawnCard extends JLayeredPane implements ActionListener {
 
+    private final ICard card;
     private boolean chosen;
-
-
-    private ICard card;
 
     public DrawnCard(ICard card) {
         this.card = card;

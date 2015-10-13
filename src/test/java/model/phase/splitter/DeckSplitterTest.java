@@ -29,26 +29,24 @@ import static org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class DeckSplitterTest {
 
-    public static final int NOT_SPLITTED = 1;
+    private static final int NOT_SPLITTED = 1;
 
-    public static final int SPLITTED = 2;
-    public static final int STACK_SIZE = 3;
+    private static final int SPLITTED = 2;
+    private static final int STACK_SIZE = 3;
     private static final ICard TEST_CARD_1 = new Card(CardValue.ONE, CardColor.BLUE);
     private static final ICard TEST_CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
+    private final Comparator<ICard> comparator;
     private DeckSplitter testee;
-
     private IDeckOfCards testDeck;
 
-    private Comparator comparator;
-
-    public DeckSplitterTest(Object o) {
-        this.comparator = (Comparator) o;
+    public DeckSplitterTest(Comparator<ICard> comparator) {
+        this.comparator = comparator;
     }
 
     @Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[]{new CardValueComparator()},
-                new Object[]{new CardColorComparator()});
+    public static Collection<Comparator[]> data() {
+        return Arrays.asList(new Comparator[]{new CardValueComparator()},
+                new Comparator[]{new CardColorComparator()});
     }
 
     @Before
@@ -79,7 +77,7 @@ public class DeckSplitterTest {
     }
 
     @Test
-    public void onlyOneDeckShouldBeExtractedIfMoreAreInTheGivenDeck() {
+    public void givenCardsShouldBeAddedAfterFindingElementsBeforeRecursiveMethodFinished() {
         testDeck.add(TEST_CARD_1);
         testDeck.add(TEST_CARD_1);
         testDeck.add(TEST_CARD_2);
@@ -91,7 +89,14 @@ public class DeckSplitterTest {
     }
 
     @Test
-    public void copy() {
+    public void checkIfCardsWhichDidNotFitWereAddedToList() {
+        testDeck.add(TEST_CARD_2);
+        testDeck.add(TEST_CARD_2);
+        List<IDeckOfCards> tmp = testee.split(testDeck);
+        assertEquals(SPLITTED, tmp.size());
+        assertEquals(CardValue.TWO, tmp.get(0).get(0).getNumber());
+        assertEquals(CardColor.GREEN, tmp.get(0).get(0).getColor());
+        assertEquals(3, tmp.get(1).size());
     }
 
     private void getFilledTestDeck() {

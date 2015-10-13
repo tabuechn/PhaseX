@@ -16,6 +16,7 @@ import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
 import util.CardCreator;
+import util.Observable;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -25,8 +26,8 @@ import java.util.stream.Collectors;
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
  */
-public class Controller extends util.Observable implements IController, UIController {
-    public static final int PLAYER_STARTING_DECK_SIZE = 10;
+public class Controller extends Observable implements IController, UIController {
+    private static final int PLAYER_STARTING_DECK_SIZE = 10;
 
     private final int playerCount;
 

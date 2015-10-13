@@ -4,7 +4,7 @@ import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 public interface ICardStack {
 

@@ -23,13 +23,13 @@ import java.awt.*;
  */
 public class GameField extends BackgroundPanel {
 
-    private PilePane pile;
-    private CurrentPlayer currentPlayer;
-    private HiddenPlayer hiddenPlayer;
-    private UIController controller;
-    private PhasePane phases;
-    private NotificationLabel notification;
-    private PhaseDescription phaseDescription;
+    private final PilePane pile;
+    private final CurrentPlayer currentPlayer;
+    private final HiddenPlayer hiddenPlayer;
+    private final UIController controller;
+    private final PhasePane phases;
+    private final NotificationLabel notification;
+    private final PhaseDescription phaseDescription;
 
     public GameField(UIController controller) {
         this.controller = controller;

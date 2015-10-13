@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class ValueCheckerTest {
 
-    public static final CardValue TESTEE_NUMBER = CardValue.byOrdinal(1);
+    private static final CardValue TESTEE_NUMBER = CardValue.byOrdinal(1);
     private static final int NUMBER_OF_CARDS = CardColor.values().length;
     private IPhaseChecker testee;
 

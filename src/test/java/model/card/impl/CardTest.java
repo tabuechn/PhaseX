@@ -9,13 +9,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 24.09.2015. Be grateful for this superior Code
  */
 public class CardTest {
 
-    public static final CardValue CARD_NUMBER_ONE = CardValue.ONE;
-    public static final CardValue CARD_NUMBER_TWO = CardValue.TWO;
-    public static final CardValue CARD_NUMBER_FIVE = CardValue.FIVE;
+    private static final CardValue CARD_NUMBER_ONE = CardValue.ONE;
+    private static final CardValue CARD_NUMBER_TWO = CardValue.TWO;
+    private static final CardValue CARD_NUMBER_FIVE = CardValue.FIVE;
 
     private static final ICard CARD_1 = new Card(CARD_NUMBER_ONE, CardColor.YELLOW);
     private static final ICard CARD_2 = new Card(CARD_NUMBER_ONE, CardColor.YELLOW);
@@ -51,7 +51,7 @@ public class CardTest {
 
     @Test
     public void equalsWithDifferentClassShouldReturnFalse() {
-        assertFalse(CARD_1.equals(new Player("testplayer", 3)));
+        assertFalse(CARD_1.equals(new Player("testPlayer", 3)));
     }
 
     @Test

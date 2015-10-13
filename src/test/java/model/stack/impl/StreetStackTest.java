@@ -12,11 +12,11 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 24.09.2015. Be grateful for this superior Code
  */
 public class StreetStackTest {
 
-    StreetStack ss;
+    private StreetStack ss;
 
     @Before
     public void setUp() throws Exception {

@@ -9,11 +9,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.annotation.Nonnull;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 public class Card implements ICard {
-    private CardValue number;
-    private CardColor color;
+    private final CardValue number;
+    private final CardColor color;
 
     public Card(CardValue cardNumber, CardColor cardColor) {
         this.number = cardNumber;

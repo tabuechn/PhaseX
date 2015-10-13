@@ -22,7 +22,7 @@ import java.util.Set;
 public class TUI implements IObserver {
 
     private static final Logger LOGGER = LogManager.getLogger(TUI.class);
-    private UIController controller;
+    private final UIController controller;
 
     @Inject
     public TUI(UIController pController) {

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class ColorCheckerTest {
 
     private static final int NUMBER_OF_CARDS = 6;
-    public static final CardValue CARD_NUMBER_OUT_OF_RANGE = CardValue.byOrdinal(NUMBER_OF_CARDS + 2);
+    private static final CardValue CARD_NUMBER_OUT_OF_RANGE = CardValue.byOrdinal(NUMBER_OF_CARDS + 2);
 
     private IPhaseChecker testee;
 

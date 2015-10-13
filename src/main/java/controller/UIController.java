@@ -67,7 +67,7 @@ public interface UIController extends IObservable {
     int getNumberOfCardsForNextPlayer();
 
     /**
-     * Getter for the UIs to get all dtacks which are played in the current Round
+     * Getter for the UIs to get all stacks which are played in the current Round
      *
      * @return List of all stacks
      */

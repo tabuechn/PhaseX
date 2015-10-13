@@ -7,14 +7,13 @@ import model.deckOfCards.IDeckOfCards;
 import model.stack.ICardStack;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 public class StreetStack implements ICardStack {
 
+    private final IDeckOfCards list;
     private ICard lowestCard;
     private ICard highestCard;
-
-    private IDeckOfCards list;
 
     public StreetStack(IDeckOfCards cards) {
         list = cards;

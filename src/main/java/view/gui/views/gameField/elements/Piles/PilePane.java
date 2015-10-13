@@ -19,13 +19,13 @@ public class PilePane extends JPanel {
 
     private static final GridLayout PILE_PANE_LAYOUT = new GridLayout(2, 1, 5, 5);
 
-    private HiddenPile hidden;
+    private final HiddenPile hidden;
 
-    private OpenPile open;
+    private final OpenPile open;
 
-    private UIController controller;
+    private final UIController controller;
 
-    private CurrentPlayer player;
+    private final CurrentPlayer player;
 
     public PilePane(UIController controller, CurrentPlayer player) {
         this.controller = controller;

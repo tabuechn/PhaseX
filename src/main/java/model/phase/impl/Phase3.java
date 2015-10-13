@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class Phase3 implements IPhase {
 
-    public static final int PHASE_SIZE = 6;
     public static final int PHASE_NUMBER = 3;
+    private static final int PHASE_SIZE = 6;
     private static final String DESCRIPTION_PHASE_3 = "six cards of one color";
 
     @Override

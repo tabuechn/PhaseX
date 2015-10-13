@@ -22,9 +22,9 @@ import static org.junit.Assert.assertTrue;
 public class StreetCheckerTest {
 
     private static final int NUMBER_OF_CARDS = 6;
-    public static final CardValue CARD_VALUE_OUT_OF_RANGE = CardValue.byOrdinal(NUMBER_OF_CARDS + 1);
+    private static final CardValue CARD_VALUE_OUT_OF_RANGE = CardValue.byOrdinal(NUMBER_OF_CARDS + 1);
 
-    private IPhaseChecker testee = new StreetChecker(NUMBER_OF_CARDS);
+    private final IPhaseChecker testee = new StreetChecker(NUMBER_OF_CARDS);
 
     private IDeckOfCards deck;
 

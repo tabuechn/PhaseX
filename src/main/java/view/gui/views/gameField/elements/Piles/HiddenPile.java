@@ -10,7 +10,7 @@ import javax.swing.*;
  * created by Konraifen88 on 01.10.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class HiddenPile extends JPanel {
+class HiddenPile extends JPanel {
 
     public HiddenPile() {
         DrawnCard drawn = new DrawnCard(GUIConstants.BACK_CARD);

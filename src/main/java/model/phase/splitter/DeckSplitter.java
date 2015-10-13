@@ -17,13 +17,13 @@ import java.util.List;
 public class DeckSplitter implements IPhaseSplitter {
 
     private final int size;
-    private final Comparator comparator;
+    private final Comparator<ICard> comparator;
 
-    List<IDeckOfCards> splittedDecks;
+    private List<IDeckOfCards> splittedDecks;
 
-    IDeckOfCards nonStackCards;
+    private IDeckOfCards nonStackCards;
 
-    public DeckSplitter(int size, Comparator comparator) {
+    public DeckSplitter(int size, Comparator<ICard> comparator) {
         this.size = size;
         this.comparator = comparator;
     }
@@ -35,10 +35,11 @@ public class DeckSplitter implements IPhaseSplitter {
         IDeckOfCards stack = new DeckOfCards();
         cards.sort(comparator);
         stack.add(cards.removeFirst());
-        stack = searchForValueStack(stack, cards);
+        stack = searchForStack(stack, cards);
 
         checkStackSize(stack);
         splittedDecks.add(nonStackCards);
+        nonStackCards.addAll(cards);
         return splittedDecks;
     }
 
@@ -50,7 +51,7 @@ public class DeckSplitter implements IPhaseSplitter {
         }
     }
 
-    private IDeckOfCards searchForValueStack(IDeckOfCards stack, IDeckOfCards deck) {
+    private IDeckOfCards searchForStack(IDeckOfCards stack, IDeckOfCards deck) {
         if (deck.size() > 0 && stack.size() < size) {
             ICard testCard = deck.removeFirst();
             if (comparator.compare(testCard, stack.get(0)) == 0) {
@@ -60,7 +61,7 @@ public class DeckSplitter implements IPhaseSplitter {
                 stack.clear();
                 stack.add(testCard);
             }
-            searchForValueStack(stack, deck);
+            searchForStack(stack, deck);
         }
         return stack;
     }

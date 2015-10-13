@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
  */
 public class Phase1 implements IPhase {
 
-    public static final int SIZE_OF_A_TRIPLE = 3;
-    public static final int PHASE_SIZE = 6;
-    public static final int NUMBER_OF_TWO_DIFFERENT_TRIPLES = 2;
-    public static final int NUMBER_OF_TWO_SAME_TRIPLES = 1;
-    public static final int SIZE_OF_ONE_TRIPLE = 3;
     public static final int PHASE_NUMBER = 1;
+    private static final int SIZE_OF_A_TRIPLE = 3;
+    private static final int PHASE_SIZE = 6;
+    private static final int NUMBER_OF_TWO_DIFFERENT_TRIPLES = 2;
+    private static final int NUMBER_OF_TWO_SAME_TRIPLES = 1;
+    private static final int SIZE_OF_ONE_TRIPLE = 3;
     private static final String DESCRIPTION_PHASE_1 = "two number triples";
 
     private IDeckOfCards setSecondStack(IDeckOfCards restPhase) {

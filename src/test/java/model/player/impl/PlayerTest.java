@@ -22,13 +22,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerTest {
 
-    public static final String PLAYER_NAME = "John";
+    private static final String PLAYER_NAME = "John";
 
     @InjectMocks
-    IPlayer testee = new Player(PLAYER_NAME, 1);
+    private final IPlayer testee = new Player(PLAYER_NAME, 1);
 
     @Mock
-    IDeckOfCards deckMock;
+    private IDeckOfCards deckMock;
 
 
     @Before

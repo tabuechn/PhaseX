@@ -76,8 +76,8 @@ public class Phase4Test {
 
     @Test
     public void testWithDifferentNumbers() {
-        IDeckOfCards testphase = fillDeck(createYellowCards(new int[]{2, 2, 5, 5, 5, 5}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testphase);
+        IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{2, 2, 5, 5, 5, 5}));
+        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
         assertEquals(testStacks.size(), 2);
         IDeckOfCards firstStack = testStacks.get(0).getList();
         IDeckOfCards secondStack = testStacks.get(1).getList();
@@ -91,8 +91,8 @@ public class Phase4Test {
 
     @Test
     public void testWithSameNumbers() {
-        IDeckOfCards testphase = fillDeck(createYellowCards(new int[]{5, 5, 5, 5, 5, 5}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testphase);
+        IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{5, 5, 5, 5, 5, 5}));
+        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
         assertEquals(testStacks.size(), 2);
         IDeckOfCards firstStack = testStacks.get(0).getList();
         IDeckOfCards secondStack = testStacks.get(1).getList();

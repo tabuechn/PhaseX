@@ -15,13 +15,13 @@ import view.gui.views.menu.MenuPanel;
  */
 public class GUI implements IObserver {
 
-    private UIController controller;
+    private final UIController controller;
 
-    private MainWindow window = new MainWindow();
+    private final MainWindow window = new MainWindow();
 
-    private GameField gameField;
+    private final GameField gameField;
 
-    private MenuPanel menu;
+    private final MenuPanel menu;
 
     @Inject
     public GUI(UIController controller) {

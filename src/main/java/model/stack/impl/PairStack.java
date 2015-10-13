@@ -6,12 +6,12 @@ import model.deckOfCards.IDeckOfCards;
 import model.stack.ICardStack;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 public class PairStack implements ICardStack {
-    private CardValue stackNumber;
+    private final CardValue stackNumber;
 
-    private IDeckOfCards list;
+    private final IDeckOfCards list;
 
     public PairStack(IDeckOfCards cards) {
         list = cards;

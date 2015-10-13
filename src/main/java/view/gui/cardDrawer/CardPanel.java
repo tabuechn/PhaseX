@@ -15,11 +15,10 @@ import java.util.List;
  */
 public class CardPanel extends JPanel {
 
+    private final SpringLayout layout;
     private List<DrawnCard> allDrawnCards;
 
-    private SpringLayout layout;
-
-    public CardPanel() {
+    protected CardPanel() {
         allDrawnCards = new LinkedList<>();
         layout = new SpringLayout();
         this.setLayout(layout);
@@ -36,28 +35,17 @@ public class CardPanel extends JPanel {
         DrawnCard drawnCard = new DrawnCard(card);
         allDrawnCards.add(drawnCard);
         this.add(drawnCard);
-        updateView();
+        allDrawnCards.forEach(this::setDeferral);
     }
 
-    public List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
+    protected List<DrawnCard> setMultipleCards(IDeckOfCards cards) {
         allDrawnCards = new LinkedList<>();
         this.removeAll();
         cards.forEach(this::addCard);
         return allDrawnCards;
     }
 
-    private void updateView() {
-        applyDeferral(GUIConstants.CARD_ADJUSTMENT);
-    }
-
-
-    private void applyDeferral(double deferral) {
-        for (JComponent card : allDrawnCards) {
-            setDeferral(card, deferral);
-        }
-    }
-
-    private void setDeferral(JComponent card, double deferral) {
+    private void setDeferral(JComponent card) {
         if (card == allDrawnCards.get(0)) {
             layout.putConstraint(SpringLayout.WEST, card, GUIConstants.CARD_POSITION_LEFT_BORDER, SpringLayout.WEST,
                     this);
@@ -65,7 +53,7 @@ public class CardPanel extends JPanel {
                     this);
         } else {
             @SuppressWarnings("SuspiciousMethodCalls") int pos = allDrawnCards.indexOf(card);
-            layout.putConstraint(SpringLayout.WEST, card, (int) deferral, SpringLayout.EAST,
+            layout.putConstraint(SpringLayout.WEST, card, GUIConstants.CARD_ADJUSTMENT, SpringLayout.EAST,
                     allDrawnCards.get(pos - 1));
             layout.putConstraint(SpringLayout.NORTH, card, GUIConstants.CARD_POSITION_TOP_BORDER, SpringLayout.NORTH,
                     this);

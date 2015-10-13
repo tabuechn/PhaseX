@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
 public class Phase4 implements IPhase {
 
 
-    public static final int SIZE_OF_A_QUADRUPLE = 4;
-    public static final int SIZE_OF_PHASE = 6;
-    public static final int PAIR_SIZE = 2;
-    public static final int QUADRUPLE_SIZE = 4;
-    public static final int SAME_PAIRS = 1;
     public static final int PHASE_NUMBER = 4;
+    private static final int SIZE_OF_A_QUADRUPLE = 4;
+    private static final int SIZE_OF_PHASE = 6;
+    private static final int PAIR_SIZE = 2;
+    private static final int QUADRUPLE_SIZE = 4;
+    private static final int SAME_PAIRS = 1;
     private static final String DESCRIPTION_PHASE_4 = "number quadruple and number pair";
 
     @Override

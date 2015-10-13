@@ -12,13 +12,13 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 24.09.2015. Be grateful for this superior Code
  */
 public class PairStackTest {
 
-    public static final CardValue CARD_NUMBER_FOUR = CardValue.FOUR;
+    private static final CardValue CARD_NUMBER_FOUR = CardValue.FOUR;
 
-    PairStack testee;
+    private PairStack testee;
 
     @Before
     public void setUp() throws Exception {
