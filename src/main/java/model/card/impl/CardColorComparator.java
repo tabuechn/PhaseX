@@ -11,7 +11,7 @@ import java.util.Comparator;
  * If it doesn't work I don't know who the hell wrote it.
  */
 @SuppressFBWarnings("SE_COMPARATOR_SHOULD_BE_SERIALIZABLE")
-public class CardColorComporator implements Comparator<ICard> {
+public class CardColorComparator implements Comparator<ICard> {
 
     @Override
     public int compare(ICard o1, ICard o2) {

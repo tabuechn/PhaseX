@@ -2,7 +2,7 @@ package model.phase.checker;
 
 import model.card.CardColor;
 import model.card.ICard;
-import model.card.impl.CardColorComporator;
+import model.card.impl.CardColorComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.phase.IPhaseChecker;
 
@@ -24,7 +24,7 @@ public class ColorChecker implements IPhaseChecker {
         if (cards.size() != this.size) {
             return false;
         }
-        cards.sort(new CardColorComporator());
+        cards.sort(new CardColorComparator());
         return allCardsHasTheSameColor(cards);
     }
 
