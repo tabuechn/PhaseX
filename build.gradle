@@ -1,19 +1,19 @@
 group 'de.htwg.se.CardGame.PhaseX'
 version '1.0-SNAPSHOT'
-
+/*
+ * applied plugins
+ */
 apply plugin: 'java'
 apply plugin: 'sonar-runner'
 apply plugin: 'jacoco'
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
-    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
-}
 
 repositories {
     mavenCentral()
 }
 
+/*
+ * Dependencies
+ */
 dependencies {
     //adding test only dependencies
     testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -36,7 +36,17 @@ dependencies {
     compile 'com.google.code.findbugs:annotations:3.0.0'
 }
 
+/*
+ * Tools
+ */
 jacoco {
     toolVersion = "0.7.5.201505241946"
 }
 
+/*
+ * Tasks
+ */
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
