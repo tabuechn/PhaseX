@@ -56,8 +56,12 @@ public class Phase1Test {
 
     @Test
     public void nextPhaseReturnsPhase2() {
-        IPhase phase2 = testee.getNextPhase();
-        assertEquals(phase2.getPhaseNumber(), Phase2.PHASE_NUMBER);
+        assertEquals(testee.getNextPhase().getPhaseNumber(), 2);
+    }
+
+    @Test
+    public void thisPhaseReturnsCorrectPhaseNumber() {
+        assertEquals(testee.getPhaseNumber(), 1);
     }
 
     @Test

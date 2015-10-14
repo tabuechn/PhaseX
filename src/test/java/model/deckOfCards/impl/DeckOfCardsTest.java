@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -36,6 +37,18 @@ public class DeckOfCardsTest {
         assertTrue(testee.contains(CARD_1));
         testee.remove(CARD_1);
         assertTrue(!testee.contains(CARD_1));
+    }
+
+    @Test
+    public void checkIfFirstCardIsRemovedOnCallingRemoveFirst() {
+        testee.removeFirst();
+        assertFalse(testee.contains(CARD_1));
+    }
+
+    @Test
+    public void checkIfLastCardIsRemovedOnCallingRemoveLast() {
+        testee.removeLast();
+        assertFalse(testee.contains(CARD_4));
     }
 
     @Test

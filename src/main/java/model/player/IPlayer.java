@@ -70,4 +70,5 @@ public interface IPlayer {
      */
     void addPoints(int points);
 
+    int getPoints();
 }

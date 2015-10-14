@@ -71,6 +71,7 @@ public class Player implements IPlayer {
         this.points += points;
     }
 
+    @Override
     public int getPoints() {
         return points;
     }
