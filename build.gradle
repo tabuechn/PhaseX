@@ -5,6 +5,11 @@ apply plugin: 'java'
 apply plugin: 'sonar-runner'
 apply plugin: 'jacoco'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
 repositories {
     mavenCentral()
 }
