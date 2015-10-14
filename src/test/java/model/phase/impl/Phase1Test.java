@@ -20,21 +20,16 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- */
-
-/**
- * edited: merged phase checker & getter
- * <p>
  * If everything works right this class was
- * created by Konraifen88 on 30.09.2015.
+ * created by Konraifen88 on 14.10.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
 
@@ -45,7 +40,7 @@ public class Phase1Test {
     private static final ICard CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
     private static final IDeckOfCards DECK_TO_SPLIT = new DeckOfCards();
     @InjectMocks
-    private Phase1 testee = new Phase1();
+    private IPhase testee = new Phase1();
     @Mock
     private IPhaseChecker checkerMock;
     @Mock
@@ -67,7 +62,7 @@ public class Phase1Test {
 
     @Test
     public void getDescriptionShouldReturnAString() {
-        assertEquals(Phase1.DESCRIPTION_PHASE_1, testee.getDescription());
+        assertThat(testee.getDescription(), containsString("triple"));
     }
 
     @Test
@@ -113,7 +108,7 @@ public class Phase1Test {
     }
 
     private void createSplittedDeck(List<ICard> cardsIndex0, List<ICard> cardsIndex1) {
-        when(splitterMock.split(DECK_TO_SPLIT)).thenReturn(splittedDeck);
+        when(splitterMock.split(eq(DECK_TO_SPLIT))).thenReturn(splittedDeck);
         splittedDeck.add(new DeckOfCards(cardsIndex0));
         splittedDeck.add(new DeckOfCards(cardsIndex1));
     }
