@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class DeckSplitter implements IPhaseSplitter {
 
+    private static final int FIRST_ELEMENT = 0;
+    private static final int EMPTY_DECK = 0;
     private final int size;
     private final Comparator<ICard> comparator;
 
@@ -32,14 +34,15 @@ public class DeckSplitter implements IPhaseSplitter {
     public List<IDeckOfCards> split(IDeckOfCards cards) {
         splittedDecks = new LinkedList<>();
         nonStackCards = new DeckOfCards();
+        IDeckOfCards copyOfCards = new DeckOfCards(cards);
         IDeckOfCards stack = new DeckOfCards();
-        cards.sort(comparator);
-        stack.add(cards.removeFirst());
-        stack = searchForStack(stack, cards);
+        copyOfCards.sort(comparator);
+        stack.add(copyOfCards.removeFirst());
+        stack = searchForStack(stack, copyOfCards);
 
         checkStackSize(stack);
         splittedDecks.add(nonStackCards);
-        nonStackCards.addAll(cards);
+        nonStackCards.addAll(copyOfCards);
         return splittedDecks;
     }
 
@@ -52,9 +55,9 @@ public class DeckSplitter implements IPhaseSplitter {
     }
 
     private IDeckOfCards searchForStack(IDeckOfCards stack, IDeckOfCards deck) {
-        if (deck.size() > 0 && stack.size() < size) {
+        if (deck.size() > EMPTY_DECK && stack.size() < size) {
             ICard testCard = deck.removeFirst();
-            if (comparator.compare(testCard, stack.get(0)) == 0) {
+            if (comparator.compare(testCard, stack.get(FIRST_ELEMENT)) == EMPTY_DECK) {
                 stack.add(testCard);
             } else {
                 nonStackCards.addAll(stack);

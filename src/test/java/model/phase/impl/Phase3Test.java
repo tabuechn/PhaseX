@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
@@ -44,41 +44,6 @@ public class Phase3Test {
     @Test
     public void descriptionTest() {
         assertEquals(testee.getDescription(), "six cards of one color");
-    }
-
-    @Test
-    public void correctPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createOneCards(
-                new CardColor[]{CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE,
-                        CardColor.BLUE}));
-        assertTrue(testee.checkIfDeckFitsToPhase(wrongPhase));
-    }
-
-    @Test
-    public void phaseToShort() {
-        IDeckOfCards wrongPhase = fillDeck(createOneCards(
-                new CardColor[]{CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
-    }
-
-    @Test
-    public void phaseToLong() {
-        IDeckOfCards wrongPhase = fillDeck(createOneCards(
-                new CardColor[]{CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE,
-                        CardColor.BLUE, CardColor.BLUE}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
-    }
-
-    @Test
-    public void phaseWrong() {
-        IDeckOfCards wrongPhase = fillDeck(createOneCards(
-                new CardColor[]{CardColor.BLUE, CardColor.YELLOW, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE,
-                        CardColor.BLUE}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
-        wrongPhase = fillDeck(createOneCards(
-                new CardColor[]{CardColor.YELLOW, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE,
-                        CardColor.BLUE}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
     }
 
     @Test

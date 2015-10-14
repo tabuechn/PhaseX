@@ -1,21 +1,21 @@
 package model.phase.impl;
 
-import model.card.CardValue;
-import model.card.ICard;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
 import model.phase.IPhase;
+import model.phase.IPhaseChecker;
+import model.phase.IPhaseSplitter;
+import model.phase.checker.ValueChecker;
+import model.phase.splitter.DeckSplitter;
 import model.stack.ICardStack;
 import model.stack.impl.PairStack;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- *
+ * <p>
  * edited: Konraifen88
  * date: 30.09.2015
  * merged phase checker and getter
@@ -23,11 +23,23 @@ import java.util.stream.Collectors;
 public class Phase5 implements IPhase {
 
     public static final int PHASE_NUMBER = 5;
-    private static final int SIZE_OF_A_QUADRUPLE = 4;
     private static final int SAME_PAIR = 1;
     private static final int NUMBER_OF_QUADRUPLES = 2;
     private static final int QUADRUPLE_SIZE = 4;
     private static final String DESCRIPTION_PHASE_5 = "two number quadruples";
+
+    private static final int SIZE_OF_A_QUADRUPLE = 4;
+    private static final int FIRST_QUADRUPLE_INDEX = 0;
+    private static final int SECOND_QUADRUPLE_INDEX = 1;
+
+    private IPhaseChecker phaseChecker;
+
+    private IPhaseSplitter phaseSplitter;
+
+    public Phase5() {
+        phaseChecker = new ValueChecker(SIZE_OF_A_QUADRUPLE);
+        phaseSplitter = new DeckSplitter(SIZE_OF_A_QUADRUPLE, new CardValueComparator());
+    }
 
     @Override
     public String getDescription() {
@@ -35,30 +47,14 @@ public class Phase5 implements IPhase {
     }
 
     @Override
-    public boolean checkIfDeckFitsToPhase(IDeckOfCards phase) {
-        return phase.size() == QUADRUPLE_SIZE * 2 && only2Numbers(phase) && checkQuadruple(phase);
-    }
-
-    @Override
-    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) {
-        ICard first = phase.remove(0);
-        IDeckOfCards firstQuadruple = new DeckOfCards();
-        firstQuadruple.add(first);
-        for (int i = 0; i < phase.size(); i++) {
-            ICard card = phase.get(i);
-            if (card.getNumber() == first.getNumber() && firstQuadruple.size() < SIZE_OF_A_QUADRUPLE) {
-                firstQuadruple.add(card);
-                phase.remove(card);
-                i--;
-            }
+    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) throws IllegalArgumentException {
+        List<IDeckOfCards> splitted = phaseSplitter.split(phase);
+        if (phaseChecker.check(splitted.get(FIRST_QUADRUPLE_INDEX))
+                && phaseChecker.check(splitted.get(SECOND_QUADRUPLE_INDEX))) {
+            return Arrays.asList(new PairStack(splitted.get(FIRST_QUADRUPLE_INDEX)),
+                    new PairStack(splitted.get(SECOND_QUADRUPLE_INDEX)));
         }
-        ICardStack firstQuadrupleStack = new PairStack(firstQuadruple);
-        IDeckOfCards secondQuadruple = new DeckOfCards(phase);
-        ICardStack secondQuadrupleStack = new PairStack(secondQuadruple);
-        LinkedList<ICardStack> listOfStacks = new LinkedList<>();
-        listOfStacks.add(firstQuadrupleStack);
-        listOfStacks.add(secondQuadrupleStack);
-        return listOfStacks;
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -70,18 +66,5 @@ public class Phase5 implements IPhase {
     public int getPhaseNumber() {
         return PHASE_NUMBER;
     }
-
-    private boolean only2Numbers(IDeckOfCards phase) {
-        Set<CardValue> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
-        return presentNumbers.size() == NUMBER_OF_QUADRUPLES || presentNumbers.size() == SAME_PAIR;
-    }
-
-    private boolean checkQuadruple(IDeckOfCards phase) {
-        CardValue quadrupleNumber = phase.get(0).getNumber();
-        List<ICard> quadruple = phase.stream().filter(card -> card.getNumber().equals(quadrupleNumber))
-                .collect(Collectors.toCollection(LinkedList::new));
-        return quadruple.size() == QUADRUPLE_SIZE || quadruple.size() == QUADRUPLE_SIZE * 2;
-    }
-
 
 }

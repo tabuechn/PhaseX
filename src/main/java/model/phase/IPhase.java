@@ -21,18 +21,11 @@ public interface IPhase {
     String getDescription();
 
     /**
-     * Method to test if the cards fits the required cards to play a phase.
-     * @param cards the chosen cards of the current player.
-     * @return true if the cards fit the requirement.
-     */
-    boolean checkIfDeckFitsToPhase(IDeckOfCards cards);
-
-    /**
      * Method to split the cards into the card stacks.
      * @param phase the successful checked cards of the player which should be played.
      * @return the splitted cardStacks which fit the requirement for current phase.
      */
-    List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase);
+    List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) throws IllegalArgumentException;
 
     /**
      * Getter for the next phase.

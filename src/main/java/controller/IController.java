@@ -135,19 +135,11 @@ public interface IController extends IObservable {
     void nextPlayer();
 
     /**
-     * Checks if the given IDeckOfCards matches the current phase of the current Player
-     *
-     * @param phase phase
-     * @return tur if the cards match the phase or else false
-     */
-    boolean deckMatchesCurrentPlayersPhase(IDeckOfCards phase);
-
-    /**
      * Removes the Card form the players hand and lays the phase down
      *
      * @param phase the phase to lay down
      */
-    void addPhase(IDeckOfCards phase);
+    void addPhase(IDeckOfCards phase) throws IllegalArgumentException;
 
     /**
      * Getter for the draw pile

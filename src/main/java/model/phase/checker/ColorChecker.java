@@ -13,6 +13,7 @@ import model.phase.IPhaseChecker;
  */
 public class ColorChecker implements IPhaseChecker {
 
+    private static final int FIRST_ELEMENT = 0;
     private final int size;
 
     public ColorChecker(int size) {
@@ -21,15 +22,12 @@ public class ColorChecker implements IPhaseChecker {
 
     @Override
     public boolean check(IDeckOfCards cards) {
-        if (cards.size() != this.size) {
-            return false;
-        }
-        cards.sort(new CardColorComparator());
-        return allCardsHasTheSameColor(cards);
+        return cards.size() == this.size && allCardsHasTheSameColor(cards);
     }
 
     private boolean allCardsHasTheSameColor(IDeckOfCards cards) {
-        CardColor colorOfDeck = cards.get(0).getColor();
+        cards.sort(new CardColorComparator());
+        CardColor colorOfDeck = cards.get(FIRST_ELEMENT).getColor();
         for (ICard card : cards) {
             if (!card.getColor().equals(colorOfDeck)) {
                 return false;

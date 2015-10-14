@@ -7,14 +7,24 @@ import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
 import model.phase.IPhase;
+import model.phase.IPhaseChecker;
+import model.phase.IPhaseSplitter;
 import model.stack.ICardStack;
+import model.stack.impl.PairStack;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
@@ -30,11 +40,23 @@ import static org.junit.Assert.*;
 
 public class Phase1Test {
 
-    private Phase1 testee;
+    public static final int SINGLE_STACK_SIZE = 3;
+    private static final ICard CARD_1 = new Card(CardValue.ONE, CardColor.BLUE);
+    private static final ICard CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
+    private static final IDeckOfCards DECK_TO_SPLIT = new DeckOfCards();
+    @InjectMocks
+    private Phase1 testee = new Phase1();
+    @Mock
+    private IPhaseChecker checkerMock;
+    @Mock
+    private IPhaseSplitter splitterMock;
+    private List<IDeckOfCards> splittedDeck;
 
     @Before
     public void setUp() throws Exception {
-        testee = new Phase1();
+        initMocks(this);
+        splittedDeck = new LinkedList<>();
+        when(checkerMock.check(any())).thenReturn(true);
     }
 
     @Test
@@ -44,71 +66,55 @@ public class Phase1Test {
     }
 
     @Test
-    public void descriptionTest() {
-        assertEquals(testee.getDescription(), "two number triples");
+    public void getDescriptionShouldReturnAString() {
+        assertEquals(Phase1.DESCRIPTION_PHASE_1, testee.getDescription());
     }
 
     @Test
-    public void checkCorrectPhase() {
-        ICard[] cardArray = createYellowCards(new int[]{2, 2, 2, 4, 4, 4});
-        IDeckOfCards correctPhase = fillDeck(cardArray);
-        assertTrue(testee.checkIfDeckFitsToPhase(correctPhase));
+    public void checkWithTwoDifferentTriplesShouldReturnTwoPairStacks() {
+        createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_2, CARD_2, CARD_2));
+        List<ICardStack> stacks = testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
+        checkCorrectSplittedPhase(stacks);
+        assertEquals(CARD_1, stacks.get(0).getList().get(0));
+        assertEquals(CARD_2, stacks.get(1).getList().get(0));
     }
 
     @Test
-    public void checkOneNumber() {
-        ICard[] cardArray = createYellowCards(new int[]{2, 2, 2, 2, 2, 2});
-        IDeckOfCards correctPhase = fillDeck(cardArray);
-        assertTrue(testee.checkIfDeckFitsToPhase(correctPhase));
+    public void checkWithTwoSameTriplesShouldReturnTwoPairStacks() {
+        createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_1, CARD_1, CARD_1));
+        List<ICardStack> stacks = testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
+        checkCorrectSplittedPhase(stacks);
+        assertEquals(CARD_1, stacks.get(0).getList().get(0));
+        assertEquals(CARD_1, stacks.get(1).getList().get(0));
     }
 
-    @Test
-    public void checkTooLongPhase() {
-        ICard[] cardArray = createYellowCards(new int[]{2, 2, 2, 2, 4, 4, 4});
-        IDeckOfCards wrongPhase = fillDeck(cardArray);
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
+    @Test(expected = IllegalArgumentException.class)
+    public void checkWithOnlyOneCorrectTripleShouldThrowException() {
+        createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_1, CARD_2, CARD_1));
+        when(checkerMock.check(any())).thenReturn(false);
+        testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
     }
 
-    @Test
-    public void checkTooShortPhase() {
-        ICard[] cardArray = createYellowCards(new int[]{2, 2, 4, 4, 4});
-        IDeckOfCards wrongPhase = fillDeck(cardArray);
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
+    @Test(expected = IllegalArgumentException.class)
+    public void checkWithoutCorrectTripleShouldThrowException() {
+        createSplittedDeck(Arrays.asList(CARD_1, CARD_2, CARD_1), Arrays.asList(CARD_1, CARD_2, CARD_1));
+        when(checkerMock.check(any())).thenReturn(false);
+        testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
     }
 
-    @Test
-    public void checkWithTwoDifferentTriples() {
-        IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{1, 1, 1, 6, 6, 6}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
-        assertEquals(testStacks.size(), 2);
-        IDeckOfCards firstTriple = testStacks.get(0).getList();
-        IDeckOfCards secondTriple = testStacks.get(1).getList();
-        assertEquals(firstTriple.size(), 3);
-        assertEquals(secondTriple.size(), 3);
+    private void checkCorrectSplittedPhase(List<ICardStack> stacks) {
+        assertEquals(2, stacks.size());
+        //Verifying first stack
+        assertTrue(stacks.get(0) instanceof PairStack);
+        assertEquals(SINGLE_STACK_SIZE, stacks.get(0).getList().size());
+        //Verifying second stack
+        assertTrue(stacks.get(1) instanceof PairStack);
+        assertEquals(SINGLE_STACK_SIZE, stacks.get(0).getList().size());
     }
 
-    @Test
-    public void checkWithTwoSameTriples() {
-        IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 1, 1}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
-        assertEquals(testStacks.size(), 2);
-        IDeckOfCards firstTriple = testStacks.get(0).getList();
-        IDeckOfCards secondTriple = testStacks.get(1).getList();
-        assertEquals(firstTriple.size(), 3);
-        assertEquals(secondTriple.size(), 3);
+    private void createSplittedDeck(List<ICard> cardsIndex0, List<ICard> cardsIndex1) {
+        when(splitterMock.split(DECK_TO_SPLIT)).thenReturn(splittedDeck);
+        splittedDeck.add(new DeckOfCards(cardsIndex0));
+        splittedDeck.add(new DeckOfCards(cardsIndex1));
     }
-
-    private ICard[] createYellowCards(int[] numbers) {
-        ICard[] returnValue = new ICard[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            returnValue[i] = new Card(CardValue.byOrdinal(numbers[i]), CardColor.YELLOW);
-        }
-        return returnValue;
-    }
-
-    private IDeckOfCards fillDeck(ICard[] cards) {
-        return new DeckOfCards(Arrays.asList(cards));
-    }
-
-
 }

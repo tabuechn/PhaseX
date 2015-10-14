@@ -1,18 +1,18 @@
 package model.phase.impl;
 
-import model.card.CardColor;
-import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 import model.phase.IPhase;
+import model.phase.IPhaseChecker;
+import model.phase.checker.ColorChecker;
 import model.stack.ICardStack;
 import model.stack.impl.ColorStack;
 
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- *
+ * <p>
  * edited: Konraifen88
  * date: 30.09.2015
  * merged phase checker and getter
@@ -20,8 +20,13 @@ import java.util.List;
 public class Phase3 implements IPhase {
 
     public static final int PHASE_NUMBER = 3;
-    private static final int PHASE_SIZE = 6;
+    public static final int PAIR_SIZE = 6;
     private static final String DESCRIPTION_PHASE_3 = "six cards of one color";
+    private IPhaseChecker phaseChecker;
+
+    public Phase3() {
+        phaseChecker = new ColorChecker(PAIR_SIZE);
+    }
 
     @Override
     public String getDescription() {
@@ -29,16 +34,11 @@ public class Phase3 implements IPhase {
     }
 
     @Override
-    public boolean checkIfDeckFitsToPhase(IDeckOfCards phase) {
-        return phase.size() == PHASE_SIZE && sixOfOneColor(phase);
-    }
-
-    @Override
-    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) {
-        LinkedList<ICardStack> allStacks = new LinkedList<>();
-        ICardStack colorStack = new ColorStack(phase);
-        allStacks.add(colorStack);
-        return allStacks;
+    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) throws IllegalArgumentException {
+        if (phaseChecker.check(phase)) {
+            return Collections.singletonList(new ColorStack(phase));
+        }
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -49,15 +49,5 @@ public class Phase3 implements IPhase {
     @Override
     public int getPhaseNumber() {
         return PHASE_NUMBER;
-    }
-
-    private boolean sixOfOneColor(IDeckOfCards phase) {
-        CardColor color = phase.get(0).getColor();
-        for (ICard card : phase) {
-            if (card.getColor() != color) {
-                return false;
-            }
-        }
-        return true;
     }
 }

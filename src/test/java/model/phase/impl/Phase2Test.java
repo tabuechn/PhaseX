@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
@@ -44,32 +44,6 @@ public class Phase2Test {
     @Test
     public void descriptionTest() {
         assertEquals(testee.getDescription(), "street of six numbers");
-    }
-
-    @Test
-    public void checkRightPhase() {
-        IDeckOfCards rightPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6}));
-        assertTrue(testee.checkIfDeckFitsToPhase(rightPhase));
-        rightPhase = fillDeck(createYellowCards(new int[]{6, 5, 4, 3, 2, 1}));
-        assertTrue(testee.checkIfDeckFitsToPhase(rightPhase));
-    }
-
-    @Test
-    public void checkWrongPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 3, 5, 6}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
-    }
-
-    @Test
-    public void checkTooLongPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6, 7}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
-    }
-
-    @Test
-    public void checkTooShortPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
     }
 
     @Test

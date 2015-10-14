@@ -11,6 +11,7 @@ import model.phase.impl.Phase5;
 import model.player.impl.Player;
 import model.stack.ICardStack;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -130,6 +131,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void playPhase1Test() {
         testee.startGame();
         testee.drawHidden();
@@ -174,6 +176,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void playPhase4Test() {
         testee.startGame();
         testee.drawHidden();
@@ -191,6 +194,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void playPhase5Test() {
         testee.startGame();
         testee.drawHidden();
@@ -210,6 +214,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void addToPhase1Test() {
         testee.startGame();
         testee.drawHidden();
@@ -229,6 +234,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void addToPhase1TestAndDiscard() {
         testee.startGame();
         testee.drawHidden();
@@ -258,6 +264,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void drawAfterPlayPhase() {
         testee.startGame();
         testee.drawHidden();
@@ -275,6 +282,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void roundEndTest() {
         testee.startGame();
         testee.drawHidden();
@@ -287,6 +295,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void gameEndTest() {
         testee.startGame();
         testee.drawHidden();
@@ -307,6 +316,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void endWithAddToStack() {
         testee.startGame();
         testee.drawHidden();

@@ -13,6 +13,7 @@ import model.phase.IPhaseChecker;
  */
 public class ValueChecker implements IPhaseChecker {
 
+    private static final int FIRST_ELEMENT = 0;
     private final int size;
 
     public ValueChecker(int size) {
@@ -29,7 +30,7 @@ public class ValueChecker implements IPhaseChecker {
     }
 
     private boolean allCardsHasTheSameValue(IDeckOfCards cards) {
-        CardValue valueOfDeck = cards.get(0).getNumber();
+        CardValue valueOfDeck = cards.get(FIRST_ELEMENT).getNumber();
         for (ICard card : cards) {
             if (!card.getNumber().equals(valueOfDeck)) {
                 return false;

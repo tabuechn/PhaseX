@@ -3,6 +3,7 @@ package model.phase.checker;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
+import model.deckOfCards.impl.DeckOfCards;
 import model.phase.IPhaseChecker;
 
 import java.util.Collections;
@@ -23,7 +24,8 @@ public class StreetChecker implements IPhaseChecker {
     @Override
     public boolean check(IDeckOfCards cards) {
         Collections.sort(cards, new CardValueComparator());
-        return cards.size() == this.size && checkStreet(cards.removeFirst(), cards);
+        IDeckOfCards copyOfCards = new DeckOfCards(cards);
+        return cards.size() == size && checkStreet(copyOfCards.removeFirst(), copyOfCards);
     }
 
     private boolean checkStreet(ICard smaller, IDeckOfCards rest) {

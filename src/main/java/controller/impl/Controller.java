@@ -54,7 +54,7 @@ public class Controller extends Observable implements IController, UIController 
         statusMessage = "";
     }
 
-
+    @SuppressWarnings("unused")
     public Controller() {
         this(2);
     }
@@ -192,16 +192,12 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
-    public boolean deckMatchesCurrentPlayersPhase(IDeckOfCards phase) {
-        return currentPlayer.getPhase().checkIfDeckFitsToPhase(phase);
-    }
-
-    @Override
-    public void addPhase(IDeckOfCards phase) {
+    public void addPhase(IDeckOfCards phase) throws IllegalArgumentException {
+        List<ICardStack> phases = currentPlayer.getPhase().splitPhaseIntoStacks(phase);
         currentPlayer.setPhaseDone(true);
         removePhaseFromCurrentPlayer(phase);
-        List<ICardStack> phases = currentPlayer.getPhase().splitPhaseIntoStacks(phase);
         putDownStacks(phases);
+
     }
 
     @Override
