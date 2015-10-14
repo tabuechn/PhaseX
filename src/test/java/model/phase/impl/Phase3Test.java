@@ -51,7 +51,7 @@ public class Phase3Test {
         IDeckOfCards testPhase = fillDeck(createOneCards(
                 new CardColor[]{CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE, CardColor.BLUE,
                         CardColor.BLUE}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
+        List<ICardStack> testStacks = testee.splitAndCheckPhase(testPhase);
         assertEquals(testStacks.size(), 1);
         IDeckOfCards colorStack = testStacks.get(0).getList();
         assertEquals(colorStack.size(), 6);

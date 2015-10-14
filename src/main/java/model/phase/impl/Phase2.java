@@ -34,7 +34,7 @@ public class Phase2 implements IPhase {
     }
 
     @Override
-    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) throws IllegalArgumentException {
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException {
         if (phaseChecker.check(phase)) {
             return Collections.singletonList(new StreetStack(phase));
         }

@@ -21,11 +21,11 @@ public interface IPhase {
     String getDescription();
 
     /**
-     * Method to split the cards into the card stacks.
-     * @param phase the successful checked cards of the player which should be played.
+     * Method to split and check the cards into the card stacks.
+     * @param phase the cards of the player which should be played.
      * @return the splitted cardStacks which fit the requirement for current phase.
      */
-    List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) throws IllegalArgumentException;
+    List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException;
 
     /**
      * Getter for the next phase.

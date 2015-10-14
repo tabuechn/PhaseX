@@ -49,7 +49,7 @@ public class Phase2Test {
     @Test
     public void checkWithOrderedStreet() {
         IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
+        List<ICardStack> testStacks = testee.splitAndCheckPhase(testPhase);
         assertEquals(testStacks.size(), 1);
         IDeckOfCards firstStreet = testStacks.get(0).getList();
         assertEquals(firstStreet.size(), 6);
@@ -58,7 +58,7 @@ public class Phase2Test {
     @Test
     public void checkWithUnorderedStreet() {
         IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{3, 2, 4, 6, 1, 5}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
+        List<ICardStack> testStacks = testee.splitAndCheckPhase(testPhase);
         assertEquals(testStacks.size(), 1);
         IDeckOfCards firstStreet = testStacks.get(0).getList();
         assertEquals(firstStreet.size(), 6);

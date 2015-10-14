@@ -49,7 +49,7 @@ public class Phase5Test {
     @Test
     public void checkWithTwoDifferentQuadruples() {
         IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 6, 6, 6, 6}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
+        List<ICardStack> testStacks = testee.splitAndCheckPhase(testPhase);
         assertEquals(testStacks.size(), 2);
         IDeckOfCards firstTriple = testStacks.get(0).getList();
         IDeckOfCards secondTriple = testStacks.get(1).getList();
@@ -60,7 +60,7 @@ public class Phase5Test {
     @Test
     public void checkWithTwoSameQuadruples() {
         IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 1, 1, 1, 1}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
+        List<ICardStack> testStacks = testee.splitAndCheckPhase(testPhase);
         assertEquals(testStacks.size(), 2);
         IDeckOfCards firstTriple = testStacks.get(0).getList();
         IDeckOfCards secondTriple = testStacks.get(1).getList();

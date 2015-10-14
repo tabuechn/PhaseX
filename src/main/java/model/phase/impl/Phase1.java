@@ -43,7 +43,7 @@ public class Phase1 implements IPhase {
     }
 
     @Override
-    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) throws IllegalArgumentException {
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException {
         List<IDeckOfCards> splitted = phaseSplitter.split(phase);
         if (phaseChecker.check(splitted.get(FIRST_TRIPLE_INDEX))
                 && phaseChecker.check(splitted.get(SECOND_TRIPLE_INDEX))) {

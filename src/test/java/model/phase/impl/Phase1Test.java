@@ -73,7 +73,7 @@ public class Phase1Test {
     @Test
     public void checkWithTwoDifferentTriplesShouldReturnTwoPairStacks() {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_2, CARD_2, CARD_2));
-        List<ICardStack> stacks = testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
+        List<ICardStack> stacks = testee.splitAndCheckPhase(DECK_TO_SPLIT);
         checkCorrectSplittedPhase(stacks);
         assertEquals(CARD_1, stacks.get(0).getList().get(0));
         assertEquals(CARD_2, stacks.get(1).getList().get(0));
@@ -82,7 +82,7 @@ public class Phase1Test {
     @Test
     public void checkWithTwoSameTriplesShouldReturnTwoPairStacks() {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_1, CARD_1, CARD_1));
-        List<ICardStack> stacks = testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
+        List<ICardStack> stacks = testee.splitAndCheckPhase(DECK_TO_SPLIT);
         checkCorrectSplittedPhase(stacks);
         assertEquals(CARD_1, stacks.get(0).getList().get(0));
         assertEquals(CARD_1, stacks.get(1).getList().get(0));
@@ -92,14 +92,14 @@ public class Phase1Test {
     public void checkWithOnlyOneCorrectTripleShouldThrowException() {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_1, CARD_2, CARD_1));
         when(checkerMock.check(any())).thenReturn(false);
-        testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
+        testee.splitAndCheckPhase(DECK_TO_SPLIT);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void checkWithoutCorrectTripleShouldThrowException() {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_2, CARD_1), Arrays.asList(CARD_1, CARD_2, CARD_1));
         when(checkerMock.check(any())).thenReturn(false);
-        testee.splitPhaseIntoStacks(DECK_TO_SPLIT);
+        testee.splitAndCheckPhase(DECK_TO_SPLIT);
     }
 
     private void checkCorrectSplittedPhase(List<ICardStack> stacks) {

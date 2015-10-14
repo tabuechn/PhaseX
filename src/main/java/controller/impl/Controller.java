@@ -193,7 +193,7 @@ public class Controller extends Observable implements IController, UIController 
 
     @Override
     public void addPhase(IDeckOfCards phase) throws IllegalArgumentException {
-        List<ICardStack> phases = currentPlayer.getPhase().splitPhaseIntoStacks(phase);
+        List<ICardStack> phases = currentPlayer.getPhase().splitAndCheckPhase(phase);
         currentPlayer.setPhaseDone(true);
         removePhaseFromCurrentPlayer(phase);
         putDownStacks(phases);
