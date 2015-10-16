@@ -22,10 +22,10 @@ import util.IObserver;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -33,6 +33,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * If everything works right this class was
  * created by Konraifen88 on 15.10.2015.
  * If it doesn't work I don't know who the hell wrote it.
+ *
+ * NOTE: Be careful using some methods will override the mocked objects!
  */
 public class ControllerTest implements IObserver {
 
@@ -131,6 +133,15 @@ public class ControllerTest implements IObserver {
         doReturn(TEST_DECK_SORTED).when(playerMock).getDeckOfCards();
         testee.getCurrentPlayersHand();
         verify(playerMock).getDeckOfCards();
+    }
+
+    @Test
+    public void getNumberOfCardsForNextPlayerShouldReturnAMapWithoutCurrentPlayer() {
+        //Creating new players and adding some Cards.
+        testee.initGame();
+        testee.newRound();
+        Map<Integer, Integer> tmp = testee.getNumberOfCardsForNextPlayer();
+        assertFalse(tmp.containsKey(testee.getCurrentPlayer().getPlayerNumber()));
     }
 
     //TODO: test all after getNumberOfCardsForNextPlayer

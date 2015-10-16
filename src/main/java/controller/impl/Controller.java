@@ -18,9 +18,7 @@ import model.stack.ICardStack;
 import util.CardCreator;
 import util.Observable;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -109,13 +107,14 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
-    public int getNumberOfCardsForNextPlayer() {
+    public Map<Integer, Integer> getNumberOfCardsForNextPlayer() {
+        Map<Integer, Integer> enemies = new HashMap<>();
         for (IPlayer player : players) {
             if (player != currentPlayer) {
-                return player.getDeckOfCards().size();
+                enemies.put(player.getPlayerNumber(), player.getDeckOfCards().size());
             }
         }
-        return 0;
+        return enemies;
     }
 
     public void initGame() {
