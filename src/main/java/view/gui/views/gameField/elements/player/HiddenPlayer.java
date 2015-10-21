@@ -8,6 +8,7 @@ import view.gui.cardDrawer.DrawnCard;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * If everything works right this class was
@@ -16,23 +17,30 @@ import java.util.List;
  */
 public class HiddenPlayer extends CardPanel {
 
-    private SpringLayout layout;
+    private final SpringLayout layout;
 
-    public HiddenPlayer(int numberOfCards) {
+    public HiddenPlayer(Map<Integer, Integer> numberOfCards) {
         super();
         this.layout = super.getLayout();
         this.setPreferredSize(GUIConstants.HIDDEN_PLAYER_CARD_PANEL_SIZE);
         addHiddenCards(numberOfCards);
     }
 
-    private void addHiddenCards(int numberOfCards) {
+    private void addHiddenCards(Map<Integer, Integer> numberOfCards) {
         this.removeAll();
+        for (Integer player : numberOfCards.values()) {
+            IDeckOfCards hiddenCards = getHiddenCards(player);
+            setMultipleCards(hiddenCards);
+            shiftCardsUp();
+        }
+    }
+
+    private IDeckOfCards getHiddenCards(Integer sum) {
         IDeckOfCards hiddenCards = new DeckOfCards();
-        for (int i = 0; i < numberOfCards; i++) {
+        for (int i = 0; i < sum; i++) {
             hiddenCards.add(GUIConstants.BACK_CARD);
         }
-        setMultipleCards(hiddenCards);
-        shiftCardsUp();
+        return hiddenCards;
     }
 
     private void shiftCardsUp() {
@@ -42,7 +50,7 @@ public class HiddenPlayer extends CardPanel {
         }
     }
 
-    public void setNewNumberOfCards(int num) {
+    public void setNewNumberOfCards(Map<Integer, Integer> num) {
         addHiddenCards(num);
     }
 }

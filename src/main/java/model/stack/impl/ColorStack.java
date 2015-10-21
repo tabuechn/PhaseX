@@ -6,13 +6,13 @@ import model.deckOfCards.IDeckOfCards;
 import model.stack.ICardStack;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 public class ColorStack implements ICardStack {
 
-    private CardColor color;
+    private final CardColor color;
 
-    private IDeckOfCards list;
+    private final IDeckOfCards list;
 
     public ColorStack(IDeckOfCards cards) {
         list = cards;

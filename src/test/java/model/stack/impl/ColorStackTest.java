@@ -1,6 +1,7 @@
 package model.stack.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.impl.DeckOfCards;
 import org.junit.Before;
@@ -11,29 +12,29 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 24.09.2015. Be grateful for this superior Code
  */
 public class ColorStackTest {
 
-    ColorStack cs;
+    private ColorStack testee;
 
     @Before
     public void setUp() throws Exception {
         DeckOfCards cardList = new DeckOfCards();
-        cardList.add(new Card(4, CardColor.BLUE));
-        cardList.add(new Card(6, CardColor.BLUE));
-        cardList.add(new Card(1, CardColor.BLUE));
-        cs = new ColorStack(cardList);
+        cardList.add(new Card(CardValue.FOUR, CardColor.BLUE));
+        cardList.add(new Card(CardValue.SIX, CardColor.BLUE));
+        cardList.add(new Card(CardValue.ONE, CardColor.BLUE));
+        testee = new ColorStack(cardList);
     }
 
     @Test
     public void csTest() {
-        assertTrue(cs.getList().size() == 3);
-        assertTrue(cs.getStackColor() == CardColor.BLUE);
-        cs.addCardToStack(new Card(3, CardColor.BLUE));
-        assertTrue(cs.getList().size() == 4);
-        assertTrue(cs.checkCardMatching(new Card(8, CardColor.BLUE)));
-        assertFalse(cs.checkCardMatching(new Card(8, CardColor.GREEN)));
+        assertTrue(testee.getList().size() == 3);
+        assertTrue(testee.getStackColor() == CardColor.BLUE);
+        testee.addCardToStack(new Card(CardValue.THREE, CardColor.BLUE));
+        assertTrue(testee.getList().size() == 4);
+        assertTrue(testee.checkCardMatching(new Card(CardValue.EIGHT, CardColor.BLUE)));
+        assertFalse(testee.checkCardMatching(new Card(CardValue.EIGHT, CardColor.GREEN)));
     }
 
 

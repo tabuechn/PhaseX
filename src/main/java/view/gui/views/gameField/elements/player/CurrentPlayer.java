@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class CurrentPlayer extends CardPanel {
 
-    List<DrawnCard> drawnCards;
-    private SpringLayout layout;
+    private final SpringLayout layout;
+    private List<DrawnCard> drawnCards;
     private IDeckOfCards chosenCards;
 
     public CurrentPlayer() {

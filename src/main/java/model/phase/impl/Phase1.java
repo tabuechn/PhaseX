@@ -1,36 +1,40 @@
 package model.phase.impl;
 
-import model.card.ICard;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
 import model.phase.IPhase;
+import model.phase.IPhaseChecker;
+import model.phase.IPhaseSplitter;
+import model.phase.checker.ValueChecker;
+import model.phase.splitter.DeckSplitter;
 import model.stack.ICardStack;
 import model.stack.impl.PairStack;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- *
+ * <p>
  * edited: Konraifen88
  * date: 30.09.2015
  * merged phase checker and getter
  */
 public class Phase1 implements IPhase {
 
-    public static final int SIZE_OF_A_TRIPLE = 3;
-    public static final int PHASE_SIZE = 6;
-    public static final int NUMBER_OF_TWO_DIFFERENT_TRIPLES = 2;
-    public static final int NUMBER_OF_TWO_SAME_TRIPLES = 1;
-    public static final int SIZE_OF_ONE_TRIPLE = 3;
     public static final int PHASE_NUMBER = 1;
-    private static final String DESCRIPTION_PHASE_1 = "two number triples";
+    protected static final String DESCRIPTION_PHASE_1 = "two number triples";
+    private static final int SIZE_OF_A_TRIPLE = 3;
+    private static final int FIRST_TRIPLE_INDEX = 0;
+    private static final int SECOND_TRIPLE_INDEX = 1;
 
-    private IDeckOfCards setSecondStack(IDeckOfCards restPhase) {
-        return restPhase.stream().collect(Collectors.toCollection(DeckOfCards::new));
+    private IPhaseChecker phaseChecker;
+
+    private IPhaseSplitter phaseSplitter;
+
+    public Phase1() {
+        phaseChecker = new ValueChecker(SIZE_OF_A_TRIPLE);
+        phaseSplitter = new DeckSplitter(SIZE_OF_A_TRIPLE, new CardValueComparator());
     }
 
     @Override
@@ -39,31 +43,16 @@ public class Phase1 implements IPhase {
     }
 
     @Override
-    public boolean checkIfDeckFitsToPhase(IDeckOfCards phase) {
-        return phase.size() == PHASE_SIZE && only2Numbers(phase) && checkTriple(phase);
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException {
+        List<IDeckOfCards> splitted = phaseSplitter.split(phase);
+        if (phaseChecker.check(splitted.get(FIRST_TRIPLE_INDEX))
+                && phaseChecker.check(splitted.get(SECOND_TRIPLE_INDEX))) {
+            return Arrays.asList(new PairStack(splitted.get(FIRST_TRIPLE_INDEX)),
+                    new PairStack(splitted.get(SECOND_TRIPLE_INDEX)));
+        }
+        throw new IllegalArgumentException();
     }
 
-    @Override
-    public List<ICardStack> splitPhaseIntoStacks(IDeckOfCards phase) {
-        ICard first = phase.remove(0);
-        IDeckOfCards firstTriple = new DeckOfCards();
-        firstTriple.add(first);
-        for (int i = 0; i < phase.size(); i++) {
-            ICard card = phase.get(i);
-            if (card.getNumber() == first.getNumber() && firstTriple.size() < SIZE_OF_A_TRIPLE) {
-                firstTriple.add(card);
-                phase.remove(card);
-                i--;
-            }
-        }
-        ICardStack firstTripleStack = new PairStack(firstTriple);
-        IDeckOfCards secondTriple = setSecondStack(phase);
-        ICardStack secondTripleStack = new PairStack(secondTriple);
-        LinkedList<ICardStack> listOfStacks = new LinkedList<>();
-        listOfStacks.add(firstTripleStack);
-        listOfStacks.add(secondTripleStack);
-        return listOfStacks;
-    }
 
     @Override
     public IPhase getNextPhase() {
@@ -73,19 +62,6 @@ public class Phase1 implements IPhase {
     @Override
     public int getPhaseNumber() {
         return PHASE_NUMBER;
-    }
-
-    private boolean only2Numbers(IDeckOfCards phase) {
-        Set<Integer> presentNumbers = phase.stream().map(ICard::getNumber).collect(Collectors.toSet());
-        return presentNumbers.size() == NUMBER_OF_TWO_DIFFERENT_TRIPLES ||
-                presentNumbers.size() == NUMBER_OF_TWO_SAME_TRIPLES;
-    }
-
-    private boolean checkTriple(IDeckOfCards phase) {
-        int tripleNumber = phase.get(0).getNumber();
-        List<ICard> triple = phase.stream().filter(card -> card.getNumber() == tripleNumber)
-                .collect(Collectors.toCollection(LinkedList::new));
-        return triple.size() == SIZE_OF_ONE_TRIPLE || triple.size() == PHASE_SIZE;
     }
 
 

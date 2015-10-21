@@ -6,13 +6,15 @@ import model.card.ICard;
 import java.util.Comparator;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * If everything works right this class was
+ * created by Konraifen88 on 11.10.2015.
+ * If it doesn't work I don't know who the hell wrote it.
  */
 @SuppressFBWarnings("SE_COMPARATOR_SHOULD_BE_SERIALIZABLE")
-public class CardComparator implements Comparator<ICard> {
+public class CardColorComparator implements Comparator<ICard> {
 
     @Override
     public int compare(ICard o1, ICard o2) {
-        return o1.getNumber() - o2.getNumber();
+        return o1.getColor().compareTo(o2.getColor());
     }
 }

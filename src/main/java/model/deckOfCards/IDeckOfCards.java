@@ -10,5 +10,18 @@ import java.util.List;
  * If it doesn't work I don't know who the hell wrote it.
  */
 public interface IDeckOfCards extends List<ICard> {
+    /**
+     * Removes the last card from the current deck.
+     *
+     * @return the card which is removed from the deck.
+     */
     ICard removeLast();
+
+    /**
+     * Removes the first card from the current deck.
+     *
+     * @return the card which is removed from the deck.
+     */
+    ICard removeFirst();
+
 }

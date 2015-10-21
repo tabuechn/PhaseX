@@ -1,108 +1,79 @@
 package model.phase.impl;
 
 import model.card.CardColor;
-import model.card.ICard;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
+import model.phase.IPhase;
+import model.phase.IPhaseChecker;
 import model.stack.ICardStack;
+import model.stack.impl.StreetStack;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
-import java.util.Arrays;
-import java.util.List;
-
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- */
-
-/**
- * edited: merged phase checker & getter
- * <p>
  * If everything works right this class was
- * created by Konraifen88 on 30.09.2015.
+ * created by Konraifen88 on 14.10.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-
 public class Phase2Test {
 
-    private Phase2 testee;
+    @InjectMocks
+    private IPhase testee = new Phase2();
+
+    @Mock
+    private IPhaseChecker checkerMock;
+
+    private IDeckOfCards street = new DeckOfCards();
 
     @Before
     public void setUp() throws Exception {
-        testee = new Phase2();
+        initMocks(this);
+        when(checkerMock.check(any())).thenReturn(true);
     }
 
     @Test
     public void nextPhaseReturnsPhase3() {
-        assertEquals(testee.getNextPhase().getPhaseNumber(), Phase3.PHASE_NUMBER);
+        assertEquals(testee.getNextPhase().getPhaseNumber(), 3);
     }
 
     @Test
     public void descriptionTest() {
-        assertEquals(testee.getDescription(), "street of six numbers");
+        assertThat(testee.getDescription(), containsString("street"));
     }
 
     @Test
-    public void checkRightPhase() {
-        IDeckOfCards rightPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6}));
-        assertTrue(testee.checkIfDeckFitsToPhase(rightPhase));
-        rightPhase = fillDeck(createYellowCards(new int[]{6, 5, 4, 3, 2, 1}));
-        assertTrue(testee.checkIfDeckFitsToPhase(rightPhase));
+    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() {
+        setCheckIsPassingAndFillDeck(true);
+        ICardStack tmp = testee.splitAndCheckPhase(street).get(0);
+        assertTrue(tmp instanceof StreetStack);
+        street.forEach(card -> assertTrue(tmp.getList().contains(card)));
     }
 
-    @Test
-    public void checkWrongPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 3, 5, 6}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
+    @Test(expected = IllegalArgumentException.class)
+    public void whenCheckIsFailingAExceptionIsThrown() {
+        setCheckIsPassingAndFillDeck(false);
+        testee.splitAndCheckPhase(street);
     }
 
-    @Test
-    public void checkTooLongPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6, 7}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
+    private void setCheckIsPassingAndFillDeck(boolean passing) {
+        when(checkerMock.check(eq(street))).thenReturn(passing);
+        createCardDeck();
     }
 
-    @Test
-    public void checkTooShortPhase() {
-        IDeckOfCards wrongPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4}));
-        assertFalse(testee.checkIfDeckFitsToPhase(wrongPhase));
-    }
-
-    @Test
-    public void checkWithOrderedStreet() {
-        IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
-        assertEquals(testStacks.size(), 1);
-        IDeckOfCards firstStreet = testStacks.get(0).getList();
-        assertEquals(firstStreet.size(), 6);
-    }
-
-    @Test
-    public void checkWithUnorderedStreet() {
-        IDeckOfCards testPhase = fillDeck(createYellowCards(new int[]{3, 2, 4, 6, 1, 5}));
-        List<ICardStack> testStacks = testee.splitPhaseIntoStacks(testPhase);
-        assertEquals(testStacks.size(), 1);
-        IDeckOfCards firstStreet = testStacks.get(0).getList();
-        assertEquals(firstStreet.size(), 6);
+    private void createCardDeck() {
         for (int i = 0; i < 6; i++) {
-            assertEquals(firstStreet.get(i).getNumber(), i + 1);
+            street.add(new Card(CardValue.byOrdinal(i), CardColor.BLUE));
         }
     }
-
-    private ICard[] createYellowCards(int[] numbers) {
-        ICard[] returnValue = new ICard[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            returnValue[i] = new Card(numbers[i], CardColor.YELLOW);
-        }
-        return returnValue;
-    }
-
-    private IDeckOfCards fillDeck(ICard[] cards) {
-        return new DeckOfCards(Arrays.asList(cards));
-    }
-
-
 }

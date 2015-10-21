@@ -20,9 +20,11 @@ public class PlayerTurnNotFinished extends AbstractState {
 
     @Override
     public void playPhase(final IController controller, IDeckOfCards phase) {
-        if (controller.deckMatchesCurrentPlayersPhase(phase)) {
+        try {
             controller.addPhase(phase);
             controller.setRoundState(new PlayerTurnFinished());
+        } catch (IllegalArgumentException e) {
+            //Do not change roundState on exception and continue application normally.
         }
     }
 

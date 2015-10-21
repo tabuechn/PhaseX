@@ -1,352 +1,170 @@
 package controller.impl;
 
+import controller.IController;
+import controller.states.AbstractState;
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
-import model.phase.impl.Phase2;
-import model.phase.impl.Phase5;
+import model.player.IPlayer;
 import model.stack.ICardStack;
+import model.stack.impl.ColorStack;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import util.Event;
+import util.IObserver;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by Tarek on 26.09.2015. Be grateful for this superior Code!
+ * If everything works right this class was
+ * created by Konraifen88 on 15.10.2015.
+ * If it doesn't work I don't know who the hell wrote it.
+ *
+ * NOTE: Be careful using some methods will override the mocked objects!
  */
-public class ControllerTest {
+public class ControllerTest implements IObserver {
 
-    private final int NUMBER_OF_PLAYERS = 2;
-
-    private Controller testee = new Controller(NUMBER_OF_PLAYERS);
+    private static final ICard TEST_CARD_1 = new Card(CardValue.ONE, CardColor.BLUE);
+    private static final ICard TEST_CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
+    private static final IDeckOfCards TEST_DECK_SORTED = new DeckOfCards();
+    private static final IDeckOfCards TEST_DECK_UNSORTED = new DeckOfCards();
+    private static final ICardStack TEST_STACK
+            = new ColorStack(new DeckOfCards(Arrays.asList(TEST_CARD_1, TEST_CARD_1)));
+    @InjectMocks
+    private IController testee;
+    @Mock(name = "roundState")
+    private AbstractState stateMock;
+    @Mock(name = "currentPlayer")
+    private IPlayer playerMock;
+    @Mock(name = "drawPile")
+    private IDeckOfCards drawPileMock;
+    @Mock(name = "discardPile")
+    private IDeckOfCards discardPileMock;
+    private boolean observed;
+    private ArgumentCaptor<ICard> cardCaptor = ArgumentCaptor.forClass(ICard.class);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        testee = new Controller(2);
         initMocks(this);
+        testee.addObserver(this);
+        observed = false;
     }
 
     @Test
-    public void testStartingTheGame() {
-        assertEquals(testee.getRoundState().toString(), "StartPhase");
+    public void startGameShouldCallTheStateToStart() {
+        doNothing().when(stateMock).start(any(Controller.class));
         testee.startGame();
-        assertEquals(testee.getRoundState().toString(), "DrawPhase");
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        assertFalse(testee.currentPlayerHasNoCards());
-        assertEquals(testee.getAllStacks().size(), 0);
+        verify(stateMock, times(1)).start(eq(testee));
+        checkIfObserverWasNotified();
     }
 
     @Test
-    public void testCardDecks() {
-        testee.startGame();
-        assertEquals(testee.getDiscardPile().size(), 1);
-        assertEquals(testee.getDrawPile().size(), ((12 * 4 * 4) - 10 * NUMBER_OF_PLAYERS) - 1);
-    }
-
-    @Test
-    public void drawTestHiddenTest() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        assertEquals(testee.getDrawPile().size(), ((12 * 4 * 4) - 10 * NUMBER_OF_PLAYERS - 1) - 1);
-        assertEquals(testee.getRoundState().toString(), "PlayerTurnNotFinished");
-    }
-
-    @Test
-    public void drawOpenWithEmptyPileTest() {
-        testee.startGame();
-        testee.getDiscardPile().removeLast();
+    public void drawOpenShouldCallTheStateToDrawACardFromTheOpenPile() {
+        doNothing().when(stateMock).drawOpen(any(Controller.class));
         testee.drawOpen();
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        assertEquals(testee.getDrawPile().size(), ((12 * 4 * 4) - 10 * NUMBER_OF_PLAYERS) - 1);
-        assertEquals(testee.getRoundState().toString(), "DrawPhase");
+        verify(stateMock, times(1)).drawOpen(eq(testee));
+        checkIfObserverWasNotified();
     }
 
     @Test
-    public void discardTest() {
-        testee.startGame();
+    public void drawHiddenShouldCallTheStateToDrawACardFromTheHiddenPile() {
+        doNothing().when(stateMock).drawHidden(any(Controller.class));
         testee.drawHidden();
-        ICard cardToDiscard = testee.getCurrentPlayersHand().get(0);
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
-        testee.discard(cardToDiscard);
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
-        assertEquals(testee.getDiscardPile().size(), 2);
-
+        verify(stateMock, times(1)).drawHidden(eq(testee));
+        checkIfObserverWasNotified();
     }
 
     @Test
-    public void drawOpenWithNonEmptyPileTest() {
-        testee.startGame();
-        testee.drawHidden();
-        ICard cardToDiscard = testee.getCurrentPlayersHand().get(0);
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
-        testee.discard(cardToDiscard);
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
-        assertEquals(testee.getDiscardPile().size(), 2);
-        testee.drawOpen();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        assertEquals(testee.getRoundState().toString(), "PlayerTurnNotFinished");
+    public void discardShouldCallTheStateToDiscardTheCard() {
+        doNothing().when(stateMock).discard(any(Controller.class), any(ICard.class));
+        testee.discard(TEST_CARD_1);
+        verify(stateMock, times(1)).discard(eq(testee), eq(TEST_CARD_1));
+        checkIfObserverWasNotified();
     }
 
     @Test
-    public void testGetRoundState() {
-        assertEquals(testee.getRoundState().toString(), "StartPhase");
-        testee.startGame();
-        assertEquals(testee.getRoundState().toString(), "DrawPhase");
+    public void playPhaseShouldCallTheStateToPlayThePhase() {
+        doNothing().when(stateMock).playPhase(any(Controller.class), any(IDeckOfCards.class));
+        testee.playPhase(TEST_DECK_SORTED);
+        verify(stateMock, times(1)).playPhase(eq(testee), eq(TEST_DECK_SORTED));
+        checkIfObserverWasNotified();
     }
 
     @Test
-    public void playerChangeAfterDiscard() {
-        testee.startGame();
-
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
-        testee.drawHidden();
-        ICard cardToDiscard = testee.getCurrentPlayersHand().get(0);
-        testee.discard(cardToDiscard);
-
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
-        testee.drawHidden();
-        cardToDiscard = testee.getCurrentPlayersHand().get(0);
-        testee.discard(cardToDiscard);
-
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
-
+    public void addToFinishedPhaseShouldCallTheStateAddTheCards() {
+        doNothing().when(stateMock).addToFinishedPhase(
+                any(Controller.class), any(ICard.class), any(ICardStack.class));
+        testee.addToFinishedPhase(TEST_CARD_1, TEST_STACK);
+        verify(stateMock, times(1)).addToFinishedPhase(eq(testee), eq(TEST_CARD_1), eq(TEST_STACK));
+        checkIfObserverWasNotified();
     }
 
     @Test
-    public void playPhase1Test() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 3, 4, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        assertEquals(testee.getAllStacks().size(), 2);
-    }
-
-    @Test
-    public void playPhase2Test() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 3, 4, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        assertEquals(testee.getAllStacks().size(), 1);
-        assertEquals(testee.getRoundState().toString(), "PlayerTurnFinished");
-    }
-
-    @Test
-    public void playPhase3Test() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 3, 4, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 2, 3, 4, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        assertEquals(testee.getAllStacks().size(), 1);
-        assertEquals(testee.getRoundState().toString(), "PlayerTurnFinished");
-    }
-
-    @Test
-    public void playPhase4Test() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 2, 4, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 2, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        assertEquals(testee.getAllStacks().size(), 2);
-        assertEquals(testee.getRoundState().toString(), "PlayerTurnFinished");
-    }
-
-    @Test
-    public void playPhase5Test() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 2, 1, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 2);
-        assertEquals(testee.getAllStacks().size(), 2);
-        assertTrue(testee.getCurrentPlayer().isPhaseDone());
-        assertEquals(testee.getRoundState().toString(), "PlayerTurnFinished");
-    }
-
-    @Test
-    public void addToPhase1Test() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 2, 1, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        assertEquals(testee.getAllStacks().size(), 2);
-        ICardStack testStack = testee.getAllStacks().get(0);
-        int testNumber = testStack.getList().get(0).getNumber();
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        testee.addToFinishedPhase(new Card(testNumber, CardColor.YELLOW), testStack);
-        assertEquals(testee.getAllStacks().get(0).getList().size(), 4);
-        assertEquals(testee.getCurrentPlayersHand().size(), 3);
-    }
-
-    @Test
-    public void addToPhase1TestAndDiscard() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getCurrentPlayersHand().size(), 11);
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 2, 1, 5, 6})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 10);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        assertEquals(testee.getAllStacks().size(), 2);
-        ICardStack testStack = testee.getAllStacks().get(0);
-        int testNumber = testStack.getList().get(0).getNumber();
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        testee.addToFinishedPhase(new Card(testNumber, CardColor.YELLOW), testStack);
-        assertEquals(testee.getAllStacks().get(0).getList().size(), 4);
-        assertEquals(testee.getCurrentPlayersHand().size(), 3);
-        testee.discard(new Card(6, CardColor.YELLOW));
-    }
-
-    @Test
-    public void getAllPlayersMap() {
-        testee.startGame();
-        testee.drawHidden();
-        assertEquals(testee.getNumberOfCardsForNextPlayer(), 10);
-    }
-
-    @Test
-    public void drawAfterPlayPhase() {
-        testee.startGame();
-        testee.drawHidden();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 3, 4, 5, 6})));
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 4);
-        testee.discard(new Card(3, CardColor.YELLOW));
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 1);
-        testee.drawHidden();
-        testee.discard(testee.getCurrentPlayersHand().get(0));
-        assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
-        assertTrue(testee.getCurrentPlayer().isPhaseDone());
-        testee.drawHidden();
-    }
-
-    @Test
-    public void roundEndTest() {
-        testee.startGame();
-        testee.drawHidden();
-        testee.getCurrentPlayer().setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 6})));
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 1);
-        testee.discard(new Card(6, CardColor.YELLOW));
-        assertEquals(testee.getRoundState().toString(), "DrawPhase");
-        assertEquals(testee.getCurrentPlayer().getPhase().getPhaseNumber(), Phase2.PHASE_NUMBER);
-    }
-
-    @Test
-    public void gameEndTest() {
-        testee.startGame();
-        testee.drawHidden();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 6})));
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-
-        assertEquals(testee.getCurrentPlayer().getPhase().getPhaseNumber(), Phase5.PHASE_NUMBER);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 1);
-        testee.discard(new Card(6, CardColor.YELLOW));
-        assertEquals(testee.getRoundState().toString(), "EndPhase");
-        testee.startGame();
-        assertEquals(testee.getRoundState().toString(), "DrawPhase");
-    }
-
-    @Test
-    public void endWithAddToStack() {
-        testee.startGame();
-        testee.drawHidden();
-        testee.getCurrentPlayer()
-                .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 2})));
-
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-        testee.getCurrentPlayer().nextPhase();
-
-        assertEquals(testee.getCurrentPlayer().getPhase().getPhaseNumber(), Phase5.PHASE_NUMBER);
-        testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2})));
-        assertEquals(testee.getCurrentPlayersHand().size(), 1);
-        testee.addToFinishedPhase(new Card(2, CardColor.YELLOW), testee.getAllStacks().get(1));
-        assertEquals(testee.getRoundState().toString(), "EndPhase");
-    }
-
-    @Test
-    public void reshuffleTest() {
-        testee.startGame();
-        testee.drawHidden();
-        ICard testCard = testee.getCurrentPlayersHand().get(0);
-        testee.discard(testCard);
-        assertTrue(testee.getDiscardPile().contains(testCard));
-        testee.drawHidden();
-        ICard testCard2 = testee.getCurrentPlayersHand().get(0);
-        testee.getDiscardPile().addAll(testee.getDrawPile());
-        testee.getDrawPile().removeAll(testee.getDrawPile());
-        testee.getDrawPile().add(new Card(1, CardColor.GREEN));
-        testee.discard(testCard2);
-        testee.drawHidden();
-        assertEquals(testee.getDiscardPile().size(), 1);
-        assertEquals(testee.getDiscardPile().get(0), testCard2);
-    }
-
-    @Test
-    public void checkIfNumberOfPlayersIsReturnedCorrectly() {
-        testee = new Controller(NUMBER_OF_PLAYERS + 2);
-        assertTrue(NUMBER_OF_PLAYERS + 2 == testee.getPlayerCount());
-
-    }
-
-    private ICard[] createYellowCards(int[] numbers) {
-        ICard[] returnValue = new ICard[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            returnValue[i] = new Card(numbers[i], CardColor.YELLOW);
+    public void addingMultipleCardsShouldSortTheGivenList() {
+        fillDecks();
+        doNothing().when(stateMock).addToFinishedPhase(
+                any(Controller.class), any(ICard.class), any(ICardStack.class));
+        testee.addMultipleCardsToFinishedPhase(new DeckOfCards(TEST_DECK_UNSORTED), TEST_STACK);
+        verify(stateMock, times(2)).addToFinishedPhase(eq(testee), cardCaptor.capture(), eq(TEST_STACK));
+        List<ICard> captured = cardCaptor.getAllValues();
+        for (int i = 0; i < TEST_DECK_SORTED.size(); i++) {
+            assertThat(captured.get(i), equalTo(TEST_DECK_SORTED.get(i)));
         }
-        return returnValue;
+        checkIfObserverWasNotified();
     }
 
-    private IDeckOfCards fillDeck(ICard[] cards) {
-        return new DeckOfCards(Arrays.asList(cards));
+    @Test
+    public void getCurrentPlayersHandShouldReturnTheDeckForTheCurrentPlayer() {
+        doReturn(TEST_DECK_SORTED).when(playerMock).getDeckOfCards();
+        testee.getCurrentPlayersHand();
+        verify(playerMock).getDeckOfCards();
     }
 
+    @Test
+    public void getNumberOfCardsForNextPlayerShouldReturnAMapWithoutCurrentPlayer() {
+        //Creating new players and adding some Cards.
+        testee.initGame();
+        testee.newRound();
+        Map<Integer, Integer> tmp = testee.getNumberOfCardsForNextPlayer();
+        assertFalse(tmp.containsKey(testee.getCurrentPlayer().getPlayerNumber()));
+    }
+
+    //TODO: test all after getNumberOfCardsForNextPlayer
+
+    private void checkIfObserverWasNotified() {
+        assertTrue(observed);
+    }
+
+    private void fillDecks() {
+        TEST_DECK_SORTED.add(TEST_CARD_1);
+        TEST_DECK_SORTED.add(TEST_CARD_2);
+
+        TEST_DECK_UNSORTED.add(TEST_CARD_2);
+        TEST_DECK_UNSORTED.add(TEST_CARD_1);
+    }
+
+    @Override
+    public void update(Event e) {
+        observed = true;
+    }
+
+    @After
+    public void tearDown() {
+        testee.removeAllObservers();
+    }
 }

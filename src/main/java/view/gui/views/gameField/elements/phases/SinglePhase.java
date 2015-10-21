@@ -11,7 +11,7 @@ import view.gui.cardDrawer.CardPanel;
  * created by Konraifen88 on 29.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class SinglePhase extends CardPanel {
+class SinglePhase extends CardPanel {
 
     private ICardStack phase;
 

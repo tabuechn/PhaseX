@@ -1,48 +1,49 @@
 package model.stack.impl;
 
+import model.card.CardValue;
 import model.card.ICard;
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.stack.ICardStack;
 
 /**
- * Created by Tarek on 22.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 public class StreetStack implements ICardStack {
 
-    private int lowestCardNumber;
-    private int highestCardNumber;
-
-    private IDeckOfCards list;
+    private final IDeckOfCards list;
+    private ICard lowestCard;
+    private ICard highestCard;
 
     public StreetStack(IDeckOfCards cards) {
         list = cards;
-        list.sort(new CardComparator());
-        lowestCardNumber = list.get(0).getNumber();
-        highestCardNumber = list.get(list.size() - 1).getNumber();
+        list.sort(new CardValueComparator());
+        this.lowestCard = list.get(0);
+        this.highestCard = list.get(list.size() - 1);
     }
 
-    public int getHighestCardNumber() {
-        return highestCardNumber;
+    public CardValue getHighestCardNumber() {
+        return highestCard.getNumber();
     }
 
-    public int getLowestCardNumber() {
-        return lowestCardNumber;
+    public CardValue getLowestCardNumber() {
+        return lowestCard.getNumber();
     }
 
     @Override
     public boolean checkCardMatching(ICard card) {
-        return (card.getNumber() == (lowestCardNumber - 1) || card.getNumber() == (highestCardNumber + 1));
+        return (card.getNumber().equals(CardValue.byOrdinal(lowestCard.getNumber().ordinal() - 1))
+                || card.getNumber().equals(CardValue.byOrdinal(highestCard.getNumber().ordinal() + 1)));
     }
 
     @Override
     public void addCardToStack(ICard card) {
         list.add(card);
-        list.sort(new CardComparator());
-        if (card.getNumber() > this.highestCardNumber) {
-            increaseHighestCardNumber();
+        list.sort(new CardValueComparator());
+        if (card.compareTo(this.highestCard) > 0) {
+            this.highestCard = card;
         } else {
-            decreaseLowestCardNumber();
+            this.lowestCard = card;
         }
     }
 
@@ -51,11 +52,4 @@ public class StreetStack implements ICardStack {
         return this.list;
     }
 
-    private void decreaseLowestCardNumber() {
-        this.lowestCardNumber--;
-    }
-
-    private void increaseHighestCardNumber() {
-        this.highestCardNumber++;
-    }
 }

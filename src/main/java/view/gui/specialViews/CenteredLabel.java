@@ -9,17 +9,12 @@ import java.awt.*;
  * If it doesn't work I don't know who the hell wrote it.
  */
 public class CenteredLabel extends JLabel {
-    public CenteredLabel() {
+    protected CenteredLabel() {
         super();
         setCentered();
     }
 
-    public CenteredLabel(ImageIcon image) {
-        super(image);
-        setCentered();
-    }
-
-    public CenteredLabel(String text) {
+    protected CenteredLabel(String text) {
         super(text);
         setCentered();
     }
@@ -30,11 +25,11 @@ public class CenteredLabel extends JLabel {
         this.setVerticalAlignment(JLabel.CENTER);
     }
 
-    public void setFixDimension(Dimension dimension) {
+    protected void setFixDimension(Dimension dimension) {
         setAllDimensions(dimension, dimension);
     }
 
-    public void setAllDimensions(Dimension min, Dimension max) {
+    private void setAllDimensions(Dimension min, Dimension max) {
         this.setMinimumSize(min);
         this.setPreferredSize(max);
         this.setMaximumSize(max);

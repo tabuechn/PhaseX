@@ -1,6 +1,7 @@
 package view.gui.cardDrawer;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.ICard;
 import org.apache.commons.lang3.StringUtils;
 import view.gui.GUIConstants;
@@ -17,10 +18,8 @@ import java.awt.event.ActionListener;
  */
 public class DrawnCard extends JLayeredPane implements ActionListener {
 
+    private final ICard card;
     private boolean chosen;
-
-
-    private ICard card;
 
     public DrawnCard(ICard card) {
         this.card = card;
@@ -76,13 +75,13 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         return path;
     }
 
-    private JLabel getNumberLabel(int number) {
+    private JLabel getNumberLabel(CardValue number) {
         String path = getCardNumberImagePath(number);
         JLabel label = new JLabel();
         label.setSize(this.getPreferredSize());
         if (StringUtils.isBlank(path)) {
             label.setFont(GUIConstants.DEFAULT_FONT);
-            label.setText(Integer.toString(number));
+            label.setText(number.toString());
         } else {
             ImageIcon ii = new ImageIcon(path);
             ii.setImage(ii.getImage()
@@ -94,52 +93,9 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         return label;
     }
 
-    //CHECKSTYLE:OFF
-    private String getCardNumberImagePath(int number) {
-        String path;
-        switch (number) {
-            case GUIConstants.ONE:
-                path = GUIConstants.CARD_NUMBER_ONE_IMAGE_PATH;
-                break;
-            case GUIConstants.TWO:
-                path = GUIConstants.CARD_NUMBER_TWO_IMAGE_PATH;
-                break;
-            case GUIConstants.THREE:
-                path = GUIConstants.CARD_NUMBER_THREE_IMAGE_PATH;
-                break;
-            case GUIConstants.FOUR:
-                path = GUIConstants.CARD_NUMBER_FOUR_IMAGE_PATH;
-                break;
-            case GUIConstants.FIVE:
-                path = GUIConstants.CARD_NUMBER_FIVE_IMAGE_PATH;
-                break;
-            case GUIConstants.SIX:
-                path = GUIConstants.CARD_NUMBER_SIX_IMAGE_PATH;
-                break;
-            case GUIConstants.SEVEN:
-                path = GUIConstants.CARD_NUMBER_SEVEN_IMAGE_PATH;
-                break;
-            case GUIConstants.EIGHT:
-                path = GUIConstants.CARD_NUMBER_EIGHT_IMAGE_PATH;
-                break;
-            case GUIConstants.NINE:
-                path = GUIConstants.CARD_NUMBER_NINE_IMAGE_PATH;
-                break;
-            case GUIConstants.TEN:
-                path = GUIConstants.CARD_NUMBER_TEN_IMAGE_PATH;
-                break;
-            case GUIConstants.ELEVEN:
-                path = GUIConstants.CARD_NUMBER_ELEVEN_IMAGE_PATH;
-                break;
-            case GUIConstants.TWELVE:
-                path = GUIConstants.CARD_NUMBER_TWELVE_IMAGE_PATH;
-                break;
-            default:
-                path = GUIConstants.CARD_NO_NUMBER_IMAGE_PATH;
-        }
-        return path;
+    private String getCardNumberImagePath(CardValue number) {
+        return GUIConstants.CARD_NUMBER_IMAGE_PATH.replace("{0}", Integer.toString(number.ordinal()));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public void actionPerformed(ActionEvent e) {

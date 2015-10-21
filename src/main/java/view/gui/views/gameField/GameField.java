@@ -2,7 +2,7 @@ package view.gui.views.gameField;
 
 import controller.UIController;
 import model.card.ICard;
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
@@ -23,13 +23,13 @@ import java.awt.*;
  */
 public class GameField extends BackgroundPanel {
 
-    private PilePane pile;
-    private CurrentPlayer currentPlayer;
-    private HiddenPlayer hiddenPlayer;
-    private UIController controller;
-    private PhasePane phases;
-    private NotificationLabel notification;
-    private PhaseDescription phaseDescription;
+    private final PilePane pile;
+    private final CurrentPlayer currentPlayer;
+    private final HiddenPlayer hiddenPlayer;
+    private final UIController controller;
+    private final PhasePane phases;
+    private final NotificationLabel notification;
+    private final PhaseDescription phaseDescription;
 
     public GameField(UIController controller) {
         this.controller = controller;
@@ -79,13 +79,13 @@ public class GameField extends BackgroundPanel {
     }
 
     private String getDescriptionText() {
-        return "Player: " + controller.getCurrentPlayer().getPlayerName() + ", " + "Phase: " +
-                controller.getCurrentPhaseDescription();
+        return "<html>Player: " + controller.getCurrentPlayer().getPlayerName() + "<br><br>Phase: " +
+                controller.getCurrentPhaseDescription() + "</html>";
     }
 
     private void setSortedPlayerCards() {
         IDeckOfCards cards = controller.getCurrentPlayersHand();
-        cards.sort(new CardComparator());
+        cards.sort(new CardValueComparator());
         currentPlayer.setMultipleCards(cards);
     }
 

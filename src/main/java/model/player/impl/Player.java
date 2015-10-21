@@ -12,13 +12,11 @@ import model.player.IPlayer;
  */
 public class Player implements IPlayer {
 
+    private final String name;
+    private final int playerNumber;
     private boolean phaseDone;
-    private String name;
     private int points;
     private IPhase phase;
-    private int playerNumber;
-
-
     private IDeckOfCards deck;
 
     public Player(String name, int number) {
@@ -71,5 +69,10 @@ public class Player implements IPlayer {
     @Override
     public void addPoints(int points) {
         this.points += points;
+    }
+
+    @Override
+    public int getPoints() {
+        return points;
     }
 }

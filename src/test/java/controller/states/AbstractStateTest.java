@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class AbstractStateTest {
 
-    AbstractState abstractTest;
+    private AbstractState abstractTest;
 
     @Before
     public void setUp() throws Exception {

@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Tarek on 29.09.2015. Be grateful for this superior Code!
  */
 public class Observable implements IObservable {
-    private List<IObserver> subscribers = new ArrayList<>(2);
+    private final List<IObserver> subscribers = new ArrayList<>(2);
 
     @Override
     public void addObserver(IObserver s) {

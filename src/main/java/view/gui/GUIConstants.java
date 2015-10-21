@@ -1,6 +1,7 @@
 package view.gui;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 
 import java.awt.*;
@@ -30,24 +31,12 @@ public final class GUIConstants {
     public static final String YELLOW_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardYellow.png";
     public static final String BACK_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardBack.png";
     public static final String BLANK_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/NoCard.png";
-    public static final String CARD_NUMBER_ONE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card1.png";
-    public static final String CARD_NUMBER_TWO_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card2.png";
-    public static final String CARD_NUMBER_THREE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card3.png";
-    public static final String CARD_NUMBER_FOUR_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card4.png";
-    public static final String CARD_NUMBER_FIVE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card5.png";
-    public static final String CARD_NUMBER_SIX_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card6.png";
-    public static final String CARD_NUMBER_SEVEN_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card7.png";
-    public static final String CARD_NUMBER_EIGHT_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card8.png";
-    public static final String CARD_NUMBER_NINE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card9.png";
-    public static final String CARD_NUMBER_TEN_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card10.png";
-    public static final String CARD_NUMBER_ELEVEN_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card11.png";
-    public static final String CARD_NUMBER_TWELVE_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card12.png";
-    public static final String CARD_NO_NUMBER_IMAGE_PATH = "src/main/resources/view/gui/cards/number/noNumber.png";
+    public static final String CARD_NUMBER_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card{0}.png";
     public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 50);
     public static final Dimension LOGO_LABEL_SIZE = new Dimension(WINDOW_WIDTH, 250);
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 50);
-    public static final Card BLANK_CARD = new Card(0, CardColor.BLANK);
-    public static final Card BACK_CARD = new Card(0, CardColor.BACK);
+    public static final Card BLANK_CARD = new Card(CardValue.ZERO, CardColor.BLANK);
+    public static final Card BACK_CARD = new Card(CardValue.ZERO, CardColor.BACK);
     /**
      * Resized Card Dimensions
      */
@@ -73,17 +62,6 @@ public final class GUIConstants {
      * Numbers
      */
     public static final int ONE = 1;
-    public static final int TWO = 2;
-    public static final int THREE = 3;
-    public static final int FOUR = 4;
-    public static final int FIVE = 5;
-    public static final int SIX = 6;
-    public static final int SEVEN = 7;
-    public static final int EIGHT = 8;
-    public static final int NINE = 9;
-    public static final int TEN = 10;
-    public static final int ELEVEN = 11;
-    public static final int TWELVE = 12;
     public static final int ZERO = 0;
     public static final Font FONT_PHASE_DESCRIPTION = new Font("Serif", Font.BOLD, 20);
     public static final int MAX_SHOWN_CARDS = 6;

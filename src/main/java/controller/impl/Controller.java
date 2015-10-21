@@ -8,7 +8,7 @@ import controller.states.impl.PlayerTurnFinished;
 import controller.states.impl.PlayerTurnNotFinished;
 import controller.states.impl.StartPhase;
 import model.card.ICard;
-import model.card.impl.CardComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
 import model.phase.impl.Phase5;
@@ -16,17 +16,16 @@ import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
 import util.CardCreator;
+import util.Observable;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
  */
-public class Controller extends util.Observable implements IController, UIController {
-    public static final int PLAYER_STARTING_DECK_SIZE = 10;
+public class Controller extends Observable implements IController, UIController {
+    private static final int PLAYER_STARTING_DECK_SIZE = 10;
 
     private final int playerCount;
 
@@ -53,7 +52,7 @@ public class Controller extends util.Observable implements IController, UIContro
         statusMessage = "";
     }
 
-
+    @SuppressWarnings("unused")
     public Controller() {
         this(2);
     }
@@ -96,7 +95,7 @@ public class Controller extends util.Observable implements IController, UIContro
 
     @Override
     public void addMultipleCardsToFinishedPhase(List<ICard> cards, ICardStack stack) {
-        cards.sort(new CardComparator());
+        cards.sort(new CardValueComparator());
         for (ICard card : cards) {
             addToFinishedPhase(card, stack);
         }
@@ -108,13 +107,14 @@ public class Controller extends util.Observable implements IController, UIContro
     }
 
     @Override
-    public int getNumberOfCardsForNextPlayer() {
+    public Map<Integer, Integer> getNumberOfCardsForNextPlayer() {
+        Map<Integer, Integer> enemies = new HashMap<>();
         for (IPlayer player : players) {
             if (player != currentPlayer) {
-                return player.getDeckOfCards().size();
+                enemies.put(player.getPlayerNumber(), player.getDeckOfCards().size());
             }
         }
-        return 0;
+        return enemies;
     }
 
     public void initGame() {
@@ -191,16 +191,12 @@ public class Controller extends util.Observable implements IController, UIContro
     }
 
     @Override
-    public boolean deckMatchesCurrentPlayersPhase(IDeckOfCards phase) {
-        return currentPlayer.getPhase().checkIfDeckFitsToPhase(phase);
-    }
-
-    @Override
-    public void addPhase(IDeckOfCards phase) {
+    public void addPhase(IDeckOfCards phase) throws IllegalArgumentException {
+        List<ICardStack> phases = currentPlayer.getPhase().splitAndCheckPhase(phase);
         currentPlayer.setPhaseDone(true);
         removePhaseFromCurrentPlayer(phase);
-        List<ICardStack> phases = currentPlayer.getPhase().splitPhaseIntoStacks(phase);
         putDownStacks(phases);
+
     }
 
     @Override
@@ -289,7 +285,7 @@ public class Controller extends util.Observable implements IController, UIContro
 
     private void calcAndAddPoints(IPlayer player) {
         for (ICard leftOverCard : player.getDeckOfCards()) {
-            player.addPoints(leftOverCard.getNumber());
+            player.addPoints(leftOverCard.getNumber().ordinal());
         }
     }
 

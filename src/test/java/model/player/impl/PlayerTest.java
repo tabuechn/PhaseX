@@ -1,39 +1,27 @@
 package model.player.impl;
 
-import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * If everything works right this class was
  * created by Konraifen88 on 22.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class PlayerTest {
 
-    public static final String PLAYER_NAME = "John";
+    private static final String PLAYER_NAME = "John";
 
-    @InjectMocks
-    IPlayer testee = new Player(PLAYER_NAME, 1);
-
-    @Mock
-    IDeckOfCards deckMock;
-
+    private IPlayer testee;
 
     @Before
     public void setUp() {
-        initMocks(this);
+        testee = new Player(PLAYER_NAME, 1);
     }
 
     @Test
@@ -49,6 +37,7 @@ public class PlayerTest {
 
     @Test
     public void checkIfDeckOfCardIsReturnedCorrectly() throws Exception {
+        testee.setDeckOfCards(new DeckOfCards());
         assertNotNull(testee.getDeckOfCards());
     }
 
@@ -71,5 +60,12 @@ public class PlayerTest {
     public void checkIfPhaseDoneIsSetCorrectly() {
         testee.setPhaseDone(true);
         assertTrue(testee.isPhaseDone());
+    }
+
+    @Test
+    public void checkIfPointsAreAddedCorrectly() {
+        testee.addPoints(10);
+        testee.addPoints(3);
+        assertEquals(13, testee.getPoints());
     }
 }

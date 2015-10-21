@@ -10,7 +10,7 @@ import javax.swing.*;
  * created by Konraifen88 on 28.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class ButtonLabel extends CenteredLabel {
+class ButtonLabel extends CenteredLabel {
 
     public ButtonLabel() {
         JButton startGame = new JButton("Start Game");

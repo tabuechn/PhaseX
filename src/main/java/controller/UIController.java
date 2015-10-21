@@ -8,6 +8,7 @@ import model.stack.ICardStack;
 import util.IObservable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tabuechn on 11.10.2015. Be grateful for this code! ^(°.°)^
@@ -64,10 +65,10 @@ public interface UIController extends IObservable {
      *
      * @return number of cards for the next player
      */
-    int getNumberOfCardsForNextPlayer();
+    Map<Integer, Integer> getNumberOfCardsForNextPlayer();
 
     /**
-     * Getter for the UIs to get all dtacks which are played in the current Round
+     * Getter for the UIs to get all stacks which are played in the current Round
      *
      * @return List of all stacks
      */

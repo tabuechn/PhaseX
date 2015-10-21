@@ -1,6 +1,7 @@
 package model.stack.impl;
 
 import model.card.CardColor;
+import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.impl.DeckOfCards;
 import org.junit.Before;
@@ -11,28 +12,29 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * Created by Tarek on 24.09.2015. Be gratefull for this superior Code
+ * Created by Tarek on 24.09.2015. Be grateful for this superior Code
  */
 public class PairStackTest {
 
-    PairStack ps;
+    private static final CardValue CARD_NUMBER_FOUR = CardValue.FOUR;
+
+    private PairStack testee;
 
     @Before
     public void setUp() throws Exception {
         DeckOfCards cardList = new DeckOfCards();
-        cardList.add(new Card(4, CardColor.BLUE));
-        cardList.add(new Card(4, CardColor.GREEN));
-        cardList.add(new Card(4, CardColor.RED));
-        ps = new PairStack(cardList);
+        cardList.add(new Card(CARD_NUMBER_FOUR, CardColor.BLUE));
+        cardList.add(new Card(CARD_NUMBER_FOUR, CardColor.GREEN));
+        cardList.add(new Card(CARD_NUMBER_FOUR, CardColor.RED));
+        testee = new PairStack(cardList);
     }
 
     @Test
     public void csTest() {
-        assertTrue(ps.getList().size() == 3);
-        assertTrue(ps.getStackNumber() == 4);
-        ps.addCardToStack(new Card(4, CardColor.BLUE));
-        assertTrue(ps.getList().size() == 4);
-        assertTrue(ps.checkCardMatching(new Card(4, CardColor.BLUE)));
-        assertFalse(ps.checkCardMatching(new Card(8, CardColor.GREEN)));
+        assertTrue(testee.getStackNumber().equals(CARD_NUMBER_FOUR));
+        testee.addCardToStack(new Card(CARD_NUMBER_FOUR, CardColor.BLUE));
+        assertTrue(testee.getList().size() == 4);
+        assertTrue(testee.checkCardMatching(new Card(CARD_NUMBER_FOUR, CardColor.BLUE)));
+        assertFalse(testee.checkCardMatching(new Card(CardValue.EIGHT, CardColor.GREEN)));
     }
 }

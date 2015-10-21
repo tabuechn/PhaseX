@@ -8,12 +8,12 @@ import model.stack.ICardStack;
 import util.IObservable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
  */
 public interface IController extends IObservable {
-
 
     void notifyObservers();
 
@@ -68,7 +68,7 @@ public interface IController extends IObservable {
      *
      * @return number of cards for the next player
      */
-    int getNumberOfCardsForNextPlayer();
+    Map<Integer, Integer> getNumberOfCardsForNextPlayer();
 
     /**
      * Initialises the Game
@@ -81,12 +81,12 @@ public interface IController extends IObservable {
     void newRound();
 
     /**
-     * End the Round by adding Points for the Players with remaining cards and incrementing their phasecounter
+     * End the Round by adding Points for the Players with remaining cards and incrementing their phaseCounter
      */
     void endRound();
 
     /**
-     * Getter for the UIs to get all dtacks which are played in the current Round
+     * Getter for the UIs to get all stacks which are played in the current Round
      *
      * @return List of all stacks
      */
@@ -136,19 +136,11 @@ public interface IController extends IObservable {
     void nextPlayer();
 
     /**
-     * Checks if the given IDeckOfCards matches the current phase of the current Player
-     *
-     * @param phase phase
-     * @return tur if the cards match the phase or else false
-     */
-    boolean deckMatchesCurrentPlayersPhase(IDeckOfCards phase);
-
-    /**
      * Removes the Card form the players hand and lays the phase down
      *
      * @param phase the phase to lay down
      */
-    void addPhase(IDeckOfCards phase);
+    void addPhase(IDeckOfCards phase) throws IllegalArgumentException;
 
     /**
      * Getter for the draw pile

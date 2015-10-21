@@ -11,7 +11,7 @@ import javax.swing.*;
  * created by Konraifen88 on 01.10.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class OpenPile extends JPanel {
+class OpenPile extends JPanel {
 
     private DrawnCard drawn;
 

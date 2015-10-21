@@ -21,9 +21,9 @@ public class MenuPanel extends BackgroundPanel {
     private static final Logger LOG = LogManager.getLogger(MenuPanel.class);
     private final UIController controller;
 
-    private JLabel messages = new NotificationLabel();
+    private final JLabel messages = new NotificationLabel();
 
-    private JLabel logo = new LogoLabel();
+    private final JLabel logo = new LogoLabel();
 
     private JButton startButton;
 
@@ -40,7 +40,7 @@ public class MenuPanel extends BackgroundPanel {
         this.setVisible(true);
     }
 
-    public JPanel getLogoAndMessagePanel() {
+    private JPanel getLogoAndMessagePanel() {
         BackgroundPanel headerPane = new BackgroundPanel();
         headerPane.setLayout(new BorderLayout());
         headerPane.add(logo, BorderLayout.NORTH);
