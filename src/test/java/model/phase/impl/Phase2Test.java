@@ -5,6 +5,7 @@ import model.card.CardValue;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.stack.ICardStack;
@@ -53,15 +54,15 @@ public class Phase2Test {
     }
 
     @Test
-    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() {
+    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(true);
         ICardStack tmp = testee.splitAndCheckPhase(street).get(0);
         assertTrue(tmp instanceof StreetStack);
         street.forEach(card -> assertTrue(tmp.getList().contains(card)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenCheckIsFailingAExceptionIsThrown() {
+    @Test(expected = DeckNotFitException.class)
+    public void whenCheckIsFailingAExceptionIsThrown() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(false);
         testee.splitAndCheckPhase(street);
     }

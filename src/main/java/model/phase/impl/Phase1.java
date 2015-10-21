@@ -2,6 +2,7 @@ package model.phase.impl;
 
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.IPhaseSplitter;
@@ -43,14 +44,14 @@ public class Phase1 implements IPhase {
     }
 
     @Override
-    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException {
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException {
         List<IDeckOfCards> splitted = phaseSplitter.split(phase);
         if (phaseChecker.check(splitted.get(FIRST_TRIPLE_INDEX))
                 && phaseChecker.check(splitted.get(SECOND_TRIPLE_INDEX))) {
             return Arrays.asList(new PairStack(splitted.get(FIRST_TRIPLE_INDEX)),
                     new PairStack(splitted.get(SECOND_TRIPLE_INDEX)));
         }
-        throw new IllegalArgumentException();
+        throw new DeckNotFitException();
     }
 
 

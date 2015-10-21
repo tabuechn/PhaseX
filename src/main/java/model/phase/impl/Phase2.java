@@ -1,6 +1,7 @@
 package model.phase.impl;
 
 import model.deckOfCards.IDeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.checker.StreetChecker;
@@ -34,11 +35,11 @@ public class Phase2 implements IPhase {
     }
 
     @Override
-    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException {
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException {
         if (phaseChecker.check(phase)) {
             return Collections.singletonList(new StreetStack(phase));
         }
-        throw new IllegalArgumentException();
+        throw new DeckNotFitException();
     }
 
     @Override

@@ -11,6 +11,7 @@ import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.impl.Phase5;
 import model.player.IPlayer;
 import model.player.impl.Player;
@@ -191,7 +192,7 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
-    public void addPhase(IDeckOfCards phase) throws IllegalArgumentException {
+    public void addPhase(IDeckOfCards phase) throws DeckNotFitException {
         List<ICardStack> phases = currentPlayer.getPhase().splitAndCheckPhase(phase);
         currentPlayer.setPhaseDone(true);
         removePhaseFromCurrentPlayer(phase);

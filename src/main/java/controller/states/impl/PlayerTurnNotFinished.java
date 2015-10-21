@@ -4,6 +4,7 @@ import controller.IController;
 import controller.states.AbstractState;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
+import model.phase.DeckNotFitException;
 
 /**
  * Created by Tarek on 25.09.2015. Be grateful for this superior Code!
@@ -23,7 +24,7 @@ public class PlayerTurnNotFinished extends AbstractState {
         try {
             controller.addPhase(phase);
             controller.setRoundState(new PlayerTurnFinished());
-        } catch (IllegalArgumentException e) {
+        } catch (DeckNotFitException e) {
             //Do not change roundState on exception and continue application normally.
         }
     }

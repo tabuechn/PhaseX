@@ -6,6 +6,7 @@ import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.IPhaseSplitter;
@@ -70,7 +71,7 @@ public class Phase1Test {
     }
 
     @Test
-    public void checkWithTwoDifferentTriplesShouldReturnTwoPairStacks() {
+    public void checkWithTwoDifferentTriplesShouldReturnTwoPairStacks() throws DeckNotFitException {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_2, CARD_2, CARD_2));
         List<ICardStack> stacks = testee.splitAndCheckPhase(DECK_TO_SPLIT);
         checkCorrectSplittedPhase(stacks);
@@ -79,7 +80,7 @@ public class Phase1Test {
     }
 
     @Test
-    public void checkWithTwoSameTriplesShouldReturnTwoPairStacks() {
+    public void checkWithTwoSameTriplesShouldReturnTwoPairStacks() throws DeckNotFitException {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_1, CARD_1, CARD_1));
         List<ICardStack> stacks = testee.splitAndCheckPhase(DECK_TO_SPLIT);
         checkCorrectSplittedPhase(stacks);
@@ -87,15 +88,15 @@ public class Phase1Test {
         assertEquals(CARD_1, stacks.get(1).getList().get(0));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void checkWithOnlyOneCorrectTripleShouldThrowException() {
+    @Test(expected = DeckNotFitException.class)
+    public void checkWithOnlyOneCorrectTripleShouldThrowException() throws DeckNotFitException {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_1, CARD_1), Arrays.asList(CARD_1, CARD_2, CARD_1));
         when(checkerMock.check(any())).thenReturn(false);
         testee.splitAndCheckPhase(DECK_TO_SPLIT);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void checkWithoutCorrectTripleShouldThrowException() {
+    @Test(expected = DeckNotFitException.class)
+    public void checkWithoutCorrectTripleShouldThrowException() throws DeckNotFitException {
         createSplittedDeck(Arrays.asList(CARD_1, CARD_2, CARD_1), Arrays.asList(CARD_1, CARD_2, CARD_1));
         when(checkerMock.check(any())).thenReturn(false);
         testee.splitAndCheckPhase(DECK_TO_SPLIT);

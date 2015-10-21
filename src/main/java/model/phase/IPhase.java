@@ -25,7 +25,7 @@ public interface IPhase {
      * @param phase the cards of the player which should be played.
      * @return the splitted cardStacks which fit the requirement for current phase.
      */
-    List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws IllegalArgumentException;
+    List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException;
 
     /**
      * Getter for the next phase.

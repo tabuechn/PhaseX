@@ -6,6 +6,7 @@ import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.IPhaseSplitter;
@@ -65,7 +66,7 @@ public class Phase5Test {
     }
 
     @Test
-    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() {
+    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(true);
         List<ICardStack> tmp = testee.splitAndCheckPhase(cards);
         verify(checkerMock, times(2)).check(any(IDeckOfCards.class));
@@ -77,8 +78,8 @@ public class Phase5Test {
         assertEquals(secondQuadruple, tmp.get(QUADRUPLE_INDEX_2).getList());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenBothChecksFailAnExceptionIsThrown() {
+    @Test(expected = DeckNotFitException.class)
+    public void whenBothChecksFailAnExceptionIsThrown() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(false);
         testee.splitAndCheckPhase(cards);
     }

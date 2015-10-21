@@ -6,6 +6,7 @@ import model.card.ICard;
 import model.card.impl.Card;
 import model.deckOfCards.IDeckOfCards;
 import model.deckOfCards.impl.DeckOfCards;
+import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.IPhaseSplitter;
@@ -67,7 +68,7 @@ public class Phase4Test {
     }
 
     @Test
-    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() {
+    public void whenCheckIsPassingAStackWithTheCardsShouldBeReturned() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(true);
         List<ICardStack> tmp = testee.splitAndCheckPhase(cards);
         //Checking Quadruple
@@ -78,21 +79,21 @@ public class Phase4Test {
         assertEquals(pair, tmp.get(PAIR_INDEX).getList());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenBothChecksFailAnExceptionIsThrown() {
+    @Test(expected = DeckNotFitException.class)
+    public void whenBothChecksFailAnExceptionIsThrown() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(false);
         testee.splitAndCheckPhase(cards);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenPairChecksFailsAnExceptionIsThrown() {
+    @Test(expected = DeckNotFitException.class)
+    public void whenPairChecksFailsAnExceptionIsThrown() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(true);
         when(pairCheckerMock.check(any())).thenReturn(false);
         testee.splitAndCheckPhase(cards);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenQuadrupleChecksFailAnExceptionIsThrown() {
+    @Test(expected = DeckNotFitException.class)
+    public void whenQuadrupleChecksFailAnExceptionIsThrown() throws DeckNotFitException {
         setCheckIsPassingAndFillDeck(true);
         when(quadrupleCheckerMock.check(any())).thenReturn(false);
         testee.splitAndCheckPhase(cards);

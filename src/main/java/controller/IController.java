@@ -3,6 +3,7 @@ package controller;
 import controller.states.AbstractState;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
+import model.phase.DeckNotFitException;
 import model.player.IPlayer;
 import model.stack.ICardStack;
 import util.IObservable;
@@ -140,7 +141,7 @@ public interface IController extends IObservable {
      *
      * @param phase the phase to lay down
      */
-    void addPhase(IDeckOfCards phase) throws IllegalArgumentException;
+    void addPhase(IDeckOfCards phase) throws DeckNotFitException;
 
     /**
      * Getter for the draw pile
