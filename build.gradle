@@ -49,9 +49,9 @@ jacoco {
 }
 
 sonarqube {
-    sonar.projectKey=de.htwg.se.PhaseX
-    sonar.projectName=PhaseX
-    sonar.projectVersion=1.0-SNAPSHOT
+    sonar.projectKey 'de.htwg.se.PhaseX'
+    sonar.projectName 'PhaseX'
+    sonar.projectVersion '1.0-SNAPSHOT'
 }
 
 
