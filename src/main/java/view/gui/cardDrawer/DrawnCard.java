@@ -83,8 +83,6 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
             label.setFont(GUIConstants.DEFAULT_FONT);
             label.setText(number.toString());
         } else {
-            System.out.println(path);
-            System.out.println(getClass().getResource(path));
             ImageIcon ii = new ImageIcon(getClass().getResource(path));
             ii.setImage(ii.getImage()
                     .getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH, GUIConstants.RESIZED_CARD_HEIGHT,
