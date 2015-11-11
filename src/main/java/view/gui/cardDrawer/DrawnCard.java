@@ -40,7 +40,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
         if (StringUtils.isBlank(path)) {
             label.setText(color.name());
         } else {
-            ImageIcon ii = new ImageIcon(path);
+            ImageIcon ii = new ImageIcon(getClass().getResource(path));
             ii.setImage(ii.getImage()
                     .getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH, GUIConstants.RESIZED_CARD_HEIGHT,
                             Image.SCALE_DEFAULT));
@@ -83,7 +83,9 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
             label.setFont(GUIConstants.DEFAULT_FONT);
             label.setText(number.toString());
         } else {
-            ImageIcon ii = new ImageIcon(path);
+            System.out.println(path);
+            System.out.println(getClass().getResource(path));
+            ImageIcon ii = new ImageIcon(getClass().getResource(path));
             ii.setImage(ii.getImage()
                     .getScaledInstance(GUIConstants.RESIZED_CARD_WIDTH, GUIConstants.RESIZED_CARD_HEIGHT,
                             Image.SCALE_DEFAULT));
@@ -94,7 +96,7 @@ public class DrawnCard extends JLayeredPane implements ActionListener {
     }
 
     private String getCardNumberImagePath(CardValue number) {
-        return GUIConstants.CARD_NUMBER_IMAGE_PATH.replace("{0}", Integer.toString(number.ordinal()));
+        return GUIConstants.CARD_NUMBER_IMAGE.replace("{0}", Integer.toString(number.ordinal()));
     }
 
     @Override

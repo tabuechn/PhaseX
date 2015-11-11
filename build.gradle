@@ -41,6 +41,17 @@ dependencies {
     compile 'com.google.code.findbugs:annotations:3.0.0'
 }
 
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'phasex.Init'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 /*
  * Tools
  */
@@ -58,6 +69,8 @@ sonarqube {
         property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
         property "sonar.jdbc.username", "admin"
         property "sonar.jdbc.password", "admin"
+        property "sonar.binaries", "build/classes"
+        property "sonar.java.coveragePlugin", "jacoco"
     }
 }
 

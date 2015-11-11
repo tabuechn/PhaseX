@@ -36,7 +36,7 @@ public class BackgroundPanel extends JPanel {
 
     private void getBackgroundImage() {
         try {
-            background = ImageIO.read(new File(GUIConstants.BACKGROUND_IMAGE_PATH));
+            background = ImageIO.read(getClass().getResource(GUIConstants.BACKGROUND_IMAGE_PATH));
         } catch (IOException e) {
             LOG.error("Background image can not be found!", e);
         }

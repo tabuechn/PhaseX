@@ -23,15 +23,15 @@ public final class GUIConstants {
     /**
      * Image Paths
      */
-    public static final String BACKGROUND_IMAGE_PATH = "src/main/resources/view/gui/Background.png";
-    public static final String LOGO_IMAGE_PATH = "src/main/resources/view/gui/Logo.png";
-    public static final String BLUE_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardBlue.png";
-    public static final String GREEN_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardGreen.png";
-    public static final String RED_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardRed.png";
-    public static final String YELLOW_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardYellow.png";
-    public static final String BACK_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/CardBack.png";
-    public static final String BLANK_CARD_IMAGE_PATH = "src/main/resources/view/gui/cards/NoCard.png";
-    public static final String CARD_NUMBER_IMAGE_PATH = "src/main/resources/view/gui/cards/number/Card{0}.png";
+    public static final String BACKGROUND_IMAGE_PATH = "/view/gui/specialViews/Background.png";
+    public static final String LOGO_IMAGE_PATH = "/view/gui/views/menu/elements/LogoLabel/Logo.png";
+    public static final String BLUE_CARD_IMAGE_PATH = "/view/gui/cardDrawer/CardBlue.png";
+    public static final String GREEN_CARD_IMAGE_PATH = "/view/gui/cardDrawer/CardGreen.png";
+    public static final String RED_CARD_IMAGE_PATH = "/view/gui/cardDrawer/CardRed.png";
+    public static final String YELLOW_CARD_IMAGE_PATH = "/view/gui/cardDrawer/CardYellow.png";
+    public static final String BACK_CARD_IMAGE_PATH = "/view/gui/cardDrawer/CardBack.png";
+    public static final String BLANK_CARD_IMAGE_PATH = "/view/gui/cardDrawer/NoCard.png";
+    public static final String CARD_NUMBER_IMAGE = "/view/gui/cardDrawer/Card{0}.png";
     public static final Dimension MAXIMUM_NOTIFICATION_SIZE = new Dimension(WINDOW_WIDTH, 50);
     public static final Dimension LOGO_LABEL_SIZE = new Dimension(WINDOW_WIDTH, 250);
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 50);

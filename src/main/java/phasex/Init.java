@@ -12,21 +12,46 @@ import java.util.Scanner;
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
  */
 @SuppressFBWarnings("DLS_DEAD_LOCAL_STORE")
-final class Init {
+public class Init {
+
+    private static Init instance;
+
+    private static TUI tui;
+    private GUI gui;
+    private Injector in;
 
     private Init() {
+        in = Guice.createInjector(new PhaseXModule());
+
+        tui = in.getInstance(TUI.class);
+
+        gui = in.getInstance(GUI.class);
+        gui.start();
+    }
+
+    public static Init getInstance() {
+        if (instance == null) {
+            instance = new Init();
+        }
+        return instance;
+    }
+
+    public Injector getIn() {
+        return in;
+    }
+
+    public static TUI getTui() {
+        return tui;
+    }
+
+    public GUI getGui() {
+        return gui;
     }
 
     @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public static void main(String[] argv) {
 
-
-        Injector in = Guice.createInjector(new PhaseXModule());
-
-        TUI tui = in.getInstance(TUI.class);
-
-        GUI gui = in.getInstance(GUI.class);
-        gui.start();
+        Init in = new Init();
 
         Scanner scanner = new Scanner(System.in);
         //noinspection InfiniteLoopStatement

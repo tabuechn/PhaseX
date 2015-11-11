@@ -29,14 +29,6 @@ public class LogoLabel extends CenteredLabel {
 
 
     private void addLogoImage() {
-        BufferedImage image;
-        try {
-            image = ImageIO.read(new File(GUIConstants.LOGO_IMAGE_PATH));
-            if (image != null) {
-                this.setIcon(new ImageIcon(image));
-            }
-        } catch (IOException e) {
-            LOG.error("Logo image can not be found!", e);
-        }
+        this.setIcon(new ImageIcon(getClass().getResource(GUIConstants.LOGO_IMAGE_PATH)));
     }
 }

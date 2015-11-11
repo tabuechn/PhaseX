@@ -8,12 +8,12 @@ import controller.impl.Controller;
 
 
 /**
- * Created by tabuechn on 07.10.2015. Be grateful for this code! ^(°.°)^
+ * Created by tabuechn on 07.10.2015. Be grateful for this code! ^(ï¿½.ï¿½)^
  */
-class PhaseXModule extends AbstractModule {
+public class PhaseXModule extends AbstractModule {
 
     @Override
-    protected void configure() {
+    public void configure() {
         bind(IController.class).to(Controller.class).in(Singleton.class);
         bind(UIController.class).to(Controller.class).in(Singleton.class);
 
