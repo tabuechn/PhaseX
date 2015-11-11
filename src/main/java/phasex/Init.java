@@ -16,7 +16,7 @@ public class Init {
 
     private static Init instance;
 
-    private static TUI tui;
+    private TUI tui;
     private GUI gui;
     private Injector in;
 
@@ -40,7 +40,7 @@ public class Init {
         return in;
     }
 
-    public static TUI getTui() {
+    public TUI getTui() {
         return tui;
     }
 
@@ -56,7 +56,7 @@ public class Init {
         Scanner scanner = new Scanner(System.in);
         //noinspection InfiniteLoopStatement
         while (true) {
-            tui.processInputLine(scanner.nextLine());
+            in.tui.processInputLine(scanner.nextLine());
         }
 
     }

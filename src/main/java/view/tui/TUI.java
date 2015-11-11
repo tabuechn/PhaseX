@@ -9,6 +9,7 @@ import model.player.IPlayer;
 import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.util.StringBuilders;
 import util.Event;
 import util.IObserver;
 
@@ -23,6 +24,16 @@ public class TUI implements IObserver {
 
     private static final Logger LOGGER = LogManager.getLogger(TUI.class);
     private final UIController controller;
+
+    private StringBuilder sb = new StringBuilder();
+
+    public StringBuilder getSb() {
+        synchronized (sb) {
+            StringBuilder tmp = sb;
+            sb = new StringBuilder();
+            return tmp;
+        }
+    }
 
     @Inject
     public TUI(UIController pController) {
@@ -50,7 +61,7 @@ public class TUI implements IObserver {
                 checkStartPhase(input);
                 break;
             default:
-                LOGGER.info("Undefined State");
+                this.log("Undefined State");
                 break;
         }
     }
@@ -62,19 +73,24 @@ public class TUI implements IObserver {
         } else if (lowerCaseInput.matches("addtophase [0-3] ([0-9]|10)")) {
             addToPhase(lowerCaseInput);
         } else {
-            LOGGER.info("Wrong input: unknown command or wrong arguments");
+            this.log("Wrong input: unknown command or wrong arguments");
         }
+    }
+
+    private void log(String log) {
+        LOGGER.info(log);
+        sb.append(log + "\n");
     }
 
     private void addToPhase(String input) {
         int stackIndex = Integer.parseInt(input.split(" ")[1]);
         int cardIndex = Integer.parseInt(input.split(" ")[2]);
         if (controller.getAllStacks().size() < stackIndex + 1) {
-            LOGGER.info("Wrong input: there is no phase with the index on the field");
+            this.log("Wrong input: there is no phase with the index on the field");
             return;
         }
         if (controller.getCurrentPlayersHand().size() < cardIndex + 1) {
-            LOGGER.info("Wrong input: the current player doesn't have a card with that index");
+            this.log("Wrong input: the current player doesn't have a card with that index");
             return;
         }
         controller.addToFinishedPhase(controller.getCurrentPlayersHand().get(cardIndex),
@@ -88,7 +104,7 @@ public class TUI implements IObserver {
         } else if (lowerCaseInput.matches("playphase (([0-9]|10)\\s){5,7}([0-9]|10)")) {
             playPhaseInput(lowerCaseInput);
         } else {
-            LOGGER.info("Wrong input: unknown command or wrong arguments");
+            this.log("Wrong input: unknown command or wrong arguments");
         }
     }
 
@@ -99,7 +115,7 @@ public class TUI implements IObserver {
         for (int i = 1; i < splitArray.length; i++) {
             int index = Integer.parseInt(splitArray[i]);
             if (numberSet.contains(index)) {
-                LOGGER.info("Wrong input: you cannot pick a card twice");
+                this.log("Wrong input: you cannot pick a card twice");
                 return;
             }
             numberSet.add(index);
@@ -113,7 +129,7 @@ public class TUI implements IObserver {
         try {
             controller.discard(controller.getCurrentPlayersHand().get(number));
         } catch (IndexOutOfBoundsException e) {
-            LOGGER.info("Wrong input: you don't have a card with that index");
+            this.log("Wrong input: you don't have a card with that index");
         }
     }
 
@@ -129,7 +145,7 @@ public class TUI implements IObserver {
                 controller.exitEvent();
                 break;
             default:
-                LOGGER.info("Wrong input: unknown command");
+                this.log("Wrong input: unknown command");
                 break;
         }
     }
@@ -143,34 +159,34 @@ public class TUI implements IObserver {
                 controller.exitEvent();
                 break;
             default:
-                LOGGER.info("Wrong input: unknown command");
+                this.log("Wrong input: unknown command");
                 break;
         }
     }
 
 
     private void printDraw() {
-        LOGGER.info(controller.getCurrentPlayer().getPlayerName() + "'s Turn");
+        this.log(controller.getCurrentPlayer().getPlayerName() + "'s Turn");
         printCurrentPlayersHand();
         printStacks();
         if (controller.getDiscardPile().size() > 0) {
             ICard discardPileCard = controller.getDiscardPile().get(controller.getDiscardPile().size() - 1);
-            LOGGER.info("The Card on the Discard Pile is: " + discardPileCard.getNumber().toString() +
+            this.log("The Card on the Discard Pile is: " + discardPileCard.getNumber().toString() +
                     discardPileCard.getColor().toString());
-            LOGGER.info("Enter DrawHidden to draw from the draw pile");
-            LOGGER.info("Enter DrawDiscard to draw from the discard pile");
+            this.log("Enter DrawHidden to draw from the draw pile");
+            this.log("Enter DrawDiscard to draw from the discard pile");
         } else {
-            LOGGER.info("The Discard Pile is empty");
-            LOGGER.info("Enter DrawHidden to draw from the draw pile");
+            this.log("The Discard Pile is empty");
+            this.log("Enter DrawHidden to draw from the draw pile");
         }
     }
 
     private void printStacks() {
         List<ICardStack> allStacks = controller.getAllStacks();
         if (allStacks.isEmpty()) {
-            LOGGER.info("There are currently no phases played");
+            this.log("There are currently no phases played");
         } else {
-            LOGGER.info("These Phases are currently played");
+            this.log("These Phases are currently played");
             printAllStacks(allStacks);
         }
     }
@@ -189,11 +205,11 @@ public class TUI implements IObserver {
             out.append(card.getColor().toString());
             out.append(", ");
         }
-        LOGGER.info(out.toString());
+        this.log(out.toString());
     }
 
     private void printCurrentPlayersHand() {
-        LOGGER.info("This is the current players hand:");
+        this.log("This is the current players hand:");
         StringBuilder out = new StringBuilder();
         for (ICard card : controller.getCurrentPlayersHand()) {
             out.append(card.getNumber().toString());
@@ -201,12 +217,12 @@ public class TUI implements IObserver {
             out.append(card.getColor().toString());
             out.append(", ");
         }
-        LOGGER.info(out);
+        this.log(out.toString());
     }
 
     private void printStart() {
-        LOGGER.info("Welcome to PhaseX");
-        LOGGER.info("Enter start to start a new game and exit to close the application");
+        this.log("Welcome to PhaseX");
+        this.log("Enter start to start a new game and exit to close the application");
     }
 
     @Override
@@ -235,24 +251,24 @@ public class TUI implements IObserver {
     }
 
     private void printPlayerTurnFinished() {
-        LOGGER.info(controller.getCurrentPlayer().getPlayerName() + "'s turn");
+        this.log(controller.getCurrentPlayer().getPlayerName() + "'s turn");
         printCurrentPlayersHand();
         printStacks();
-        LOGGER.info("Enter discard and the index of the card to discard a card");
-        LOGGER.info("or AddToPhase and the index of the phase and the index of the card");
+        this.log("Enter discard and the index of the card to discard a card");
+        this.log("or AddToPhase and the index of the phase and the index of the card");
     }
 
     private void printPlayerTurnNotFinished() {
-        LOGGER.info(controller.getCurrentPlayer().getPlayerName() + "'s turn");
+        this.log(controller.getCurrentPlayer().getPlayerName() + "'s turn");
         printCurrentPlayersHand();
         printStacks();
-        LOGGER.info("Enter discard and the index of the card to discard a card");
-        LOGGER.info("or PlayPhase and the indexes of the cards for the phase to lay down your phase");
+        this.log("Enter discard and the index of the card to discard a card");
+        this.log("or PlayPhase and the indexes of the cards for the phase to lay down your phase");
     }
 
     private void printEnd() {
         IPlayer winner = controller.getCurrentPlayer();
-        LOGGER.info("Congratulation " + winner.getPlayerName() + "! You won the Game!");
-        LOGGER.info("Enter start to start a new game or exit to close the application");
+        this.log("Congratulation " + winner.getPlayerName() + "! You won the Game!");
+        this.log("Enter start to start a new game or exit to close the application");
     }
 }
