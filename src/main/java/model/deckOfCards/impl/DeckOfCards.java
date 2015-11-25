@@ -1,5 +1,6 @@
 package model.deckOfCards.impl;
 
+import com.google.gson.Gson;
 import model.card.ICard;
 import model.deckOfCards.IDeckOfCards;
 
@@ -22,4 +23,8 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards {
         super(cards);
     }
 
+    @Override
+    public String getJSon() {
+        return new Gson().toJson(this);
+    }
 }

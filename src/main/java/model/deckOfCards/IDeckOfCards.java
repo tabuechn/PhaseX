@@ -24,4 +24,11 @@ public interface IDeckOfCards extends List<ICard> {
      */
     ICard removeFirst();
 
+
+    /**
+     * Method for getting a JSon Object of the current deck
+     * @return a json formatted string
+     */
+    String getJSon();
+
 }
