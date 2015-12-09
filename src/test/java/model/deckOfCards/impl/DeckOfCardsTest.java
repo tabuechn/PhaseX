@@ -66,13 +66,14 @@ public class DeckOfCardsTest {
     @Test
     public void aJsonFormattedStringShouldBeReturnedForGetJson() {
         String tmp = testee.getJSon();
+        System.out.println(tmp);
         assertEquals(JSON, tmp);
     }
 
     @Test
     public void emptyConstructorCanBeCalled(){
         testee = new DeckOfCards();
-        assertTrue(testee instanceof IDeckOfCards);
+        assertEquals(true, testee instanceof IDeckOfCards);
     }
 
     private void createAFilledDeckOfCards() {
