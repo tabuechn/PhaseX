@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by tabuechn on 11.10.2015. Be grateful for this code! ^(°.°)^
+ * Created by tabuechn on 11.10.2015. Be grateful for this code! ^(ï¿½.ï¿½)^
  */
 public interface UIController extends IObservable {
     /**
@@ -101,6 +101,13 @@ public interface UIController extends IObservable {
      * @return the current player
      */
     IPlayer getCurrentPlayer();
+
+    /**
+     * Getter for the opponent player
+     *
+     * @return the opponent player
+     */
+    IPlayer getOpponentPlayer();
 
     /**
      * Stops the application

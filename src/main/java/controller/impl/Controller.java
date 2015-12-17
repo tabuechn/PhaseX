@@ -35,6 +35,9 @@ public class Controller extends Observable implements IController, UIController 
     private IPlayer[] players;
 
     private IPlayer currentPlayer;
+
+    private IPlayer opponentPlayer;
+
     private int currentPlayerIndex;
 
     private List<ICardStack> allPhases;
@@ -212,6 +215,17 @@ public class Controller extends Observable implements IController, UIController 
 
     @Override
     public IPlayer getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    @Override
+    public IPlayer getOpponentPlayer() {
+        for(IPlayer player : players) {
+            if(player != currentPlayer) {
+                return player;
+            }
+        }
+        // should never happen
         return currentPlayer;
     }
 
