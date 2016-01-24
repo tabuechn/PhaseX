@@ -25,8 +25,8 @@ public class Init {
 
         tui = in.getInstance(TUI.class);
 
-        gui = in.getInstance(GUI.class);
-        gui.start();
+//        gui = in.getInstance(GUI.class);
+//        gui.start();
     }
 
     public static Init getInstance() {

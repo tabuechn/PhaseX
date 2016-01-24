@@ -54,6 +54,6 @@ public class Phase3 implements IPhase {
 
     @Override
     public boolean isNumberPhase() {
-        return !(phaseChecker instanceof ColorChecker);
+        return phaseChecker instanceof ColorChecker;
     }
 }

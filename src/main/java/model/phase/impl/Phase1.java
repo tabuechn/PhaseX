@@ -68,7 +68,7 @@ public class Phase1 implements IPhase {
 
     @Override
     public boolean isNumberPhase() {
-        return !(phaseChecker instanceof ColorChecker);
+        return phaseChecker instanceof ColorChecker;
     }
 
 
