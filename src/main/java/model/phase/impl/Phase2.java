@@ -4,6 +4,7 @@ import model.deckOfCards.IDeckOfCards;
 import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
+import model.phase.checker.ColorChecker;
 import model.phase.checker.StreetChecker;
 import model.stack.ICardStack;
 import model.stack.impl.StreetStack;
@@ -50,5 +51,10 @@ public class Phase2 implements IPhase {
     @Override
     public int getPhaseNumber() {
         return PHASE_NUMBER;
+    }
+
+    @Override
+    public boolean isNumberPhase() {
+        return !(phaseChecker instanceof ColorChecker);
     }
 }

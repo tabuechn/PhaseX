@@ -127,4 +127,6 @@ public interface UIController extends IObservable {
      * @return description of the current phase
      */
     String getCurrentPhaseDescription();
+
+    IPlayer getWinner();
 }

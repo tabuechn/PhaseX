@@ -36,8 +36,6 @@ public class Controller extends Observable implements IController, UIController 
 
     private IPlayer currentPlayer;
 
-    private IPlayer opponentPlayer;
-
     private int currentPlayerIndex;
 
     private List<ICardStack> allPhases;
@@ -47,8 +45,11 @@ public class Controller extends Observable implements IController, UIController 
     private IDeckOfCards discardPile;
     private String statusMessage;
 
+    private IPlayer winner;
+
 
     public Controller(int numberOfPlayers) {
+        winner = null;
         playerCount = numberOfPlayers;
         drawPile = new DeckOfCards();
         discardPile = new DeckOfCards();
@@ -347,5 +348,15 @@ public class Controller extends Observable implements IController, UIController 
     private void removePhaseFromCurrentPlayer(IDeckOfCards phase) {
         IDeckOfCards playerDeck = currentPlayer.getDeckOfCards();
         phase.forEach(playerDeck::remove);
+    }
+
+    @Override
+    public IPlayer getWinner() {
+        return winner;
+    }
+
+    @Override
+    public void setWinner() {
+        this.winner = getCurrentPlayer();
     }
 }

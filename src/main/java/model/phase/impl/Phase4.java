@@ -6,6 +6,7 @@ import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.IPhaseSplitter;
+import model.phase.checker.ColorChecker;
 import model.phase.checker.ValueChecker;
 import model.phase.splitter.DeckSplitter;
 import model.stack.ICardStack;
@@ -69,5 +70,10 @@ public class Phase4 implements IPhase {
     @Override
     public int getPhaseNumber() {
         return PHASE_NUMBER;
+    }
+
+    @Override
+    public boolean isNumberPhase() {
+        return !(pairPhaseChecker instanceof ColorChecker || quadruplePhaseChecker instanceof ColorChecker);
     }
 }

@@ -22,6 +22,7 @@ public class PlayerTurnFinished extends AbstractState {
     private void endOfTurn(IController controller) {
         if (controller.isGameFinished()) {
             controller.setRoundState(new EndPhase());
+            controller.setWinner();
             controller.setStatusMessage("Player " + controller.getCurrentPlayer().getPlayerName() + " has won");
         } else {
             controller.endRound();

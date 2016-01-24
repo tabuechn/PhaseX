@@ -1,5 +1,7 @@
 package model.player.impl;
 
+import model.card.impl.CardColorComparator;
+import model.card.impl.CardValueComparator;
 import model.deckOfCards.IDeckOfCards;
 import model.phase.IPhase;
 import model.phase.impl.Phase1;
@@ -38,6 +40,10 @@ public class Player implements IPlayer {
 
     @Override
     public void setDeckOfCards(IDeckOfCards cards) {
+        if (phase.isNumberPhase())
+            cards.sort(new CardColorComparator());
+        else
+            cards.sort(new CardValueComparator());
         this.deck = cards;
     }
 

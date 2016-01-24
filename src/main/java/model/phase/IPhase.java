@@ -38,4 +38,9 @@ public interface IPhase {
      * @return the phase as a number (for example: Phase5 will return 5);
      */
     int getPhaseNumber();
+
+    /**
+     *
+     */
+    boolean isNumberPhase();
 }

@@ -188,4 +188,6 @@ public interface IController extends IObservable {
      * @return the current amount of players
      */
     int getPlayerCount();
+
+    void setWinner();
 }
