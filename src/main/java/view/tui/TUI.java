@@ -124,6 +124,7 @@ public class TUI implements IObserver {
         controller.playPhase(phase);
     }
 
+    @SuppressWarnings("squid:S1166")
     private void discardInput(String input) {
         int number = Integer.parseInt(input.split(" ")[1]);
         try {

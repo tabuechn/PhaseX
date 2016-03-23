@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public interface IController extends IObservable {
 
+    @Override
     void notifyObservers();
 
     /**

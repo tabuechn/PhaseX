@@ -122,10 +122,12 @@ public class Controller extends Observable implements IController, UIController 
         return enemies;
     }
 
+    @Override
     public void initGame() {
         initPlayers();
     }
 
+    @Override
     public void newRound() {
         drawPile = new DeckOfCards();
         discardPile = new DeckOfCards();
@@ -171,17 +173,19 @@ public class Controller extends Observable implements IController, UIController 
         discardPile.add(card);
     }
 
+    @Override
     public AbstractState getRoundState() {
         return roundState;
     }
 
+    @Override
     public void setRoundState(AbstractState roundState) {
         this.roundState = roundState;
     }
 
     @Override
     public boolean currentPlayerHasNoCards() {
-        return currentPlayer.getDeckOfCards().size() == 0;
+        return currentPlayer.getDeckOfCards().isEmpty();
     }
 
     @Override
@@ -236,10 +240,12 @@ public class Controller extends Observable implements IController, UIController 
         System.exit(0);
     }
 
+    @Override
     public String getStatusMessage() {
         return statusMessage;
     }
 
+    @Override
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
     }
@@ -252,7 +258,6 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public boolean isGameFinished() {
         return currentPlayer.isPhaseDone() && (currentPlayer.getPhase().getPhaseNumber() == Phase5.PHASE_NUMBER);
-        //return gameFinished;
     }
 
     @Override
@@ -270,7 +275,7 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     private void checkIfDrawPileEmpty() {
-        if (drawPile.size() == 0) {
+        if (drawPile.isEmpty()) {
             moveDiscardPileToDrawPile();
         }
     }
@@ -300,6 +305,7 @@ public class Controller extends Observable implements IController, UIController 
         }
     }
 
+    @SuppressWarnings("squid:UnusedPrivateMethod")
     private void calcAndAddPoints(IPlayer player) {
         for (ICard leftOverCard : player.getDeckOfCards()) {
             player.addPoints(leftOverCard.getNumber().ordinal());

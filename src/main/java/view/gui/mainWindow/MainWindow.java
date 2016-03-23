@@ -25,6 +25,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
+            @SuppressWarnings("squid:S1147")
             public void windowClosed(WindowEvent e) {
                 LOG.error("window closed");
                 System.exit(0);
