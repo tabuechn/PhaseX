@@ -24,6 +24,7 @@ public class PlayerTurnNotFinished extends AbstractState {
 
 
     @Override
+    @SuppressWarnings("squid:S1166")
     public void playPhase(final IController controller, IDeckOfCards phase) {
         try {
             controller.addPhase(phase);
