@@ -231,6 +231,7 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    @SuppressWarnings("squid:S1147")
     public void exitEvent() {
         System.exit(0);
     }
