@@ -40,6 +40,7 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.code.findbugs:annotations:3.0.0'
     compile 'com.google.code.gson:gson:2.5'
+    compile files('libs/db4o-7.2.44.10827-osgi.jar')
 }
 
 task fatJar(type: Jar) {
