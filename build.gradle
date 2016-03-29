@@ -7,6 +7,7 @@ version '1.0-SNAPSHOT'
  * applied plugins
  */
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco'
 
@@ -43,6 +44,10 @@ dependencies {
     compile files('libs/db4o-7.2.44.10827-osgi.jar')
 }
 
+
+/*
+ * Package and Upload to Nexus
+ */
 task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Gradle Jar File Example',
@@ -53,6 +58,26 @@ task fatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
+
+artifacts {
+    archives file: file('build/libs/' + project.name + '-all-1.0-SNAPSHOT.jar'), name: 'PhaseX', type: 'jar'
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://nexus-phasex.rhcloud.com/content/repositories/snapshots") {
+                authentication(userName: nexusUser, password: nexusPassword)
+            }
+
+            pom.version = version
+            pom.artifactId = project.name
+        }
+    }
+}
+
+uploadArchives.dependsOn fatJar
 
 /*
  * Tools

@@ -68,6 +68,7 @@ local.properties
 # Gradle:
 # .idea/gradle.xml
 # .idea/libraries
+gradle.properties
 
 # Mongo Explorer plugin:
 # .idea/mongoSettings.xml
@@ -100,6 +101,7 @@ gradle-app.setting
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+gradle-wrapper.properties
 ### Java template
 #*.class
 
