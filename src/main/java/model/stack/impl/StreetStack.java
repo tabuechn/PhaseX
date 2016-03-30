@@ -32,8 +32,8 @@ public class StreetStack implements ICardStack {
 
     @Override
     public boolean checkCardMatching(ICard card) {
-        return (card.getNumber().equals(CardValue.byOrdinal(lowestCard.getNumber().ordinal() - 1))
-                || card.getNumber().equals(CardValue.byOrdinal(highestCard.getNumber().ordinal() + 1)));
+        return card.getNumber().equals(CardValue.byOrdinal(lowestCard.getNumber().ordinal() - 1))
+                || card.getNumber().equals(CardValue.byOrdinal(highestCard.getNumber().ordinal() + 1));
     }
 
     @Override

@@ -21,13 +21,6 @@ public enum CardValue {
     ELEVEN(11),
     TWELVE(12);
 
-/* Example to add points to the various cards
-    Owl(2) {
-        public String speak() {
-            return "Hoo";
-        }
-    };
-    abstract public String speak();*/
 
     private int valueOrdinal = 0;
 
