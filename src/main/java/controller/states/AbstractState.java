@@ -27,5 +27,6 @@ public abstract class AbstractState {
     public void start(final IController controller) {
     }
 
+    @Override
     public abstract String toString();
 }
