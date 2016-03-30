@@ -10,7 +10,7 @@ public class DrawPhase extends AbstractState {
 
     @Override
     public void drawOpen(final IController controller) {
-        if (controller.getDiscardPile().size() > 0) {
+        if (!controller.getDiscardPile().isEmpty()) {
             controller.drawOpenCard();
         }
     }
