@@ -92,6 +92,23 @@ uploadArchives.dependsOn fatJar
  */
 jacoco {
     toolVersion = "0.7.4.201502262128"
+    excludes = ['src/main/java/view/gui/**']
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "de.htwg.se.PhaseX"
+        property "sonar.projectName", "PhaseX"
+        property "sonar.projectVersion", "1.0-SNAPSHOT"
+        property "sonar.binaries", "build/classes"
+        property "sonar.java.coveragePlugin", "jacoco"
+
+        property "sonar.jdbc.url", "jdbc:mysql://lenny2.in.htwg-konstanz.de:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
+        property "sonar.jdbc.username", "sonar"
+        property "sonar.jdbc.password", "mysql"
+        property "sonar.login", "admin"
+        property "sonar.password", "admin"
+    }
 }
 
 /*
