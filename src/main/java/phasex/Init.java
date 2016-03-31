@@ -12,6 +12,7 @@ import java.util.Scanner;
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
  */
 @SuppressFBWarnings("DLS_DEAD_LOCAL_STORE")
+@SuppressWarnings("squid:CommentedOutCodeLine")
 public class Init {
 
     private static Init instance;

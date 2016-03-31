@@ -44,7 +44,7 @@ dependencies {
     compile 'osgi:db4o:8.0.184.15484-all'
 
     //Hibernate
-    compile 'org.hibernate:hibernate:3.5.4-Final'
+    compile 'org.hibernate:hibernate-core:5.1.0.Final'
     compile 'org.hibernate:hibernate-annotations:3.5.6-Final'
     compile 'mysql:mysql-connector-java:5.1.38'
     compile 'org.slf4j:slf4j-api:1.7.20'

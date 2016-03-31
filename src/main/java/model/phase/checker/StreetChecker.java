@@ -38,6 +38,7 @@ public class StreetChecker implements IPhaseChecker {
         return isStreet;
     }
 
+    @SuppressWarnings("squid:S2200")
     private boolean compareCards(ICard smaller, ICard greater) {
         return greater.compareTo(smaller) == 1;
     }

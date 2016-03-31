@@ -17,6 +17,7 @@ import java.util.stream.IntStream;
  * created by Konraifen88 on 25.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
+@SuppressWarnings("squid:S1118")
 public class CardCreator {
 
     private CardCreator() {}
