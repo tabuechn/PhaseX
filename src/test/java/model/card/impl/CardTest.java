@@ -51,7 +51,7 @@ public class CardTest {
 
     @Test
     public void equalsWithDifferentClassShouldReturnFalse() {
-        assertFalse(CARD_1.equals(new Player("testPlayer", 3)));
+        assertFalse(CARD_1.equals(new Player(3)));
     }
 
     @Test

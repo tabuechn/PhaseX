@@ -331,7 +331,7 @@ public class Controller extends Observable implements IController, UIController 
     private void initPlayers() {
         players = new IPlayer[playerCount];
         for (int i = 0; i < playerCount; i++) {
-            players[i] = new Player("Player" + (i + 1), i);
+            players[i] = new Player(i);
         }
     }
 
@@ -360,6 +360,15 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public IPlayer getWinner() {
         return winner;
+    }
+
+    @Override
+    public void setPlayerName(String name, int playerNumber) {
+        if (players[0].getPlayerNumber() == playerNumber) {
+            players[0].setName(name);
+        } else {
+            players[1].setName(name);
+        }
     }
 
     @Override

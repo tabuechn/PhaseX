@@ -21,7 +21,7 @@ public class PlayerTest {
 
     @Before
     public void setUp() {
-        testee = new Player(PLAYER_NAME, 1);
+        testee = new Player(1);
     }
 
     @Test
@@ -44,7 +44,6 @@ public class PlayerTest {
 
     @Test
     public void checkIfPlayerIsInitializedCorrectly() {
-        assertEquals(PLAYER_NAME, testee.getPlayerName());
         assertEquals(Phase1.PHASE_NUMBER, testee.getPhase().getPhaseNumber());
         assertFalse(testee.isPhaseDone());
     }
@@ -67,5 +66,20 @@ public class PlayerTest {
         testee.addPoints(10);
         testee.addPoints(3);
         assertEquals(13, testee.getPoints());
+    }
+
+    @Test
+    public void checkIfPlayerWithEmptyNameIsSetCorrectly() {
+        assertTrue(testee.getPlayerName().isEmpty());
+        testee.setName("John");
+        assertEquals("John", testee.getPlayerName());
+    }
+
+    @Test
+    public void playerNameMustNotSetTwice() {
+        testee.setName("John");
+        assertEquals("John", testee.getPlayerName());
+        testee.setName("Giesela");
+        assertEquals("John", testee.getPlayerName());
     }
 }

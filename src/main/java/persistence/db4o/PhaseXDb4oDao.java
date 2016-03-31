@@ -1,8 +1,13 @@
 package persistence.db4o;
 
+import com.db4o.Db4oEmbedded;
+import com.db4o.ObjectContainer;
+import com.db4o.query.Predicate;
 import controller.IController;
 import model.player.impl.Player;
 import persistence.IPhaseXDao;
+
+import java.util.List;
 
 /**
  * If everything works right this class was
@@ -10,15 +15,27 @@ import persistence.IPhaseXDao;
  * If it doesn't work I don't know who the hell wrote it.
  */
 public class PhaseXDb4oDao implements IPhaseXDao {
+
+    private ObjectContainer db;
+
+    public PhaseXDb4oDao() {
+        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "PhaseX");
+    }
+
     @Override
     public void saveGame(IController controller) {
-        //TODO Implement
+        db.store(controller);
     }
 
     @Override
     public boolean isGameExisting(Player p1, Player p2) {
-        //TODO Implement
-        return false;
+        List<IController> gameList = db.query(new Predicate<IController>() {
+            @Override
+            public boolean match(IController controller) {
+                return false;
+            }
+        });
+        return !gameList.isEmpty();
     }
 
     @Override

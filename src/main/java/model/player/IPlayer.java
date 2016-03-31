@@ -71,4 +71,6 @@ public interface IPlayer {
     void addPoints(int points);
 
     int getPoints();
+
+    void setName(String name);
 }

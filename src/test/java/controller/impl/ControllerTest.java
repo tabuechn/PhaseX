@@ -37,8 +37,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * NOTE: Be careful using some methods will override the mocked objects!
  */
 public class ControllerTest implements IObserver {
-
     private static final ICard TEST_CARD_1 = new Card(CardValue.ONE, CardColor.BLUE);
+
     private static final ICard TEST_CARD_2 = new Card(CardValue.TWO, CardColor.GREEN);
     private static final IDeckOfCards TEST_DECK_SORTED = new DeckOfCards();
     private static final IDeckOfCards TEST_DECK_UNSORTED = new DeckOfCards();
@@ -56,7 +56,6 @@ public class ControllerTest implements IObserver {
     private IDeckOfCards discardPileMock;
     private boolean observed;
     private ArgumentCaptor<ICard> cardCaptor = ArgumentCaptor.forClass(ICard.class);
-
     @Before
     public void setUp() {
         testee = new Controller(2);

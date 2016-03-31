@@ -352,6 +352,25 @@ public class OldControllerTest {
 
     }
 
+
+    @Test
+    public void setPlayerNameForPlayer1ShouldSetCorrectly() throws Exception {
+        testee.initGame();
+        testee.startGame();
+        testee.setPlayerName("John", 0);
+        assertTrue(testee.getOpponentPlayer().getPlayerName().isEmpty());
+        assertEquals("John", testee.getCurrentPlayer().getPlayerName());
+    }
+
+    @Test
+    public void setPlayerNameForPlayer2ShouldSetCorrectly() throws Exception {
+        testee.initGame();
+        testee.startGame();
+        testee.setPlayerName("John", 1);
+        assertTrue(testee.getCurrentPlayer().getPlayerName().isEmpty());
+        assertEquals(testee.getOpponentPlayer().getPlayerName(), "John");
+    }
+
     private ICard[] createYellowCards(int[] numbers) {
         ICard[] returnValue = new ICard[numbers.length];
         for (int i = 0; i < numbers.length; i++) {

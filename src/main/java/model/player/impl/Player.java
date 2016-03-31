@@ -14,15 +14,14 @@ import model.player.IPlayer;
  */
 public class Player implements IPlayer {
 
-    private final String name;
     private final int playerNumber;
+    private String name = "";
     private boolean phaseDone;
     private int points;
     private IPhase phase;
     private IDeckOfCards deck;
 
-    public Player(String name, int number) {
-        this.name = name;
+    public Player(int number) {
         this.phase = new Phase1();
         this.phaseDone = false;
         this.playerNumber = number;
@@ -80,5 +79,12 @@ public class Player implements IPlayer {
     @Override
     public int getPoints() {
         return points;
+    }
+
+    @Override
+    public void setName(String name) {
+        if (this.name.isEmpty()) {
+            this.name = name;
+        }
     }
 }

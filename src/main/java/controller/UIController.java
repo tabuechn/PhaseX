@@ -129,4 +129,13 @@ public interface UIController extends IObservable {
     String getCurrentPhaseDescription();
 
     IPlayer getWinner();
+
+    /**
+     * Set the playername for Player 1
+     *
+     * @param name         name of player 1
+     * @param playerNumber number of the Player
+     */
+    void setPlayerName(String name, int playerNumber);
+
 }
