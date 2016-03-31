@@ -92,7 +92,15 @@ uploadArchives.dependsOn fatJar
  */
 jacoco {
     toolVersion = "0.7.4.201502262128"
-    excludes = ['src/main/java/view/gui/**']
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/view/**'])
+        })
+    }
 }
 
 sonarqube {
