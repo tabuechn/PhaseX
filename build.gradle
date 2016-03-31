@@ -41,8 +41,7 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.code.findbugs:annotations:3.0.0'
     compile 'com.google.code.gson:gson:2.5'
-    compile 'osgi:db4o:7.2.44.10827'
-
+    compile 'osgi:db4o:8.0.184.15484-all'
 
     //Hibernate
     compile 'org.hibernate:hibernate:3.5.4-Final'
@@ -51,9 +50,6 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.20'
     compile 'org.slf4j:slf4j-simple:1.7.20'
     compile 'org.javassist:javassist:3.20.0-GA'
-
-
-
 }
 
 
