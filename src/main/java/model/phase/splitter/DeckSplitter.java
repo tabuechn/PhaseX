@@ -1,8 +1,8 @@
 package model.phase.splitter;
 
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.phase.IPhaseSplitter;
 
 import java.util.Comparator;

@@ -1,6 +1,6 @@
 package model.phase;
 
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 
 /**
  * If everything works right this class was

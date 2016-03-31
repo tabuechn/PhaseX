@@ -1,8 +1,8 @@
-package model.deckOfCards.impl;
+package model.deck.impl;
 
 import com.google.gson.Gson;
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 
 import java.util.LinkedList;
 import java.util.List;

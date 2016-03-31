@@ -2,7 +2,7 @@ package model.player.impl;
 
 import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.phase.IPhase;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;

@@ -1,4 +1,4 @@
-package model.deckOfCards;
+package model.deck;
 
 import model.card.ICard;
 

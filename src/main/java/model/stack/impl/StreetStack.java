@@ -3,7 +3,7 @@ package model.stack.impl;
 import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.stack.ICardStack;
 
 /**

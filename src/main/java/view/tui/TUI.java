@@ -3,13 +3,12 @@ package view.tui;
 import com.google.inject.Inject;
 import controller.UIController;
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.util.StringBuilders;
 import util.Event;
 import util.IObserver;
 
@@ -27,19 +26,19 @@ public class TUI implements IObserver {
 
     private StringBuilder sb = new StringBuilder();
 
+    @Inject
+    public TUI(UIController pController) {
+        this.controller = pController;
+        controller.addObserver(this);
+        printStart();
+    }
+
     public StringBuilder getSb() {
         synchronized (sb) {
             StringBuilder tmp = sb;
             sb = new StringBuilder();
             return tmp;
         }
-    }
-
-    @Inject
-    public TUI(UIController pController) {
-        this.controller = pController;
-        controller.addObserver(this);
-        printStart();
     }
 
     public void processInputLine(String input) {

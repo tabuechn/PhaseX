@@ -4,8 +4,8 @@ import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
-import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,11 +20,13 @@ import java.util.stream.IntStream;
 @SuppressWarnings("squid:S1118")
 public class CardCreator {
 
-    private CardCreator() {}
+    static final int SIZE_OF_DECK_MULTIPLIER = 4;
+    static final int LOWEST_CARD = 1;
+    static final int HIGHEST_CARD = 12;
 
-    public static final int SIZE_OF_DECK_MULTIPLIER = 4;
-    public static final int LOWEST_CARD = 1;
-    public static final int HIGHEST_CARD = 12;
+    private CardCreator() {
+        //Nothing to do
+    }
 
     private static IDeckOfCards giveDeckOfCardsByList(List<?> range) {
         IDeckOfCards deck = new DeckOfCards();

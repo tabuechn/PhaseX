@@ -1,6 +1,6 @@
 package model.phase;
 
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.stack.ICardStack;
 
 import java.util.List;

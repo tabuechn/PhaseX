@@ -1,6 +1,6 @@
 package model.phase.impl;
 
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;

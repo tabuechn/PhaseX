@@ -1,7 +1,7 @@
 package view.gui.cardDrawer;
 
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import view.gui.GUIConstants;
 
 import javax.swing.*;

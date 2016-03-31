@@ -3,7 +3,7 @@ package controller.states.impl;
 import controller.IController;
 import controller.states.AbstractState;
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.phase.DeckNotFitException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

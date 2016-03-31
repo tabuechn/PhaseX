@@ -3,7 +3,7 @@ package view.gui.views.gameField;
 import controller.UIController;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import view.gui.GUIConstants;
 import view.gui.specialViews.BackgroundPanel;
 import view.gui.views.commonViews.NotificationLabel;

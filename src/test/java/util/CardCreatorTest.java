@@ -3,7 +3,7 @@ package util;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.impl.Card;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import org.junit.Before;
 import org.junit.Test;
 

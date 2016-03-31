@@ -1,6 +1,6 @@
 package model.player;
 
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.phase.IPhase;
 
 /**

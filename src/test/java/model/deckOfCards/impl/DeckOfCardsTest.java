@@ -4,7 +4,8 @@ import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.Card;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -2,7 +2,7 @@ package controller;
 
 import controller.states.AbstractState;
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.player.IPlayer;
 import model.stack.ICardStack;
 import util.IObservable;

@@ -2,7 +2,7 @@ package controller.states;
 
 import controller.IController;
 import model.card.ICard;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.stack.ICardStack;
 
 /**

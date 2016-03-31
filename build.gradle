@@ -108,6 +108,7 @@ sonarqube {
         property "sonar.jdbc.password", "mysql"
         property "sonar.login", "admin"
         property "sonar.password", "admin"
+        property "sonar.exclusions", "src/main/java/view/gui/*"
     }
 }
 

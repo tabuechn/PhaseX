@@ -2,8 +2,8 @@ package model.phase.checker;
 
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
-import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.phase.IPhaseChecker;
 
 import java.util.Collections;

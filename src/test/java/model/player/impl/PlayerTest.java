@@ -1,6 +1,6 @@
 package model.player.impl;
 
-import model.deckOfCards.impl.DeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
 import org.junit.Before;

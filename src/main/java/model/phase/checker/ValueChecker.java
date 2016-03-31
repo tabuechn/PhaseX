@@ -3,7 +3,7 @@ package model.phase.checker;
 import model.card.CardValue;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
-import model.deckOfCards.IDeckOfCards;
+import model.deck.IDeckOfCards;
 import model.phase.IPhaseChecker;
 
 /**

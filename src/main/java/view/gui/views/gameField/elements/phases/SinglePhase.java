@@ -1,7 +1,7 @@
 package view.gui.views.gameField.elements.phases;
 
-import model.deckOfCards.IDeckOfCards;
-import model.deckOfCards.impl.DeckOfCards;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.stack.ICardStack;
 import view.gui.GUIConstants;
 import view.gui.cardDrawer.CardPanel;
