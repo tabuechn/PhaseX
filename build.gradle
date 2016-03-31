@@ -116,6 +116,7 @@ sonarqube {
         property "sonar.jdbc.password", "mysql"
         property "sonar.login", "admin"
         property "sonar.password", "admin"
+        property "sonar.jacoco.excludes", "**/view/**"
     }
 }
 
