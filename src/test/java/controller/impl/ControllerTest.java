@@ -66,8 +66,9 @@ public class ControllerTest implements IObserver {
 
     @Test
     public void startGameShouldCallTheStateToStart() {
+        testee.initGame();
         doNothing().when(stateMock).start(any(Controller.class));
-        testee.startGame();
+        testee.startGame("Player1");
         verify(stateMock, times(1)).start(eq(testee));
         checkIfObserverWasNotified();
     }

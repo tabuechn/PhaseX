@@ -35,7 +35,8 @@ public class GUI implements IObserver {
     }
 
     public void start() {
-        controller.startGame();
+        controller.startGame("Player1");
+        controller.setSecondPlayerName("Player2");
     }
 
     @Override

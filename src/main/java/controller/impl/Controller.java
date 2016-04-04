@@ -48,7 +48,7 @@ public class Controller extends Observable implements IController, UIController 
     private IPlayer winner;
 
 
-    public Controller(int numberOfPlayers) {
+    Controller(int numberOfPlayers) {
         winner = null;
         playerCount = numberOfPlayers;
         drawPile = new DeckOfCards();
@@ -227,7 +227,7 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public IPlayer getOpponentPlayer() {
         for(IPlayer player : players) {
-            if(player != currentPlayer) {
+            if (!player.equals(currentPlayer)) {
                 return player;
             }
         }
@@ -371,10 +371,5 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public void setWinner() {
         this.winner = getCurrentPlayer();
-    }
-
-    @Override
-    public IPlayer getNextPlayer() {
-        return players[0].equals(getCurrentPlayer()) ? players[1] : players[0];
     }
 }

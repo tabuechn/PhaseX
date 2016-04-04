@@ -33,7 +33,8 @@ public class GameField extends BackgroundPanel {
 
     public GameField(UIController controller) {
         this.controller = controller;
-        controller.startGame();
+        controller.startGame("player1");
+        controller.setSecondPlayerName("player2");
         this.setLayout(new BorderLayout());
 
         //Add current player

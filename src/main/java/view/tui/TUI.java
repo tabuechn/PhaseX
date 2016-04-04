@@ -33,6 +33,7 @@ public class TUI implements IObserver {
         printStart();
     }
 
+    @SuppressWarnings("SynchronizeOnNonFinalField")
     public StringBuilder getSb() {
         synchronized (sb) {
             StringBuilder tmp = sb;
@@ -78,7 +79,7 @@ public class TUI implements IObserver {
 
     private void log(String log) {
         LOGGER.info(log);
-        sb.append(log + "\n");
+        sb.append(log).append("\n");
     }
 
     private void addToPhase(String input) {
@@ -153,7 +154,8 @@ public class TUI implements IObserver {
     private void checkStartPhase(String input) {
         switch (input.toLowerCase()) {
             case "start":
-                controller.startGame();
+                controller.startGame("Player1");
+                controller.setSecondPlayerName("Player2");
                 break;
             case "exit":
                 controller.exitEvent();
