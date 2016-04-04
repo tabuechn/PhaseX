@@ -1,7 +1,9 @@
 package persistence;
 
 import controller.IController;
-import model.player.impl.Player;
+import model.player.IPlayer;
+
+import java.util.List;
 
 /**
  * If everything works right this class was
@@ -24,7 +26,7 @@ public interface IPhaseXDao {
      * @param p2 name of the second player
      * @return true if a game with the two players was found (doesn't matter if p1 and p2 is switched) or false if no game was found.
      */
-    boolean isGameExisting(Player p1, Player p2);
+    boolean isGameExisting(IPlayer p1, IPlayer p2);
 
     /**
      * Method to load a already existing game.
@@ -33,18 +35,20 @@ public interface IPhaseXDao {
      * @param p2 Playername of second Player
      * @return The controller of the current game or null when game isn't found.
      */
-    IController loadGame(Player p1, Player p2);
+    IController loadGame(IPlayer p1, IPlayer p2);
 
     /**
      * Method to remove an active Game between 2 Players
      * @param p1 name of first player
      * @param p2 name of second player
      */
-    void deleteGameForPlayers(Player p1, Player p2);
+    void deleteGameForPlayers(IPlayer p1, IPlayer p2);
 
     /**
      * Method to remove all running games for the given Player
      * @param p1 name of the player
      */
-    void deleteAllGamesForPlayer(Player p1);
+    void deleteAllGamesForPlayer(IPlayer p1);
+
+    List<IController> getAllSavedGamesForPlayer(IPlayer player);
 }

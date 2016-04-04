@@ -63,8 +63,9 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
-    public void startGame() {
+    public void startGame(String firstPlayer) {
         roundState.start(this);
+        players[0].setName(firstPlayer);
         notifyObservers();
     }
 
@@ -363,16 +364,17 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
-    public void setPlayerName(String name, int playerNumber) {
-        if (players[0].getPlayerNumber() == playerNumber) {
-            players[0].setName(name);
-        } else {
-            players[1].setName(name);
-        }
+    public void setSecondPlayerName(String name) {
+        players[1].setName(name);
     }
 
     @Override
     public void setWinner() {
         this.winner = getCurrentPlayer();
+    }
+
+    @Override
+    public IPlayer getNextPlayer() {
+        return players[0].equals(getCurrentPlayer()) ? players[1] : players[0];
     }
 }
