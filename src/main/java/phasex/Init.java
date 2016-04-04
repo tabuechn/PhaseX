@@ -3,6 +3,8 @@ package phasex;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.hibernate.Session;
+import persistence.hibernate.HibernateUtil;
 import view.gui.GUI;
 import view.tui.TUI;
 
