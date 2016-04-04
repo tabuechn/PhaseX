@@ -21,8 +21,9 @@ public interface IController extends IObservable {
 
     /**
      * Event to start the Game for the UIs
+     * @param firstPlayer Name of the first player
      */
-    void startGame();
+    void startGame(String firstPlayer);
 
     /**
      * Event to draw a card from the discard pile
@@ -191,4 +192,11 @@ public interface IController extends IObservable {
     int getPlayerCount();
 
     void setWinner();
+
+    /**
+     * Method to get the second player
+     *
+     * @return the next player
+     */
+    IPlayer getNextPlayer();
 }

@@ -16,8 +16,9 @@ import java.util.Map;
 public interface UIController extends IObservable {
     /**
      * Event to start the Game for the UIs
+     * @param firstPlayerName name of the first player
      */
-    void startGame();
+    void startGame(String firstPlayerName);
 
     /**
      * Event to draw a card from the discard pile
@@ -132,10 +133,8 @@ public interface UIController extends IObservable {
 
     /**
      * Set the playername for Player 1
-     *
      * @param name         name of player 1
-     * @param playerNumber number of the Player
      */
-    void setPlayerName(String name, int playerNumber);
+    void setSecondPlayerName(String name);
 
 }
