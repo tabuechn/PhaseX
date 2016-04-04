@@ -198,5 +198,5 @@ public interface IController extends IObservable {
      *
      * @return the next player
      */
-    IPlayer getNextPlayer();
+    IPlayer getOpponentPlayer();
 }

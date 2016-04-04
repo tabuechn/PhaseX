@@ -59,7 +59,7 @@ public class PhaseXDb4oDao implements IPhaseXDao {
         return db.query(new Predicate<IController>() {
             @Override
             public boolean match(IController controller) {
-                return controller.getCurrentPlayer().equals(player) || controller.getNextPlayer().equals(player);
+                return controller.getCurrentPlayer().equals(player) || controller.getOpponentPlayer().equals(player);
             }
         });
     }

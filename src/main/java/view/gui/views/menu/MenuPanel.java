@@ -66,7 +66,7 @@ public class MenuPanel extends BackgroundPanel {
         startButton.setMaximumSize(GUIConstants.BUTTON_SIZE);
         startButton.setPreferredSize(GUIConstants.BUTTON_SIZE);
         startButton.setFont(GUIConstants.DEFAULT_FONT);
-        startButton.addActionListener(e -> controller.startGame());
+        startButton.addActionListener(e -> controller.startGame("player"));
         startButton.setVisible(true);
 
     }

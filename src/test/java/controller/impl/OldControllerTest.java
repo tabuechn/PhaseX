@@ -28,6 +28,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
  */
 public class OldControllerTest {
 
+    private static final String PLAYER_1 = "Player1";
+    private static final String PLAYER_2 = "Player2";
     private final int NUMBER_OF_PLAYERS = 2;
 
     @InjectMocks
@@ -44,7 +46,7 @@ public class OldControllerTest {
     @Test
     public void testStartingTheGame() {
         assertEquals(testee.getRoundState().toString(), "StartPhase");
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
         assertEquals(testee.getCurrentPlayersHand().size(), 10);
@@ -54,14 +56,14 @@ public class OldControllerTest {
 
     @Test
     public void testCardDecks() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         assertEquals(testee.getDiscardPile().size(), 1);
         assertEquals(testee.getDrawPile().size(), ((12 * 4 * 4) - 10 * NUMBER_OF_PLAYERS) - 1);
     }
 
     @Test
     public void drawTestHiddenTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         assertEquals(testee.getDrawPile().size(), ((12 * 4 * 4) - 10 * NUMBER_OF_PLAYERS - 1) - 1);
@@ -70,7 +72,7 @@ public class OldControllerTest {
 
     @Test
     public void drawOpenWithEmptyPileTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.getDiscardPile().removeLast();
         testee.drawOpen();
         assertEquals(testee.getCurrentPlayersHand().size(), 10);
@@ -80,7 +82,7 @@ public class OldControllerTest {
 
     @Test
     public void discardTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         ICard cardToDiscard = testee.getCurrentPlayersHand().get(0);
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
@@ -92,7 +94,7 @@ public class OldControllerTest {
 
     @Test
     public void drawOpenWithNonEmptyPileTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         ICard cardToDiscard = testee.getCurrentPlayersHand().get(0);
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
@@ -107,13 +109,13 @@ public class OldControllerTest {
     @Test
     public void testGetRoundState() {
         assertEquals(testee.getRoundState().toString(), "StartPhase");
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
     }
 
     @Test
     public void playerChangeAfterDiscard() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
 
         assertEquals(testee.getCurrentPlayer().getPlayerNumber(), 0);
         testee.drawHidden();
@@ -131,7 +133,7 @@ public class OldControllerTest {
 
     @Test
     public void playPhase1Test() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer()
@@ -144,7 +146,7 @@ public class OldControllerTest {
 
     @Test
     public void playPhase2Test() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer().nextPhase();
@@ -159,7 +161,7 @@ public class OldControllerTest {
 
     @Test
     public void playPhase3Test() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer().nextPhase();
@@ -175,7 +177,7 @@ public class OldControllerTest {
 
     @Test
     public void playPhase4Test() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer().nextPhase();
@@ -192,7 +194,7 @@ public class OldControllerTest {
 
     @Test
     public void playPhase5Test() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer().nextPhase();
@@ -211,7 +213,7 @@ public class OldControllerTest {
 
     @Test
     public void addToPhase1Test() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer()
@@ -230,7 +232,7 @@ public class OldControllerTest {
 
     @Test
     public void addToPhase1TestAndDiscard() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         assertEquals(testee.getCurrentPlayersHand().size(), 11);
         testee.getCurrentPlayer()
@@ -261,7 +263,7 @@ public class OldControllerTest {
 
     @Test
     public void drawAfterPlayPhase() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         testee.getCurrentPlayer()
                 .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 3, 4, 5, 6})));
@@ -278,7 +280,7 @@ public class OldControllerTest {
 
     @Test
     public void roundEndTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         testee.getCurrentPlayer().setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2, 6})));
         testee.playPhase(fillDeck(createYellowCards(new int[]{1, 1, 1, 2, 2, 2})));
@@ -290,7 +292,7 @@ public class OldControllerTest {
 
     @Test
     public void gameEndTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         testee.getCurrentPlayer()
                 .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 6})));
@@ -304,13 +306,13 @@ public class OldControllerTest {
         assertEquals(testee.getCurrentPlayersHand().size(), 1);
         testee.discard(new Card(CardValue.SIX, CardColor.YELLOW));
         assertEquals(testee.getRoundState().toString(), "EndPhase");
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         assertEquals(testee.getRoundState().toString(), "DrawPhase");
     }
 
     @Test
     public void endWithAddToStack() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         testee.getCurrentPlayer()
                 .setDeckOfCards(fillDeck(createYellowCards(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 2})));
@@ -329,7 +331,7 @@ public class OldControllerTest {
 
     @Test
     public void reshuffleTest() {
-        testee.startGame();
+        testee.startGame(PLAYER_1);
         testee.drawHidden();
         ICard testCard = testee.getCurrentPlayersHand().get(0);
         testee.discard(testCard);
@@ -356,19 +358,17 @@ public class OldControllerTest {
     @Test
     public void setPlayerNameForPlayer1ShouldSetCorrectly() throws Exception {
         testee.initGame();
-        testee.startGame();
-        testee.setPlayerName("John", 0);
+        testee.startGame(PLAYER_1);
         assertTrue(testee.getOpponentPlayer().getPlayerName().isEmpty());
-        assertEquals("John", testee.getCurrentPlayer().getPlayerName());
+        assertEquals(PLAYER_1, testee.getCurrentPlayer().getPlayerName());
     }
 
     @Test
     public void setPlayerNameForPlayer2ShouldSetCorrectly() throws Exception {
         testee.initGame();
-        testee.startGame();
-        testee.setPlayerName("John", 1);
-        assertTrue(testee.getCurrentPlayer().getPlayerName().isEmpty());
-        assertEquals(testee.getOpponentPlayer().getPlayerName(), "John");
+        testee.startGame(PLAYER_1);
+        testee.setSecondPlayerName(PLAYER_2);
+        assertEquals(testee.getOpponentPlayer().getPlayerName(), PLAYER_2);
     }
 
     private ICard[] createYellowCards(int[] numbers) {
