@@ -9,9 +9,10 @@ import java.io.Serializable;
 @Entity
 @Table(name="PhaseX")
 public class PersistentTest implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long stringID;
+    private Integer stringID;
 
     @Column(name="PHASE_X_STRING")
     private String testString;
@@ -21,11 +22,11 @@ public class PersistentTest implements Serializable {
         //nothing todo only testing
     }
 
-    public Long getStringID() {
+    public Integer getStringID() {
         return stringID;
     }
 
-    public void setStringID(Long stringID) {
+    public void setStringID(Integer stringID) {
         this.stringID = stringID;
     }
 

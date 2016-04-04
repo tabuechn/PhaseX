@@ -32,10 +32,14 @@ public class IPhaseXDaoTest {
     @Test
     public void testSaveGame() throws Exception {
 
-        /*
         PersistentTest test = new PersistentTest();
         test.setTestString("this is a testString");
         Transaction trans = null;
+        Session session = HibernateUtil.getInstance().getCurrentSession();
+        trans = session.beginTransaction();
+        session.save(test);
+        trans.commit();
+        /*
         try(Session session = HibernateUtil.getInstance().getCurrentSession()) {
             trans = session.beginTransaction();
             session.save(test);
@@ -49,8 +53,9 @@ public class IPhaseXDaoTest {
                 }
                 throw new RuntimeException(ex.getMessage());
             }
-        }
+        }*
 
+        /*
         java.util.List<PersistentTest> testList = null;
         try(Session se = HibernateUtil.getInstance().getCurrentSession()) {
             trans = se.beginTransaction();
