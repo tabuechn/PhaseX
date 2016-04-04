@@ -1,9 +1,6 @@
 package persistence.hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,6 +10,7 @@ import java.io.Serializable;
 @Table(name="PhaseX")
 public class PersistentTest implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long stringID;
 
     @Column(name="PHASE_X_STRING")
