@@ -18,7 +18,9 @@ public class PersistentTest implements Serializable {
     private String testString;
 
 
-    public PersistentTest() {}
+    public PersistentTest() {
+        //nothing todo only testing
+    }
 
     public Integer getStringID() {
         return id;
