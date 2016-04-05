@@ -101,7 +101,7 @@ sonarqube {
         property "sonar.binaries", "build/classes"
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-        property "sonar.exclusions", "**/view/**, **/java/phasex/**"
+        property "sonar.test.exclusions", "**/view/**, **/java/phasex/**"
 
         property "sonar.jdbc.url", "jdbc:mysql://lenny2.in.htwg-konstanz.de:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
         property "sonar.jdbc.username", "sonar"
