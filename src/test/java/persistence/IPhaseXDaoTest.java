@@ -32,47 +32,6 @@ public class IPhaseXDaoTest {
     @Test
     public void testSaveGame() throws Exception {
 
-        PersistentTest test = new PersistentTest();
-        test.setTestString("this is a testString");
-        Transaction trans = null;
-        Session session = HibernateUtil.getInstance().getCurrentSession();
-        trans = session.beginTransaction();
-        session.save(test);
-        trans.commit();
-        /*
-        try(Session session = HibernateUtil.getInstance().getCurrentSession()) {
-            trans = session.beginTransaction();
-            session.save(test);
-            trans.commit();
-        } catch (HibernateException ex) {
-            if(trans != null) {
-                try {
-                    trans.rollback();
-                } catch (HibernateException e) {
-                    //ignore
-                }
-                throw new RuntimeException(ex.getMessage());
-            }
-        }*
-
-        /*
-        java.util.List<PersistentTest> testList = null;
-        try(Session se = HibernateUtil.getInstance().getCurrentSession()) {
-            trans = se.beginTransaction();
-            Criteria criteria = se.createCriteria(PersistentTest.class);
-            testList = null;
-            trans.commit();
-        } catch(HibernateException exc) {
-            if(trans != null) {
-                try {
-                    trans.rollback();
-                } catch (HibernateException e) {
-                    //ignore
-                }
-                throw new RuntimeException(exc.getMessage());
-            }
-        }
-        System.out.println(testList);*/
     }
 
     @Test

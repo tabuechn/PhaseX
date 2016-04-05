@@ -12,7 +12,7 @@ public class PersistentTest implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer stringID;
+    private Integer id;
 
     @Column(name="PHASE_X_STRING")
     private String testString;
@@ -23,11 +23,11 @@ public class PersistentTest implements Serializable {
     }
 
     public Integer getStringID() {
-        return stringID;
+        return id;
     }
 
     public void setStringID(Integer stringID) {
-        this.stringID = stringID;
+        this.id = stringID;
     }
 
     public String getTestString() {
