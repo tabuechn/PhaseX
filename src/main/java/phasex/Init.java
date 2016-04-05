@@ -1,9 +1,11 @@
 package phasex;
 
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import persistence.hibernate.HibernateUtil;
@@ -11,6 +13,8 @@ import persistence.hibernate.PersistentTest;
 import view.gui.GUI;
 import view.tui.TUI;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -57,21 +61,7 @@ public class Init {
     @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public static void main(String[] argv) {
 
-        PersistentTest test = new PersistentTest();
-        test.setTestString("this is a testString");
-        Transaction trans = null;
-        Session session = HibernateUtil.getInstance().getCurrentSession();
-        trans = session.beginTransaction();
-        session.save(test);
-        trans.commit();
-        System.out.println("data saved");
 
-        session = HibernateUtil.getInstance().getCurrentSession();
-        trans = session.beginTransaction();
-
-        Criteria criteria = session.createCriteria(PersistentTest.class);
-        PersistentTest pt =session.get(PersistentTest.class,12);
-        System.out.println("Got Data : " + pt.getTestString());
         Init in = new Init();
 
         Scanner scanner = new Scanner(System.in);
