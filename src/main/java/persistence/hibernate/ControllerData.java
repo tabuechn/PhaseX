@@ -1,6 +1,7 @@
 package persistence.hibernate;
 
 import model.player.IPlayer;
+import persistence.hibernate.controller.PlayerData;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,38 +10,24 @@ import java.io.Serializable;
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "ControllerData")
+@Table(name = "ControllerDataTest1234567891")
 public class ControllerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer stringID;
 
-    @Column(name = "player1name")
-    private String player1Name;
+    @Column(name="player1Data")
+    private PlayerData player1Data;
 
-    @Column(name = "player2name")
-    private String player2Name;
+    @Column(name="player2Data")
+    private PlayerData player2Data;
 
 
 
     public ControllerData() {
     }
 
-    public String getPlayer1Name() {
-        return player1Name;
-    }
 
-    public void setPlayer1Name(String player1Name) {
-        this.player1Name = player1Name;
-    }
-
-    public String getPlayer2Name() {
-        return player2Name;
-    }
-
-    public void setPlayer2Name(String player2Name) {
-        this.player2Name = player2Name;
-    }
 
     public Integer getStringID() {
         return stringID;
@@ -48,6 +35,22 @@ public class ControllerData implements Serializable {
 
     public void setStringID(Integer stringID) {
         this.stringID = stringID;
+    }
+
+    public PlayerData getPlayer1Data() {
+        return player1Data;
+    }
+
+    public void setPlayer1Data(PlayerData player1Data) {
+        this.player1Data = player1Data;
+    }
+
+    public PlayerData getPlayer2Data() {
+        return player2Data;
+    }
+
+    public void setPlayer2Data(PlayerData player2Data) {
+        this.player2Data = player2Data;
     }
 }
 

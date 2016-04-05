@@ -14,5 +14,6 @@
       <property name="show_sql">false</property>
       <mapping class="persistence.hibernate.PersistentTest" />
       <mapping class="persistence.hibernate.ControllerData" />
+      <mapping class="persistence.hibernate.controller.PlayerData" />
    </session-factory>
 </hibernate-configuration>
