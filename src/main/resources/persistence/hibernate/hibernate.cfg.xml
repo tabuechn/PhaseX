@@ -14,6 +14,7 @@
       <property name="show_sql">false</property>
       <mapping class="persistence.hibernate.PersistentTest" />
       <mapping class="persistence.hibernate.ControllerData" />
-      <mapping class="persistence.hibernate.controller.PlayerData" />
+      <mapping class="model.card.impl.Card" />
+      <mapping class="model.player.impl.Player" />
    </session-factory>
 </hibernate-configuration>

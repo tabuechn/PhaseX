@@ -1,9 +1,12 @@
 package model.deck.impl;
 
 import com.google.gson.Gson;
+import com.sun.javafx.beans.IDProperty;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import java.util.List;
  * If it doesn't work I don't know who the hell wrote it.
  */
 
-public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards {
+public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Serializable {
 
     public DeckOfCards() {
         super();
@@ -27,4 +30,5 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards {
     public String getJSon() {
         return new Gson().toJson(this);
     }
+
 }
