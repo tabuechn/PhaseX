@@ -1,5 +1,12 @@
 package persistence.hibernate;
 
+import com.google.gson.Gson;
+import model.card.CardColor;
+import model.card.CardValue;
+import model.card.ICard;
+import model.card.impl.Card;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.player.impl.Player;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -32,9 +39,14 @@ public class HibernateDAOTest {
         ControllerData test = new ControllerData();
         String klaus = "Klaus";
         String herbert = "Herbert";
+        IDeckOfCards deck = new DeckOfCards();
+        deck.add(new Card(CardValue.EIGHT,CardColor.BLUE));
+        Gson gson = new Gson();
+        String testString = gson.toJson(deck);
         Player herbertObject = new Player(0);
         herbertObject.setName(herbert);
         test.setPlayer1(herbertObject);
+        test.setTestCard(testString);
         Player klausObject= new Player(1);
         klausObject.setName(klaus);
         test.setPlayer2(klausObject);
@@ -52,6 +64,7 @@ public class HibernateDAOTest {
         for(Object o : testlist) {
             ControllerData pt = (ControllerData) o;
             assertEquals(herbert,pt.getPlayer1().getPlayerName());
+            assertEquals(testString, pt.getTestCard());
             assertEquals(klaus,pt.getPlayer2().getPlayerName());
             session.delete(o);
             i++;

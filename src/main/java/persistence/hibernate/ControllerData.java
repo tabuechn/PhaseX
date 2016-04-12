@@ -1,17 +1,20 @@
 package persistence.hibernate;
 
+import model.card.ICard;
+import model.card.impl.Card;
 import model.player.IPlayer;
 import model.player.impl.Player;
 
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "PhaseX_Controller3")
+@Table(name = "PhaseX_Controller5")
 public class ControllerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +22,10 @@ public class ControllerData implements Serializable {
 
     @Column(name="PhaseX_Player1")
     private Player player1;
+
+
+    @Column(name="PhaseX_TestCard5")
+    private String testCard;
 
     @Column(name="PhaseX_Player2")
     private Player player2;
@@ -53,6 +60,15 @@ public class ControllerData implements Serializable {
 
     public void setPlayer1(Player player1) {
         this.player1 = player1;
+    }
+
+
+    public String getTestCard() {
+        return testCard;
+    }
+
+    public void setTestCard(String testCard) {
+        this.testCard = testCard;
     }
 }
 

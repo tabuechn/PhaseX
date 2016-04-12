@@ -14,16 +14,16 @@ import java.io.Serializable;
  * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
 @Entity
-@Table(name = "PhaseX_Card3")
+@Table(name = "PhaseX_Card5")
 public class Card implements ICard, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "PhaseX_CardValue")
+    @Column(name = "PhaseX_CardValue5")
     private CardValue number;
-    @Column(name = "PhaseX_CardColor")
+    @Column(name = "PhaseX_CardColor5")
     private CardColor color;
 
     public Card() {}

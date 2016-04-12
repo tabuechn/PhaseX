@@ -31,4 +31,10 @@ public interface IDeckOfCards extends List<ICard> {
      */
     String getJSon();
 
+    /**
+     * Method to return a the Deck as a List of ICards
+     * @return list of ICards
+     */
+    List<ICard> getCards();
+
 }

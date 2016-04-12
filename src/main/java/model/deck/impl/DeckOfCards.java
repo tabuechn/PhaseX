@@ -31,4 +31,8 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Seri
         return new Gson().toJson(this);
     }
 
+    public List<ICard> getCards() {
+        return this;
+    }
+
 }
