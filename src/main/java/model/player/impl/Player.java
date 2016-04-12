@@ -29,7 +29,7 @@ public class Player implements IPlayer, Serializable {
     @Column(name = "PhaseX_PlayerNumber5")
     private int playerNumber;
     @Column(name ="PhaseX_Name5")
-    private String name = "";
+    private String name;
     @Column(name="PhaseX_PhaseDone5")
 
     private boolean phaseDone;
@@ -105,7 +105,7 @@ public class Player implements IPlayer, Serializable {
 
     @Override
     public void setName(String name) {
-        if (this.name.isEmpty()) {
+        if (this.name == null || this.name.isEmpty()) {
             this.name = name;
         }
     }

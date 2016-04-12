@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import util.CardCreator;
 
 import java.util.List;
 
@@ -39,14 +40,15 @@ public class HibernateDAOTest {
         ControllerData test = new ControllerData();
         String klaus = "Klaus";
         String herbert = "Herbert";
-        IDeckOfCards deck = new DeckOfCards();
-        deck.add(new Card(CardValue.EIGHT,CardColor.BLUE));
+        IDeckOfCards deck = CardCreator.giveDeckOfCards();
         Gson gson = new Gson();
         String testString = gson.toJson(deck);
+        System.out.println(testString);
+        System.out.println(testString.length());
         Player herbertObject = new Player(0);
         herbertObject.setName(herbert);
         test.setPlayer1(herbertObject);
-        test.setTestCard(testString);
+        test.setPlayer1Pile(testString);
         Player klausObject= new Player(1);
         klausObject.setName(klaus);
         test.setPlayer2(klausObject);
@@ -64,7 +66,7 @@ public class HibernateDAOTest {
         for(Object o : testlist) {
             ControllerData pt = (ControllerData) o;
             assertEquals(herbert,pt.getPlayer1().getPlayerName());
-            assertEquals(testString, pt.getTestCard());
+            assertEquals(testString, pt.getPlayer1Pile());
             assertEquals(klaus,pt.getPlayer2().getPlayerName());
             session.delete(o);
             i++;

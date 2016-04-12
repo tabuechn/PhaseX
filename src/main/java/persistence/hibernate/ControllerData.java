@@ -14,7 +14,7 @@ import java.util.List;
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "PhaseX_Controller5")
+@Table(name = "PhaseX_Controller6")
 public class ControllerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,13 +24,14 @@ public class ControllerData implements Serializable {
     private Player player1;
 
 
-    @Column(name="PhaseX_TestCard5")
-    private String testCard;
+    @Column(name="PhaseX_Player1Cards", length = Integer.MAX_VALUE)
+    private String player1Pile;
 
     @Column(name="PhaseX_Player2")
     private Player player2;
 
-
+    @Column(name="PhaseX_Player1Cards", length = Integer.MAX_VALUE)
+    private String player2Pile;
 
     public ControllerData() {
     }
@@ -63,12 +64,20 @@ public class ControllerData implements Serializable {
     }
 
 
-    public String getTestCard() {
-        return testCard;
+    public String getPlayer1Pile() {
+        return player1Pile;
     }
 
-    public void setTestCard(String testCard) {
-        this.testCard = testCard;
+    public void setPlayer1Pile(String player1Pile) {
+        this.player1Pile = player1Pile;
+    }
+
+    public String getPlayer2Pile() {
+        return player2Pile;
+    }
+
+    public void setPlayer2Pile(String player2Pile) {
+        this.player2Pile = player2Pile;
     }
 }
 
