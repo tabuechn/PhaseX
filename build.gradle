@@ -48,6 +48,11 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.20'
     compile 'org.slf4j:slf4j-simple:1.7.20'
     compile 'org.javassist:javassist:3.20.0-GA'
+
+    //CouchDB
+    compile 'org.ektorp:org.ektorp:1.4.2'
+    compile 'org.opencredo.couchdb:couchdb-si-support:0.1'
+
 }
 
 
