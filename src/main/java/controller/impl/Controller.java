@@ -48,7 +48,7 @@ public class Controller extends Observable implements IController, UIController 
     private IPlayer winner;
 
 
-    Controller(int numberOfPlayers) {
+    public Controller(int numberOfPlayers) {
         winner = null;
         playerCount = numberOfPlayers;
         drawPile = new DeckOfCards();

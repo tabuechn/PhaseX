@@ -1,6 +1,6 @@
 package persistence.hibernate;
 
-import controller.IController;
+import controller.UIController;
 import model.player.IPlayer;
 import persistence.IPhaseXDao;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class HibernateDAO implements IPhaseXDao {
     @Override
-    public void saveGame(IController controller) {
+    public void saveGame(UIController controller) {
 
     }
 
@@ -21,7 +21,7 @@ public class HibernateDAO implements IPhaseXDao {
     }
 
     @Override
-    public IController loadGame(IPlayer p1, IPlayer p2) {
+    public UIController loadGame(IPlayer p1, IPlayer p2) {
         return null;
     }
 
@@ -36,7 +36,12 @@ public class HibernateDAO implements IPhaseXDao {
     }
 
     @Override
-    public List<IController> getAllSavedGamesForPlayer(IPlayer player) {
+    public List<UIController> getAllSavedGamesForPlayer(IPlayer player) {
         return null;
+    }
+
+    @Override
+    public boolean closeDBConnection() {
+        return false;
     }
 }

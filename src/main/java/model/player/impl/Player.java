@@ -6,6 +6,8 @@ import model.deck.IDeckOfCards;
 import model.phase.IPhase;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * If everything works right this class was
@@ -86,5 +88,23 @@ public class Player implements IPlayer {
         if (this.name.isEmpty()) {
             this.name = name;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(name).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        } else if (o == this) {
+            return true;
+        } else {
+            Player other = (Player) o;
+            return new EqualsBuilder().append(name.toLowerCase(), other.getPlayerName().toLowerCase()).isEquals();
+        }
+
     }
 }

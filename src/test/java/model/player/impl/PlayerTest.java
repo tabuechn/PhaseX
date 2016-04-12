@@ -4,6 +4,7 @@ import model.deck.impl.DeckOfCards;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -22,6 +23,7 @@ public class PlayerTest {
     @Before
     public void setUp() {
         testee = new Player(1);
+        testee.setName(PLAYER_NAME);
     }
 
     @Test
@@ -70,6 +72,7 @@ public class PlayerTest {
 
     @Test
     public void checkIfPlayerWithEmptyNameIsSetCorrectly() {
+        testee = new Player(1);
         assertTrue(testee.getPlayerName().isEmpty());
         testee.setName("John");
         assertEquals("John", testee.getPlayerName());
@@ -81,5 +84,51 @@ public class PlayerTest {
         assertEquals("John", testee.getPlayerName());
         testee.setName("Giesela");
         assertEquals("John", testee.getPlayerName());
+    }
+
+    @Test
+    public void compareWithSamePlayerShouldReturnTrue() {
+        assertTrue(testee.equals(testee));
+    }
+
+    @Test
+    public void comparePlayersWithSameNameShouldReturnTrue() {
+        IPlayer secondPlayer = new Player(2);
+        secondPlayer.setName(PLAYER_NAME);
+        secondPlayer.nextPhase();
+        assertTrue(testee.equals(secondPlayer));
+    }
+
+    @Test
+    public void playersWithSameNameShouldReturnSameHashCode() {
+        IPlayer secondPlayer = new Player(2);
+        secondPlayer.setName(PLAYER_NAME);
+        secondPlayer.nextPhase();
+        assertTrue(testee.hashCode() == secondPlayer.hashCode());
+    }
+
+    @Test
+    public void comparePlayersWithOtherNamesShouldReturnFalse() {
+        IPlayer secondPlayer = new Player(2);
+        secondPlayer.setName("Udo");
+        secondPlayer.nextPhase();
+        assertFalse(testee.equals(secondPlayer));
+    }
+
+    @Test
+    public void playersWithDifferentNameShouldReturnDifferentHashCode() {
+        IPlayer secondPlayer = new Player(2);
+        secondPlayer.setName("Udo");
+        secondPlayer.nextPhase();
+        assertFalse(testee.hashCode() == secondPlayer.hashCode());
+    }
+
+    @Test
+    @Ignore
+    public void comparePlayersWithSameNameButDifferentCaptionShouldReturnTrue() {
+        IPlayer secondPlayer = new Player(2);
+        secondPlayer.setName("joHn");
+        secondPlayer.nextPhase();
+        assertFalse(testee.equals(secondPlayer));
     }
 }
