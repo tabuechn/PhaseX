@@ -30,7 +30,7 @@ public class Player implements IPlayer, Serializable {
     private int playerNumber;
     @Column(name ="PhaseX_Name5")
     private String name;
-    @Column(name="PhaseX_PhaseDone5")
+    @Column(name="PhaseX_PhaseDone6")
 
     private boolean phaseDone;
     @Column(name = "PhaseX_PlayerPoints5")
