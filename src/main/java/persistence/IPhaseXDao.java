@@ -1,6 +1,6 @@
 package persistence;
 
-import controller.IController;
+import controller.UIController;
 import model.player.IPlayer;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface IPhaseXDao {
      *
      * @param controller the controller of the current game.
      */
-    void saveGame(IController controller);
+    void saveGame(UIController controller);
 
     /**
      * Checks if a game with the given Players is stored in db
@@ -35,7 +35,7 @@ public interface IPhaseXDao {
      * @param p2 Playername of second Player
      * @return The controller of the current game or null when game isn't found.
      */
-    IController loadGame(IPlayer p1, IPlayer p2);
+    UIController loadGame(IPlayer p1, IPlayer p2);
 
     /**
      * Method to remove an active Game between 2 Players
@@ -50,5 +50,18 @@ public interface IPhaseXDao {
      */
     void deleteAllGamesForPlayer(IPlayer p1);
 
-    List<IController> getAllSavedGamesForPlayer(IPlayer player);
+    /**
+     * Method to get all active game of the current player
+     *
+     * @param player the player Object to find the active games for.
+     * @return all active games of player
+     */
+    List<UIController> getAllSavedGamesForPlayer(IPlayer player);
+
+    /**
+     * Method to close the DB connection
+     *
+     * @return true if connection successfully closed, false if not.
+     */
+    boolean closeDBConnection();
 }

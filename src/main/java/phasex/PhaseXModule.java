@@ -16,7 +16,6 @@ public class PhaseXModule extends AbstractModule {
     public void configure() {
         bind(IController.class).to(Controller.class).in(Singleton.class);
         bind(UIController.class).to(Controller.class).in(Singleton.class);
-
     }
 
 
