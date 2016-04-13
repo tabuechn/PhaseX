@@ -3,6 +3,7 @@ package persistence.hibernate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import controller.impl.Controller;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
@@ -55,27 +56,16 @@ public class HibernateDAOTest {
 
     @Test
     public void saveAndDeletePlayers() throws Exception {
-        String pileString = new Gson().toJson(deck);
+        Controller ctrl = new Controller();
+        ctrl.startGame(herbert);
+        ctrl.setSecondPlayerName(klaus);
 
-        Player herbertObject = new Player(0);
-        herbertObject.setName(herbert);
-        ctrlData.setPlayer1(herbertObject);
-        ctrlData.setPlayer1Pile(pileString);
-        ctrlData.setPlayer1PhaseString(herbertObject.getPhase());
+        HibernateDAO hdao = new HibernateDAO();
+        hdao.saveGame(ctrl);
 
-        Player klausObject= new Player(1);
-        klausObject.setName(klaus);
-        ctrlData.setPlayer2(klausObject);
-        ctrlData.setPlayer2Pile(pileString);
-        ctrlData.setPlayer2PhaseString(klausObject.getPhase());
 
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
-        session.save(ctrlData);
-        trans.commit();
-
-        session = HibernateUtil.getInstance().getCurrentSession();
-        trans = session.beginTransaction();
 
         Criteria criteria = session.createCriteria(ControllerData.class);
         List testlist =criteria.list();
@@ -83,12 +73,11 @@ public class HibernateDAOTest {
         for(Object o : testlist) {
             ControllerData cd = (ControllerData) o;
             assertEquals(herbert,cd.getPlayer1().getPlayerName());
-            assertEquals(pileString, cd.getPlayer1Pile());
 
             DeckOfCards result = gson.fromJson(cd.getPlayer1Pile(),DeckOfCards.class);
-            assertEquals(result,deck);
+            assertEquals(result,ctrl.getCurrentPlayersHand());
 
-            assertEquals(cd.getPlayer1PhaseString(),herbertObject.getPhase().toString());
+            assertEquals(cd.getPlayer1PhaseString(),ctrl.getCurrentPlayer().getPhase().toString());
 
             assertEquals(klaus,cd.getPlayer2().getPlayerName());
 

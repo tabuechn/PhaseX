@@ -15,7 +15,7 @@ import java.util.List;
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "PhaseX_Controller8")
+@Table(name = "PhaseX_Controller10")
 public class ControllerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +34,12 @@ public class ControllerData implements Serializable {
     private String player2Pile;
     @Column(name = "PhaseX_Player2Phase")
     private String player2PhaseString;
+
+    @Column(name = "PhaseX_DiscardPile", length = Integer.MAX_VALUE)
+    private String discardPile;
+
+    @Column(name = "PhaseX_DrawPile", length = Integer.MAX_VALUE)
+    private String drawPile;
 
     public ControllerData() {
     }
@@ -104,6 +110,22 @@ public class ControllerData implements Serializable {
 
     public void setPlayer2PhaseString(IPhase phase) {
         this.player2PhaseString = phase.toString();
+    }
+
+    public String getDiscardPile() {
+        return discardPile;
+    }
+
+    public void setDiscardPile(String discardPile) {
+        this.discardPile = discardPile;
+    }
+
+    public String getDrawPile() {
+        return drawPile;
+    }
+
+    public void setDrawPile(String drawPile) {
+        this.drawPile = drawPile;
     }
 }
 
