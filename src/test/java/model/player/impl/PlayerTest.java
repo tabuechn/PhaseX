@@ -4,7 +4,6 @@ import model.deck.impl.DeckOfCards;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -124,11 +123,10 @@ public class PlayerTest {
     }
 
     @Test
-    @Ignore
     public void comparePlayersWithSameNameButDifferentCaptionShouldReturnTrue() {
         IPlayer secondPlayer = new Player(2);
         secondPlayer.setName("joHn");
         secondPlayer.nextPhase();
-        assertFalse(testee.equals(secondPlayer));
+        assertTrue(testee.equals(secondPlayer));
     }
 }

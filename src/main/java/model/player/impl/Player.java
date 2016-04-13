@@ -1,6 +1,5 @@
 package model.player.impl;
 
-import model.card.impl.Card;
 import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
@@ -29,7 +28,7 @@ public class Player implements IPlayer, Serializable {
     @Column(name = "PhaseX_PlayerNumber5")
     private int playerNumber;
     @Column(name ="PhaseX_Name5")
-    private String name;
+    private String name = "";
     @Column(name="PhaseX_PhaseDone6")
 
     private boolean phaseDone;
@@ -105,7 +104,7 @@ public class Player implements IPlayer, Serializable {
 
     @Override
     public void setName(String name) {
-        if (this.name == null || this.name.isEmpty()) {
+        if (this.name.isEmpty()) {
             this.name = name;
         }
     }

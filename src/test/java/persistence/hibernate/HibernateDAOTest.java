@@ -1,24 +1,20 @@
 package persistence.hibernate;
 
 import com.google.gson.Gson;
-import model.card.CardColor;
-import model.card.CardValue;
-import model.card.ICard;
-import model.card.impl.Card;
 import model.deck.IDeckOfCards;
-import model.deck.impl.DeckOfCards;
 import model.player.impl.Player;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import util.CardCreator;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by tabuechn on 05.04.2016.
@@ -36,6 +32,7 @@ public class HibernateDAOTest {
     }
 
     @Test
+    @Ignore
     public void saveAndDeleteObject() throws Exception {
         ControllerData test = new ControllerData();
         String klaus = "Klaus";
