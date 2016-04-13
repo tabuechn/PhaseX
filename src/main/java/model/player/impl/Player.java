@@ -19,22 +19,25 @@ import java.io.Serializable;
  * If it doesn't work I don't know who the hell wrote it.
  */
 @Entity
-@Table(name = "PhaseX_Player5")
+@Table(name = "PhaseX_Player6")
 public class Player implements IPlayer, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "PhaseX_PlayerNumber5")
+    @Column(name = "PhaseX_PlayerNumber")
     private int playerNumber;
-    @Column(name ="PhaseX_Name5")
-    private String name;
-    @Column(name="PhaseX_PhaseDone6")
 
+    @Column(name ="PhaseX_Name")
+    private String name ="";
+
+    @Column(name="PhaseX_PhaseDone")
     private boolean phaseDone;
-    @Column(name = "PhaseX_PlayerPoints5")
+
+    @Column(name = "PhaseX_PlayerPoints")
     private int points;
+
     @Transient
     private transient IPhase phase;
     @Transient

@@ -76,4 +76,9 @@ public class Phase4 implements IPhase {
     public boolean isNumberPhase() {
         return pairPhaseChecker instanceof ColorChecker || quadruplePhaseChecker instanceof ColorChecker;
     }
+
+    @Override
+    public String toString() {
+        return "Phase4";
+    }
 }

@@ -71,4 +71,8 @@ public class Phase5 implements IPhase {
         return phaseChecker instanceof ColorChecker;
     }
 
+    @Override
+    public String toString() {
+        return "Phase5";
+    }
 }
