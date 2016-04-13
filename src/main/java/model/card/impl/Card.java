@@ -7,13 +7,26 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.annotation.Nonnull;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
-public class Card implements ICard {
-    private final CardValue number;
-    private final CardColor color;
+@Entity
+@Table(name = "PhaseX_Card5")
+public class Card implements ICard, Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name = "PhaseX_CardValue5")
+    private CardValue number;
+    @Column(name = "PhaseX_CardColor5")
+    private CardColor color;
+
+    public Card() {}
 
     public Card(CardValue cardNumber, CardColor cardColor) {
         this.number = cardNumber;
@@ -53,5 +66,11 @@ public class Card implements ICard {
                 .isEquals();
     }
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

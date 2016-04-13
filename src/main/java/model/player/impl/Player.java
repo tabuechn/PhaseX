@@ -1,5 +1,6 @@
 package model.player.impl;
 
+import model.card.impl.Card;
 import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
@@ -9,24 +10,43 @@ import model.player.IPlayer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * If everything works right this class was
  * created by Konraifen88 on 22.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class Player implements IPlayer {
+@Entity
+@Table(name = "PhaseX_Player5")
+public class Player implements IPlayer, Serializable {
 
-    private final int playerNumber;
-    private String name = "";
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name = "PhaseX_PlayerNumber5")
+    private int playerNumber;
+    @Column(name ="PhaseX_Name5")
+    private String name;
+    @Column(name="PhaseX_PhaseDone6")
+
     private boolean phaseDone;
+    @Column(name = "PhaseX_PlayerPoints5")
     private int points;
-    private IPhase phase;
-    private IDeckOfCards deck;
+    @Transient
+    private transient IPhase phase;
+    @Transient
+    private transient IDeckOfCards deck;
 
     public Player(int number) {
         this.phase = new Phase1();
         this.phaseDone = false;
         this.playerNumber = number;
+    }
+
+    public Player() {
     }
 
     @Override
@@ -85,7 +105,7 @@ public class Player implements IPlayer {
 
     @Override
     public void setName(String name) {
-        if (this.name.isEmpty()) {
+        if (this.name == null || this.name.isEmpty()) {
             this.name = name;
         }
     }
@@ -105,6 +125,13 @@ public class Player implements IPlayer {
             Player other = (Player) o;
             return new EqualsBuilder().append(name.toLowerCase(), other.getPlayerName().toLowerCase()).isEquals();
         }
+    }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

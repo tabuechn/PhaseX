@@ -1,12 +1,20 @@
 package persistence.hibernate;
 
+import com.google.gson.Gson;
+import model.card.CardColor;
+import model.card.CardValue;
+import model.card.ICard;
+import model.card.impl.Card;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
+import model.player.impl.Player;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import persistence.hibernate.controller.PlayerData;
+import util.CardCreator;
 
 import java.util.List;
 
@@ -32,12 +40,18 @@ public class HibernateDAOTest {
         ControllerData test = new ControllerData();
         String klaus = "Klaus";
         String herbert = "Herbert";
-        PlayerData herbertObject = new PlayerData();
-        herbertObject.setPlayerName(herbert);
-        test.setPlayer1Data(herbertObject);
-        PlayerData klausObject= new PlayerData();
-        klausObject.setPlayerName(klaus);
-        test.setPlayer2Data(klausObject);
+        IDeckOfCards deck = CardCreator.giveDeckOfCards();
+        Gson gson = new Gson();
+        String testString = gson.toJson(deck);
+        System.out.println(testString);
+        System.out.println(testString.length());
+        Player herbertObject = new Player(0);
+        herbertObject.setName(herbert);
+        test.setPlayer1(herbertObject);
+        test.setPlayer1Pile(testString);
+        Player klausObject= new Player(1);
+        klausObject.setName(klaus);
+        test.setPlayer2(klausObject);
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
         session.save(test);
@@ -51,8 +65,9 @@ public class HibernateDAOTest {
         int i = 0;
         for(Object o : testlist) {
             ControllerData pt = (ControllerData) o;
-            assertEquals(herbert,pt.getPlayer1Data().getPlayerName());
-            assertEquals(klaus,pt.getPlayer2Data().getPlayerName());
+            assertEquals(herbert,pt.getPlayer1().getPlayerName());
+            assertEquals(testString, pt.getPlayer1Pile());
+            assertEquals(klaus,pt.getPlayer2().getPlayerName());
             session.delete(o);
             i++;
         }
