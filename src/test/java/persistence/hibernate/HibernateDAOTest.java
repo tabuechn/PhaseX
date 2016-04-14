@@ -71,7 +71,6 @@ public class HibernateDAOTest {
         Controller ctrl = new Controller();
         ctrl.startGame(herbert);
         ctrl.setSecondPlayerName(klaus);
-        List<ICardStack>
     }
 
 
