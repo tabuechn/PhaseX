@@ -13,6 +13,7 @@ import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
 import model.player.impl.Player;
+import model.stack.ICardStack;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -53,6 +54,26 @@ public class HibernateDAOTest {
 
     }
 
+    @Test
+    public void deleteTest() throws Exception {
+        Session session = HibernateUtil.getInstance().getCurrentSession();
+        Transaction trans = session.beginTransaction();
+        Criteria criteria = session.createCriteria(ControllerData.class);
+        List testlist = criteria.list();
+        for(Object o : testlist) {
+            session.delete(o);
+        }
+        trans.commit();
+    }
+
+    @Test
+    public void saveAndDeleteStacks() throws Exception {
+        Controller ctrl = new Controller();
+        ctrl.startGame(herbert);
+        ctrl.setSecondPlayerName(klaus);
+        List<ICardStack>
+    }
+
 
     @Test
     public void saveAndDeletePlayers() throws Exception {
@@ -73,13 +94,14 @@ public class HibernateDAOTest {
         for(Object o : testlist) {
             ControllerData cd = (ControllerData) o;
             assertEquals(herbert,cd.getPlayer1().getPlayerName());
-
-            DeckOfCards result = gson.fromJson(cd.getPlayer1Pile(),DeckOfCards.class);
-            assertEquals(result,ctrl.getCurrentPlayersHand());
-
-            assertEquals(cd.getPlayer1PhaseString(),ctrl.getCurrentPlayer().getPhase().toString());
+            DeckOfCards herbertDeck = gson.fromJson(cd.getPlayer1Pile(),DeckOfCards.class);
+            assertEquals(ctrl.getPlayers()[0].getDeckOfCards(),herbertDeck);
+            assertEquals(ctrl.getPlayers()[0].getPhase().toString(),cd.getPlayer1PhaseString());
 
             assertEquals(klaus,cd.getPlayer2().getPlayerName());
+            DeckOfCards klausDeck = gson.fromJson(cd.getPlayer2Pile(),DeckOfCards.class);
+            assertEquals(ctrl.getPlayers()[1].getDeckOfCards(),klausDeck);
+            assertEquals(ctrl.getPlayers()[1].getPhase().toString(),cd.getPlayer2PhaseString());
 
             session.delete(o);
             i++;

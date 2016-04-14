@@ -43,6 +43,7 @@ public class Controller extends Observable implements IController, UIController 
     private IDeckOfCards drawPile;
 
     private IDeckOfCards discardPile;
+
     private String statusMessage;
 
     private IPlayer winner;
@@ -366,6 +367,31 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public void setSecondPlayerName(String name) {
         players[1].setName(name);
+    }
+
+    @Override
+    public IPlayer[] getPlayers() {
+        return this.players;
+    }
+
+    @Override
+    public int getCurrentPlayerIndex() {
+        return this.currentPlayerIndex;
+    }
+
+    @Override
+    public void setCurrentPlayerIndex(int index) {
+        this.currentPlayerIndex = index;
+    }
+
+    @Override
+    public void setPlayer1(IPlayer player1) {
+        this.players[0] = player1;
+    }
+
+    @Override
+    public void setPlayer2(IPlayer player2) {
+        this.players[1] = player2;
     }
 
     @Override

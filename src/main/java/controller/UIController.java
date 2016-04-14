@@ -137,4 +137,17 @@ public interface UIController extends IObservable {
      */
     void setSecondPlayerName(String name);
 
+    /**
+     * Returns the Array of all Players
+     * @return Array of all Players
+     */
+    IPlayer[] getPlayers();
+
+    int getCurrentPlayerIndex();
+
+    void setCurrentPlayerIndex(int index);
+
+    void setPlayer1(IPlayer player1);
+
+    void setPlayer2(IPlayer player2);
 }

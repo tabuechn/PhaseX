@@ -29,19 +29,27 @@ public class HibernateDAO implements IPhaseXDao {
     @Override
     public void saveGame(UIController controller) {
         ControllerData cd = new ControllerData();
+        IPlayer[] players = controller.getPlayers();
+        Player player1 = (Player)players[0];
+        Player player2 = (Player)players[1];
+        Gson gsonNormal = new Gson();
 
-        cd.setPlayer1((Player)controller.getCurrentPlayer());
-        cd.setPlayer1PhaseString(controller.getCurrentPlayer().getPhase().toString());
-        String player1Hand = gson.toJson(controller.getCurrentPlayersHand());
+        cd.setPlayer1(player1);
+        cd.setPlayer1PhaseString(player1.getPhase().toString());
+        String player1Hand = gsonNormal.toJson(player1.getDeckOfCards());
         cd.setPlayer1Pile(player1Hand);
 
-        cd.setPlayer2((Player)controller.getOpponentPlayer());
-        cd.setPlayer2PhaseString(controller.getOpponentPlayer().getPhase().toString());
-        String player2Hand = gson.toJson(controller.getOpponentPlayer().getDeckOfCards());
-        cd.setPlayer1Pile(player2Hand);
+        cd.setPlayer2(player2);
+        cd.setPlayer2PhaseString(player2.getPhase().toString());
+        String player2Hand = gsonNormal.toJson(player2.getDeckOfCards());
+        cd.setPlayer2Pile(player2Hand);
 
-        cd.setDiscardPile(gson.toJson(controller.getDrawPile()));
-        cd.setDrawPile(gson.toJson(controller.getDiscardPile()));
+        cd.setDiscardPile(gsonNormal.toJson(controller.getDiscardPile()));
+        cd.setDrawPile(gsonNormal.toJson(controller.getDrawPile()));
+        cd.setRoundState(controller.getRoundState().toString());
+        cd.setStatusMessage(controller.getStatusMessage());
+
+
 
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
