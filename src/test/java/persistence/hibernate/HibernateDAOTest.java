@@ -14,6 +14,10 @@ import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
 import model.player.impl.Player;
 import model.stack.ICardStack;
+import model.stack.impl.ColorStack;
+import model.stack.impl.PairStack;
+import model.stack.impl.StackDeserializer;
+import model.stack.impl.StreetStack;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import util.CardCreator;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,6 +42,7 @@ public class HibernateDAOTest {
     IDeckOfCards deck;
     ControllerData ctrlData;
     Gson gson;
+    HibernateDAO hdao;
 
     @Before
     public void setUp() throws Exception {
@@ -46,7 +52,9 @@ public class HibernateDAOTest {
         ctrlData = new ControllerData();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
         gson = gsonBuilder.create();
+        hdao = new HibernateDAO();
     }
 
     @After
@@ -71,6 +79,49 @@ public class HibernateDAOTest {
         Controller ctrl = new Controller();
         ctrl.startGame(herbert);
         ctrl.setSecondPlayerName(klaus);
+
+        List<ICardStack> testStacks = new LinkedList<>();
+
+        ICardStack pairStack = new PairStack(getPairStack(4));
+        ICardStack colorStack = new ColorStack(getColorStack(CardColor.RED));
+        ICardStack streetStack = new StreetStack(getStreetStack());
+
+        testStacks.add(pairStack);
+        testStacks.add(colorStack);
+        testStacks.add(streetStack);
+        ctrl.setAllStacks(testStacks);
+
+        hdao.saveGame(ctrl);
+
+        Session session = HibernateUtil.getInstance().getCurrentSession();
+        Transaction trans = session.beginTransaction();
+        Criteria criteria = session.createCriteria(ControllerData.class);
+        List testlist =criteria.list();
+        int i = 0;
+        for(Object o : testlist) {
+            ControllerData cd = (ControllerData) o;
+            assertFalse(cd.getStack1().isEmpty());
+            assertFalse(cd.getStack2().isEmpty());
+
+            ICardStack stack1res = gson.fromJson(cd.getStack1(),ICardStack.class);
+            assertTrue(stack1res instanceof PairStack);
+            assertEquals(pairStack.getList(),stack1res.getList());
+
+            ICardStack stack2res = gson.fromJson(cd.getStack2(),ICardStack.class);
+            assertTrue(stack2res instanceof ColorStack);
+            assertEquals(colorStack.getList(),stack2res.getList());
+
+            ICardStack stack3res = gson.fromJson(cd.getStack3(),ICardStack.class);
+            assertTrue(stack3res instanceof StreetStack);
+            assertEquals(streetStack.getList(),stack3res.getList());
+            System.out.println(cd.getStack4());
+
+
+            session.delete(o);
+            i++;
+        }
+        trans.commit();
+        assertEquals(i,1);
     }
 
 
@@ -80,7 +131,7 @@ public class HibernateDAOTest {
         ctrl.startGame(herbert);
         ctrl.setSecondPlayerName(klaus);
 
-        HibernateDAO hdao = new HibernateDAO();
+
         hdao.saveGame(ctrl);
 
 
@@ -107,5 +158,32 @@ public class HibernateDAOTest {
         }
         trans.commit();
         assertEquals(i,1);
+    }
+
+    private IDeckOfCards getColorStack(CardColor color) {
+        IDeckOfCards retDeck = new DeckOfCards();
+        for(int i = 1; i < 9; i++) {
+            ICard card = new Card(CardValue.byOrdinal(i),color);
+            retDeck.add(card);
+        }
+        return retDeck;
+    }
+
+    private IDeckOfCards getStreetStack() {
+        IDeckOfCards retDeck = new DeckOfCards();
+        for(int i = 1; i < 6; i++) {
+            ICard card = new Card(CardValue.byOrdinal(i),CardColor.BLUE);
+            retDeck.add(card);
+        }
+        return retDeck;
+    }
+
+    private IDeckOfCards getPairStack(int pairValue) {
+        IDeckOfCards pairStack = new DeckOfCards();
+        for(int i = 0; i < 4;i++) {
+            ICard card = new Card(CardValue.byOrdinal(pairValue),CardColor.GREEN);
+            pairStack.add(card);
+        }
+        return pairStack;
     }
 }

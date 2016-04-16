@@ -150,4 +150,6 @@ public interface UIController extends IObservable {
     void setPlayer1(IPlayer player1);
 
     void setPlayer2(IPlayer player2);
+
+    void setAllStacks(List<ICardStack> allStacks);
 }

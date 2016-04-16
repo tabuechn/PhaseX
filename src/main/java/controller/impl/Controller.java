@@ -395,6 +395,11 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    public void setAllStacks(List<ICardStack> allStacks) {
+        this.allPhases = allStacks;
+    }
+
+    @Override
     public void setWinner() {
         this.winner = getCurrentPlayer();
     }

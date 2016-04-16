@@ -15,7 +15,7 @@ import java.util.List;
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "PhaseX_Controller11")
+@Table(name = "PhaseX_Controller13")
 public class ControllerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,6 +46,18 @@ public class ControllerData implements Serializable {
 
     @Column(name = "PhaseX_StatusMessage")
     private String statusMessage;
+
+    @Column(name = "PhaseX_Stack1", length = Integer.MAX_VALUE)
+    private String stack1;
+
+    @Column(name = "PhaseX_Stack2", length = Integer.MAX_VALUE)
+    private String stack2;
+
+    @Column(name = "PhaseX_Stack3", length = Integer.MAX_VALUE)
+    private String stack3;
+
+    @Column(name = "PhaseX_Stack4", length = Integer.MAX_VALUE)
+    private String stack4;
 
     public ControllerData() {
     }
@@ -148,6 +160,57 @@ public class ControllerData implements Serializable {
 
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    public String getStack1() {
+        return stack1;
+    }
+
+    public void setStack1(String stack1) {
+        this.stack1 = stack1;
+    }
+
+    public String getStack2() {
+        return stack2;
+    }
+
+    public void setStack2(String stack2) {
+        this.stack2 = stack2;
+    }
+
+    public String getStack3() {
+        return stack3;
+    }
+
+    public void setStack3(String stack3) {
+        this.stack3 = stack3;
+    }
+
+    public String getStack4() {
+        return stack4;
+    }
+
+    public void setStack4(String stack4) {
+        this.stack4 = stack4;
+    }
+
+    public void setStack(String stack, int stackNumber) {
+        switch (stackNumber) {
+            case 1:
+                setStack1(stack);
+                break;
+            case 2:
+                setStack2(stack);
+                break;
+            case 3:
+                setStack3(stack);
+                break;
+            case 4:
+                setStack4(stack);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }
 
