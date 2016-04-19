@@ -73,4 +73,10 @@ public interface IPlayer {
     int getPoints();
 
     void setName(String name);
+
+    /**
+     * set she phase of the player by the name of the phase
+     * @param phaseName name of the phase
+     */
+    void setPhase(String phaseName);
 }

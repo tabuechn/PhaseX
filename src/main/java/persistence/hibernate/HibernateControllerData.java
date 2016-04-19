@@ -1,14 +1,24 @@
 package persistence.hibernate;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import controller.UIController;
+import controller.impl.Controller;
 import model.card.ICard;
 import model.card.impl.Card;
+import model.card.impl.CardDeserializer;
+import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
 import model.player.IPlayer;
 import model.player.impl.Player;
+import model.stack.ICardStack;
+import model.stack.impl.StackDeserializer;
+import persistence.IControllerData;
 
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,7 +26,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PhaseX_Controller14")
-public class ControllerData implements Serializable {
+public class HibernateControllerData implements Serializable, IControllerData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -59,7 +69,7 @@ public class ControllerData implements Serializable {
     @Column(name = "PhaseX_Stack4", length = Integer.MAX_VALUE)
     private String stack4;
 
-    public ControllerData() {
+    public HibernateControllerData() {
     }
 
 
@@ -210,6 +220,59 @@ public class ControllerData implements Serializable {
                 break;
             default:
                 throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public UIController getController() {
+        UIController controller = new Controller();
+        controller.startGame(player1.getPlayerName());
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        controller.setRoundState(this.roundState);
+        controller.setStatusMessage(this.statusMessage);
+
+        IPlayer player1 = this.player1;
+        player1.setPhase(this.getPlayer1PhaseString());
+        player1.setDeckOfCards(gson.fromJson(this.player1Pile, DeckOfCards.class));
+        controller.setPlayer1(player1);
+
+        IPlayer player2 = this.player2;
+        player2.setPhase(this.player2PhaseString);
+        player2.setDeckOfCards(gson.fromJson(this.getPlayer2Pile(),DeckOfCards.class));
+        controller.setPlayer2(player2);
+
+
+        controller.setDrawPile(gson.fromJson(this.drawPile,DeckOfCards.class));
+        controller.setDiscardPile(gson.fromJson(this.discardPile,DeckOfCards.class));
+
+        List<ICardStack> allStacks = new LinkedList<>();
+        fillAllStacks(allStacks);
+        controller.setAllStacks(allStacks);
+
+        return controller;
+    }
+
+    private void fillAllStacks(List<ICardStack> allStacks) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
+        Gson gson = gsonBuilder.create();
+        if(stack1 != null) {
+            allStacks.add(gson.fromJson(stack1,ICardStack.class));
+        }
+        if(stack2 != null) {
+            allStacks.add(gson.fromJson(stack2,ICardStack.class));
+        }
+        if(stack3 != null) {
+            allStacks.add(gson.fromJson(stack3,ICardStack.class));
+        }
+        if(stack4 != null) {
+            allStacks.add(gson.fromJson(stack4,ICardStack.class));
         }
     }
 }

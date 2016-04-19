@@ -2,7 +2,7 @@ package persistence.hibernate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import controller.UIController;
 import controller.impl.Controller;
 import model.card.CardColor;
 import model.card.CardValue;
@@ -11,7 +11,7 @@ import model.card.impl.Card;
 import model.card.impl.CardDeserializer;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
-import model.phase.IPhase;
+import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
 import model.stack.impl.ColorStack;
@@ -28,7 +28,6 @@ import util.CardCreator;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +39,7 @@ public class HibernateDAOTest {
     String klaus;
     String herbert;
     IDeckOfCards deck;
-    ControllerData ctrlData;
+    HibernateControllerData ctrlData;
     Gson gson;
     HibernateDAO hdao;
 
@@ -49,7 +48,7 @@ public class HibernateDAOTest {
         klaus = "Klaus";
         herbert = "Herbert";
         deck = CardCreator.giveDeckOfCards();
-        ctrlData = new ControllerData();
+        ctrlData = new HibernateControllerData();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
         gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
@@ -66,7 +65,7 @@ public class HibernateDAOTest {
     public void deleteTest() throws Exception {
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
-        Criteria criteria = session.createCriteria(ControllerData.class);
+        Criteria criteria = session.createCriteria(HibernateControllerData.class);
         List testlist = criteria.list();
         for(Object o : testlist) {
             session.delete(o);
@@ -95,11 +94,11 @@ public class HibernateDAOTest {
 
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
-        Criteria criteria = session.createCriteria(ControllerData.class);
+        Criteria criteria = session.createCriteria(HibernateControllerData.class);
         List testlist =criteria.list();
         int i = 0;
         for(Object o : testlist) {
-            ControllerData cd = (ControllerData) o;
+            HibernateControllerData cd = (HibernateControllerData) o;
             assertFalse(cd.getStack1().isEmpty());
             assertFalse(cd.getStack2().isEmpty());
 
@@ -114,7 +113,6 @@ public class HibernateDAOTest {
             ICardStack stack3res = gson.fromJson(cd.getStack3(),ICardStack.class);
             assertTrue(stack3res instanceof StreetStack);
             assertEquals(streetStack.getList(),stack3res.getList());
-            System.out.println(cd.getStack4());
 
 
             session.delete(o);
@@ -122,6 +120,37 @@ public class HibernateDAOTest {
         }
         trans.commit();
         assertEquals(i,1);
+    }
+
+    @Test
+    public void saveAndLoadGame() throws Exception {
+        Controller ctrl = new Controller();
+        IPlayer herberObject = new Player(0);
+        herberObject.setName(herbert);
+        ctrl.startGame(herberObject.getPlayerName());
+        ctrl.setSecondPlayerName(klaus);
+
+        List<ICardStack> testStacks = new LinkedList<>();
+
+        ICardStack pairStack = new PairStack(getPairStack(4));
+        ICardStack colorStack = new ColorStack(getColorStack(CardColor.RED));
+        ICardStack streetStack = new StreetStack(getStreetStack());
+
+        testStacks.add(pairStack);
+        testStacks.add(colorStack);
+        testStacks.add(streetStack);
+        ctrl.setAllStacks(testStacks);
+
+        hdao.saveGame(ctrl);
+
+        UIController loadedController = hdao.loadGame(herberObject);
+        assertEquals(ctrl.getStatusMessage(),loadedController.getStatusMessage());
+        assertEquals(ctrl.getRoundState().toString(),loadedController.getRoundState().toString());
+        assertEquals(testStacks.size(),loadedController.getAllStacks().size());
+        for(int i = 0; i < testStacks.size(); ++i) {
+            assertEquals(ctrl.getAllStacks().get(i).getList(),loadedController.getAllStacks().get(i).getList());
+        }
+
     }
 
 
@@ -138,11 +167,11 @@ public class HibernateDAOTest {
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
 
-        Criteria criteria = session.createCriteria(ControllerData.class);
+        Criteria criteria = session.createCriteria(HibernateControllerData.class);
         List testlist =criteria.list();
         int i = 0;
         for(Object o : testlist) {
-            ControllerData cd = (ControllerData) o;
+            HibernateControllerData cd = (HibernateControllerData) o;
             assertEquals(herbert,cd.getPlayer1().getPlayerName());
             DeckOfCards herbertDeck = gson.fromJson(cd.getPlayer1Pile(),DeckOfCards.class);
             assertEquals(ctrl.getPlayers()[0].getDeckOfCards(),herbertDeck);

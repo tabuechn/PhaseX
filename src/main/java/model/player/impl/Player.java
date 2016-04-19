@@ -5,7 +5,7 @@ import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
 import model.phase.IPhase;
-import model.phase.impl.Phase1;
+import model.phase.impl.*;
 import model.player.IPlayer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -110,6 +110,29 @@ public class Player implements IPlayer, Serializable {
     public void setName(String name) {
         if (this.name == null || this.name.isEmpty()) {
             this.name = name;
+        }
+    }
+
+    @Override
+    public void setPhase(String phaseName) {
+        switch (phaseName) {
+            case "Phase1":
+                this.phase = new Phase1();
+                break;
+            case "Phase2":
+                this.phase = new Phase2();
+                break;
+            case "Phase3":
+                this.phase = new Phase3();
+                break;
+            case "Phase4":
+                this.phase = new Phase4();
+                break;
+            case "Phase5":
+                this.phase = new Phase5();
+                break;
+            default:
+                throw new IllegalStateException();
         }
     }
 

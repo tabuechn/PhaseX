@@ -3,21 +3,25 @@ package persistence.hibernate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.UIController;
+import controller.impl.Controller;
 import model.card.ICard;
 import model.card.impl.CardDeserializer;
+import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
+import model.stack.impl.StackDeserializer;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import persistence.IPhaseXDao;
+import persistence.SaveSinglePlayerDAO;
 
 import java.util.List;
 
 /**
  * Created by Tarek on 30.03.2016. Be grateful for this superior Code!
  */
-public class HibernateDAO implements IPhaseXDao {
+public class HibernateDAO implements SaveSinglePlayerDAO {
 
     Gson gson;
     Gson gsonNormal;
@@ -27,16 +31,20 @@ public class HibernateDAO implements IPhaseXDao {
     public HibernateDAO() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
         gson = gsonBuilder.create();
         gsonNormal = new Gson();
     }
 
     @Override
     public void saveGame(UIController controller) {
-        ControllerData cd = new ControllerData();
+
+        HibernateControllerData cd = new HibernateControllerData();
         IPlayer[] players = controller.getPlayers();
         Player player1 = (Player)players[0];
         Player player2 = (Player)players[1];
+
+
 
         cd.setPlayer1(player1);
         cd.setPlayer1PhaseString(player1.getPhase().toString());
@@ -56,13 +64,26 @@ public class HibernateDAO implements IPhaseXDao {
         setAllStacks(cd,controller);
 
         Session session = HibernateUtil.getInstance().getCurrentSession();
+
         Transaction trans = session.beginTransaction();
+        deleteIfAlreadyExists(player1,session);
         session.save(cd);
         trans.commit();
 
     }
 
-    private void setAllStacks(ControllerData cd, UIController controller) {
+    private void deleteIfAlreadyExists(Player player1,Session session) {
+        Criteria criteria = session.createCriteria(HibernateControllerData.class);
+        List games = criteria.list();
+        for (Object o : games) {
+            HibernateControllerData hibernateControllerData = (HibernateControllerData)o;
+            if(hibernateControllerData.getPlayer1().equals(player1)) {
+                session.delete(o);
+            }
+        }
+    }
+
+    private void setAllStacks(HibernateControllerData cd, UIController controller) {
         List<ICardStack> allStacks = controller.getAllStacks();
         for(int i = 0; i < NUMBER_OF_STACKS;++i) {
             if(allStacks.size() > i) {
@@ -71,33 +92,32 @@ public class HibernateDAO implements IPhaseXDao {
         }
     }
 
-    @Override
-    public boolean isGameExisting(IPlayer p1, IPlayer p2) {
-        return false;
-    }
 
     @Override
-    public UIController loadGame(IPlayer p1, IPlayer p2) {
+    public UIController loadGame(IPlayer player) {
+        HibernateControllerData hibernateControllerData = getPlayersGame(player);
+        if(hibernateControllerData != null)
+            return hibernateControllerData.getController();
+        else {
+            UIController controller = new Controller(2);
+            return controller;
+        }
+    }
+
+
+
+    private HibernateControllerData getPlayersGame(IPlayer player) {
+        Session session = HibernateUtil.getInstance().getCurrentSession();
+        Transaction trans = session.beginTransaction();
+        Criteria criteria = session.createCriteria(HibernateControllerData.class);
+        List list = criteria.list();
+        for (Object o : list) {
+            HibernateControllerData hibernateControllerData = (HibernateControllerData)o;
+            if(hibernateControllerData.getPlayer1().equals(player)) {
+                return hibernateControllerData;
+            }
+        }
         return null;
     }
 
-    @Override
-    public void deleteGameForPlayers(IPlayer p1, IPlayer p2) {
-
-    }
-
-    @Override
-    public void deleteAllGamesForPlayer(IPlayer p1) {
-
-    }
-
-    @Override
-    public List<UIController> getAllSavedGamesForPlayer(IPlayer player) {
-        return null;
-    }
-
-    @Override
-    public boolean closeDBConnection() {
-        return false;
-    }
 }

@@ -3,10 +3,7 @@ package controller.impl;
 import controller.IController;
 import controller.UIController;
 import controller.states.AbstractState;
-import controller.states.impl.DrawPhase;
-import controller.states.impl.PlayerTurnFinished;
-import controller.states.impl.PlayerTurnNotFinished;
-import controller.states.impl.StartPhase;
+import controller.states.impl.*;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
@@ -397,6 +394,21 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public void setAllStacks(List<ICardStack> allStacks) {
         this.allPhases = allStacks;
+    }
+
+    @Override
+    public void setDrawPile(IDeckOfCards deck) {
+        this.drawPile = deck;
+    }
+
+    @Override
+    public void setDiscardPile(IDeckOfCards deck) {
+        this.discardPile = deck;
+    }
+
+    @Override
+    public void setRoundState(String roundState) {
+        this.roundState = AbstractState.getStateFromString(roundState);
     }
 
     @Override
