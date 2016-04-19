@@ -15,7 +15,7 @@ import java.util.List;
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "PhaseX_Controller13")
+@Table(name = "PhaseX_Controller14")
 public class ControllerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,5 +1,6 @@
 package persistence.hibernate;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,9 +12,16 @@ public class ControllerDataTest {
 
     private ControllerData controllerData;
 
+    @Before
+    public void setUp() throws Exception {
+     controllerData = new ControllerData();
+    }
+
 
     @Test
     public void testGetStringID() throws Exception {
+        controllerData.setStringID(1);
+        assertEquals(controllerData.getStringID(),new Integer(1));
 
     }
 
