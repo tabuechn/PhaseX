@@ -71,7 +71,7 @@ task fatJar(type: Jar) {
 }
 
 artifacts {
-    archives file: file('build/libs/' + project.name + '-all-1.0-SNAPSHOT.jar'), name: 'PhaseX', type: 'jar'
+    archives file: file('build/libs/' + project.name + '-1.0-SNAPSHOT.jar'), name: 'PhaseX', type: 'jar'
 }
 
 
