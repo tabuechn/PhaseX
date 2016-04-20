@@ -17,6 +17,19 @@ repositories {
     mavenCentral()
 }
 
+
+sourceSets {
+    integration {
+        java {
+            srcDir 'src/integration-test/java'
+        }
+        resources{
+            srcDir 'src/integration-test/resources'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
 /*
  * Dependencies
  */
@@ -24,6 +37,10 @@ dependencies {
     //adding test only dependencies
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
+
+    //adding integrationtest only dependencies
+    integrationCompile group: 'junit', name: 'junit', version: '4.12'
+    integrationCompile 'org.mockito:mockito-all:1.10.19'
 
     //Adding logger
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
@@ -105,6 +122,7 @@ sonarqube {
         property "sonar.binaries", "build/classes"
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integrationTest.exec"
         property "sonar.exclusions", "**/view/**, **/java/phasex/**"
 
         property "sonar.jdbc.url", "jdbc:mysql://lenny2.in.htwg-konstanz.de:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
@@ -119,24 +137,14 @@ sonarqube {
 /*
  * Tasks
  */
-
-sourceSets {
-    integrationTest {
-        java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDir file('src/integration-test/java')
-        }
-        resources.srcDir file('src/integration-test/resources')
+task intTest(type: Test, dependsOn: cleanTest){
+    jacoco {
+        destinationFile = file("${project.buildDir}/jacoco/integrationTest.exec")
+        classDumpFile = file("${project.buildDir}/classes/integrationTest")
     }
+    testClassesDir = sourceSets.integration.output.classesDir
+    classpath += sourceSets.integration.runtimeClasspath
 }
-
-task integrationTest(type: Test){
-    testClassesDir = sourceSets.integrationTest.output.classesDir
-    classpath = sourceSets.integrationTest.runtimeClasspath
-}
-
-check.dependsOn integrationTest
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.12'

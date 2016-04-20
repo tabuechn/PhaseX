@@ -32,22 +32,19 @@ import util.CardCreator;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by tabuechn on 05.04.2016.
  */
 public class HibernateDAOTest {
 
-    String klaus;
-    String herbert;
-    IDeckOfCards deck;
-    HibernateControllerData ctrlData;
-    Gson gson;
-    HibernateDAO hdao;
+    private String klaus;
+    private String herbert;
+    private IDeckOfCards deck;
+    private HibernateControllerData ctrlData;
+    private Gson gson;
+    private HibernateDAO hdao;
 
     @Before
     public void setUp() throws Exception {
@@ -72,10 +69,8 @@ public class HibernateDAOTest {
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
         Criteria criteria = session.createCriteria(HibernateControllerData.class);
-        List testlist = criteria.list();
-        for (Object o : testlist) {
-            session.delete(o);
-        }
+        List testList = criteria.list();
+        testList.forEach(session::delete);
         trans.commit();
     }
 
