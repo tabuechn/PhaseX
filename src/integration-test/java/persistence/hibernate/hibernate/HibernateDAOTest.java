@@ -1,4 +1,4 @@
-package persistence.hibernate;
+package persistence.hibernate.hibernate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,12 +24,18 @@ import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import persistence.hibernate.HibernateControllerData;
+import persistence.hibernate.HibernateDAO;
+import persistence.hibernate.HibernateUtil;
 import util.CardCreator;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by tabuechn on 05.04.2016.
@@ -67,7 +73,7 @@ public class HibernateDAOTest {
         Transaction trans = session.beginTransaction();
         Criteria criteria = session.createCriteria(HibernateControllerData.class);
         List testlist = criteria.list();
-        for(Object o : testlist) {
+        for (Object o : testlist) {
             session.delete(o);
         }
         trans.commit();
@@ -95,31 +101,31 @@ public class HibernateDAOTest {
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
         Criteria criteria = session.createCriteria(HibernateControllerData.class);
-        List testlist =criteria.list();
+        List testlist = criteria.list();
         int i = 0;
-        for(Object o : testlist) {
+        for (Object o : testlist) {
             HibernateControllerData cd = (HibernateControllerData) o;
             assertFalse(cd.getStack1().isEmpty());
             assertFalse(cd.getStack2().isEmpty());
 
-            ICardStack stack1res = gson.fromJson(cd.getStack1(),ICardStack.class);
+            ICardStack stack1res = gson.fromJson(cd.getStack1(), ICardStack.class);
             assertTrue(stack1res instanceof PairStack);
-            assertEquals(pairStack.getList(),stack1res.getList());
+            assertEquals(pairStack.getList(), stack1res.getList());
 
-            ICardStack stack2res = gson.fromJson(cd.getStack2(),ICardStack.class);
+            ICardStack stack2res = gson.fromJson(cd.getStack2(), ICardStack.class);
             assertTrue(stack2res instanceof ColorStack);
-            assertEquals(colorStack.getList(),stack2res.getList());
+            assertEquals(colorStack.getList(), stack2res.getList());
 
-            ICardStack stack3res = gson.fromJson(cd.getStack3(),ICardStack.class);
+            ICardStack stack3res = gson.fromJson(cd.getStack3(), ICardStack.class);
             assertTrue(stack3res instanceof StreetStack);
-            assertEquals(streetStack.getList(),stack3res.getList());
+            assertEquals(streetStack.getList(), stack3res.getList());
 
 
             session.delete(o);
             i++;
         }
         trans.commit();
-        assertEquals(i,1);
+        assertEquals(i, 1);
     }
 
     @Test
@@ -144,11 +150,11 @@ public class HibernateDAOTest {
         hdao.saveGame(ctrl);
 
         UIController loadedController = hdao.loadGame(herberObject);
-        assertEquals(ctrl.getStatusMessage(),loadedController.getStatusMessage());
-        assertEquals(ctrl.getRoundState().toString(),loadedController.getRoundState().toString());
-        assertEquals(testStacks.size(),loadedController.getAllStacks().size());
-        for(int i = 0; i < testStacks.size(); ++i) {
-            assertEquals(ctrl.getAllStacks().get(i).getList(),loadedController.getAllStacks().get(i).getList());
+        assertEquals(ctrl.getStatusMessage(), loadedController.getStatusMessage());
+        assertEquals(ctrl.getRoundState().toString(), loadedController.getRoundState().toString());
+        assertEquals(testStacks.size(), loadedController.getAllStacks().size());
+        for (int i = 0; i < testStacks.size(); ++i) {
+            assertEquals(ctrl.getAllStacks().get(i).getList(), loadedController.getAllStacks().get(i).getList());
         }
 
     }
@@ -168,31 +174,31 @@ public class HibernateDAOTest {
         Transaction trans = session.beginTransaction();
 
         Criteria criteria = session.createCriteria(HibernateControllerData.class);
-        List testlist =criteria.list();
+        List testlist = criteria.list();
         int i = 0;
-        for(Object o : testlist) {
+        for (Object o : testlist) {
             HibernateControllerData cd = (HibernateControllerData) o;
-            assertEquals(herbert,cd.getPlayer1().getPlayerName());
-            DeckOfCards herbertDeck = gson.fromJson(cd.getPlayer1Pile(),DeckOfCards.class);
-            assertEquals(ctrl.getPlayers()[0].getDeckOfCards(),herbertDeck);
-            assertEquals(ctrl.getPlayers()[0].getPhase().toString(),cd.getPlayer1PhaseString());
+            assertEquals(herbert, cd.getPlayer1().getPlayerName());
+            DeckOfCards herbertDeck = gson.fromJson(cd.getPlayer1Pile(), DeckOfCards.class);
+            assertEquals(ctrl.getPlayers()[0].getDeckOfCards(), herbertDeck);
+            assertEquals(ctrl.getPlayers()[0].getPhase().toString(), cd.getPlayer1PhaseString());
 
-            assertEquals(klaus,cd.getPlayer2().getPlayerName());
-            DeckOfCards klausDeck = gson.fromJson(cd.getPlayer2Pile(),DeckOfCards.class);
-            assertEquals(ctrl.getPlayers()[1].getDeckOfCards(),klausDeck);
-            assertEquals(ctrl.getPlayers()[1].getPhase().toString(),cd.getPlayer2PhaseString());
+            assertEquals(klaus, cd.getPlayer2().getPlayerName());
+            DeckOfCards klausDeck = gson.fromJson(cd.getPlayer2Pile(), DeckOfCards.class);
+            assertEquals(ctrl.getPlayers()[1].getDeckOfCards(), klausDeck);
+            assertEquals(ctrl.getPlayers()[1].getPhase().toString(), cd.getPlayer2PhaseString());
 
             session.delete(o);
             i++;
         }
         trans.commit();
-        assertEquals(i,1);
+        assertEquals(i, 1);
     }
 
     private IDeckOfCards getColorStack(CardColor color) {
         IDeckOfCards retDeck = new DeckOfCards();
-        for(int i = 1; i < 9; i++) {
-            ICard card = new Card(CardValue.byOrdinal(i),color);
+        for (int i = 1; i < 9; i++) {
+            ICard card = new Card(CardValue.byOrdinal(i), color);
             retDeck.add(card);
         }
         return retDeck;
@@ -200,8 +206,8 @@ public class HibernateDAOTest {
 
     private IDeckOfCards getStreetStack() {
         IDeckOfCards retDeck = new DeckOfCards();
-        for(int i = 1; i < 6; i++) {
-            ICard card = new Card(CardValue.byOrdinal(i),CardColor.BLUE);
+        for (int i = 1; i < 6; i++) {
+            ICard card = new Card(CardValue.byOrdinal(i), CardColor.BLUE);
             retDeck.add(card);
         }
         return retDeck;
@@ -209,8 +215,8 @@ public class HibernateDAOTest {
 
     private IDeckOfCards getPairStack(int pairValue) {
         IDeckOfCards pairStack = new DeckOfCards();
-        for(int i = 0; i < 4;i++) {
-            ICard card = new Card(CardValue.byOrdinal(pairValue),CardColor.GREEN);
+        for (int i = 0; i < 4; i++) {
+            ICard card = new Card(CardValue.byOrdinal(pairValue), CardColor.GREEN);
             pairStack.add(card);
         }
         return pairStack;

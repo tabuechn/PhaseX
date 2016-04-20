@@ -131,6 +131,13 @@ sourceSets {
     }
 }
 
+task integrationTest(type: Test){
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+check.dependsOn integrationTest
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.12'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"

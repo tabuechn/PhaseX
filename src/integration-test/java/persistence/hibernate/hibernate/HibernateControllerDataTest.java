@@ -1,10 +1,12 @@
-package persistence.hibernate;
+package persistence.hibernate.hibernate;
 
 import model.player.impl.Player;
 import org.junit.Before;
 import org.junit.Test;
+import persistence.hibernate.HibernateControllerData;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Created by tabuechn on 19.04.2016.
