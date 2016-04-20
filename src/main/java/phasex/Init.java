@@ -4,17 +4,9 @@ package phasex;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import persistence.hibernate.HibernateUtil;
-import persistence.hibernate.PersistentTest;
 import view.gui.GUI;
 import view.tui.TUI;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**

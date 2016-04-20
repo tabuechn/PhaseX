@@ -15,7 +15,9 @@ import static org.junit.Assert.*;
  */
 public class PlayerTest {
 
+    public static final String DERP = "Derp";
     private static final String PLAYER_NAME = "John";
+    private static final String PHASE = "Phase";
 
     private IPlayer testee;
 
@@ -128,5 +130,15 @@ public class PlayerTest {
         secondPlayer.setName("joHn");
         secondPlayer.nextPhase();
         assertTrue(testee.equals(secondPlayer));
+    }
+
+    @Test
+    public void setPhaseTest() {
+
+        for(int i = 1; i <= 5;++i) {
+            String phaseX = PHASE + i;
+            testee.setPhase(phaseX);
+            assertEquals(phaseX,testee.getPhase().toString());
+        }
     }
 }

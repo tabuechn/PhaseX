@@ -3,10 +3,7 @@ package controller.impl;
 import controller.IController;
 import controller.UIController;
 import controller.states.AbstractState;
-import controller.states.impl.DrawPhase;
-import controller.states.impl.PlayerTurnFinished;
-import controller.states.impl.PlayerTurnNotFinished;
-import controller.states.impl.StartPhase;
+import controller.states.impl.*;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
@@ -43,6 +40,7 @@ public class Controller extends Observable implements IController, UIController 
     private IDeckOfCards drawPile;
 
     private IDeckOfCards discardPile;
+
     private String statusMessage;
 
     private IPlayer winner;
@@ -366,6 +364,51 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public void setSecondPlayerName(String name) {
         players[1].setName(name);
+    }
+
+    @Override
+    public IPlayer[] getPlayers() {
+        return this.players;
+    }
+
+    @Override
+    public int getCurrentPlayerIndex() {
+        return this.currentPlayerIndex;
+    }
+
+    @Override
+    public void setCurrentPlayerIndex(int index) {
+        this.currentPlayerIndex = index;
+    }
+
+    @Override
+    public void setPlayer1(IPlayer player1) {
+        this.players[0] = player1;
+    }
+
+    @Override
+    public void setPlayer2(IPlayer player2) {
+        this.players[1] = player2;
+    }
+
+    @Override
+    public void setAllStacks(List<ICardStack> allStacks) {
+        this.allPhases = allStacks;
+    }
+
+    @Override
+    public void setDrawPile(IDeckOfCards deck) {
+        this.drawPile = deck;
+    }
+
+    @Override
+    public void setDiscardPile(IDeckOfCards deck) {
+        this.discardPile = deck;
+    }
+
+    @Override
+    public void setRoundState(String roundState) {
+        this.roundState = AbstractState.getStateFromString(roundState);
     }
 
     @Override

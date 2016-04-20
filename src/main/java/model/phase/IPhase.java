@@ -40,7 +40,11 @@ public interface IPhase {
     int getPhaseNumber();
 
     /**
-     *
+     * Checks which kind of checker is uses in this Phase
+     * @return true if the Phase utilizes the ColorChecker, false otherwise
      */
     boolean isNumberPhase();
+
+
+
 }

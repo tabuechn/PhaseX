@@ -11,5 +11,24 @@ public enum CardColor {
     BLUE,
     GREEN,
     BACK,
-    BLANK
+    BLANK;
+
+    public static CardColor getColorByString(String color) {
+        switch(color) {
+            case "YELLOW":
+                return YELLOW;
+            case "RED":
+                return RED;
+            case "BLUE":
+                return BLUE;
+            case "GREEN":
+                return GREEN;
+            case "BACK":
+                return BACK;
+            case "BLANK":
+                return BLANK;
+            default:
+                throw new IllegalStateException();
+        }
+    }
 }

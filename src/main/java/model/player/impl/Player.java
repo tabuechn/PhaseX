@@ -1,10 +1,11 @@
 package model.player.impl;
 
+import model.card.impl.Card;
 import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
 import model.phase.IPhase;
-import model.phase.impl.Phase1;
+import model.phase.impl.*;
 import model.player.IPlayer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -18,22 +19,25 @@ import java.io.Serializable;
  * If it doesn't work I don't know who the hell wrote it.
  */
 @Entity
-@Table(name = "PhaseX_Player5")
+@Table(name = "PhaseX_Player6")
 public class Player implements IPlayer, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "PhaseX_PlayerNumber5")
+    @Column(name = "PhaseX_PlayerNumber")
     private int playerNumber;
-    @Column(name ="PhaseX_Name5")
-    private String name = "";
-    @Column(name="PhaseX_PhaseDone6")
 
+    @Column(name ="PhaseX_Name")
+    private String name ="";
+
+    @Column(name="PhaseX_PhaseDone")
     private boolean phaseDone;
-    @Column(name = "PhaseX_PlayerPoints5")
+
+    @Column(name = "PhaseX_PlayerPoints")
     private int points;
+
     @Transient
     private transient IPhase phase;
     @Transient
@@ -104,8 +108,31 @@ public class Player implements IPlayer, Serializable {
 
     @Override
     public void setName(String name) {
-        if (this.name.isEmpty()) {
+        if (this.name == null || this.name.isEmpty()) {
             this.name = name;
+        }
+    }
+
+    @Override
+    public void setPhase(String phaseName) {
+        switch (phaseName) {
+            case "Phase1":
+                this.phase = new Phase1();
+                break;
+            case "Phase2":
+                this.phase = new Phase2();
+                break;
+            case "Phase3":
+                this.phase = new Phase3();
+                break;
+            case "Phase4":
+                this.phase = new Phase4();
+                break;
+            case "Phase5":
+                this.phase = new Phase5();
+                break;
+            default:
+                throw new IllegalStateException();
         }
     }
 

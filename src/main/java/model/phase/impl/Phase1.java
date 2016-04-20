@@ -72,4 +72,8 @@ public class Phase1 implements IPhase {
     }
 
 
+    @Override
+    public String toString() {
+        return "Phase1";
+    }
 }

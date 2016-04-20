@@ -44,6 +44,17 @@ public class Card implements ICard, Serializable {
     }
 
     @Override
+    public void setColor(CardColor color) {
+        this.color = color;
+    }
+
+    @Override
+    public void setNumber(CardValue value) {
+        this.number = value;
+    }
+
+
+    @Override
     public int compareTo(@Nonnull ICard other) {
         return this.number.ordinal() - other.getNumber().ordinal();
     }

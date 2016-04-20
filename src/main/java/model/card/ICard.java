@@ -12,6 +12,10 @@ public interface ICard extends Comparable<ICard> {
 
     CardColor getColor();
 
+    void setColor(CardColor color);
+
+    void setNumber(CardValue value);
+
     @Override
     int compareTo(@Nonnull ICard other);
 }
