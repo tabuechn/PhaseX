@@ -21,8 +21,8 @@ import java.net.MalformedURLException;
  */
 public class CouchDbDAO implements SaveSinglePlayerDAO {
 
-    private CouchDbConnector db;
     private static final Logger LOGGER = LogManager.getLogger(CouchDbDAO.class);
+    private CouchDbConnector db;
 
     public CouchDbDAO(){
         HttpClient client;
@@ -30,10 +30,10 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
             client = new StdHttpClient.Builder().url(
                     "http://lenny2.in.htwg-konstanz.de:5984").build();
             CouchDbInstance dbInstance = new StdCouchDbInstance(client);
-            db = dbInstance.createConnector("sudoku_db", true);
+            db = dbInstance.createConnector("phase_x_db", true);
             db.createDatabaseIfNotExists();
         } catch (MalformedURLException e) {
-            LOGGER.error("Malformed URL", e);
+            LOGGER.error("Cant connect to Couch DB", e);
         }
     }
 
