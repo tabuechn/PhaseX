@@ -1,9 +1,11 @@
-package persistence.hibernate.hibernate;
+package persistence.hibernate;
 
+import model.player.IPlayer;
 import model.player.impl.Player;
 import org.junit.Before;
 import org.junit.Test;
 import persistence.hibernate.HibernateControllerData;
+import util.CardCreator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -96,5 +98,7 @@ public class HibernateControllerDataTest {
         hibernateControllerData.setRoundState("test");
         assertEquals(hibernateControllerData.getRoundState(), "test");
     }
+
+
 
 }
