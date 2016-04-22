@@ -49,7 +49,7 @@ public class HibernateDAOTest {
     @Before
     public void setUp() throws Exception {
         klaus = "Klaus";
-        herbert = "Herbert";
+        herbert = "Herbert2";
         deck = CardCreator.giveDeckOfCards();
         ctrlData = new HibernateControllerData();
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -148,6 +148,7 @@ public class HibernateDAOTest {
         assertEquals(ctrl.getStatusMessage(), loadedController.getStatusMessage());
         assertEquals(ctrl.getRoundState().toString(), loadedController.getRoundState().toString());
         assertEquals(testStacks.size(), loadedController.getAllStacks().size());
+        assertEquals(herberObject,loadedController.getPlayers()[0]);
         for (int i = 0; i < testStacks.size(); ++i) {
             assertEquals(ctrl.getAllStacks().get(i).getList(), loadedController.getAllStacks().get(i).getList());
         }

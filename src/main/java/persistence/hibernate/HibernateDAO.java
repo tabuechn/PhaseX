@@ -114,6 +114,7 @@ public class HibernateDAO implements SaveSinglePlayerDAO {
         for (Object o : list) {
             HibernateControllerData hibernateControllerData = (HibernateControllerData)o;
             if(hibernateControllerData.getPlayer1().equals(player)) {
+                trans.commit();
                 return hibernateControllerData;
             }
         }
