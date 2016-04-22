@@ -152,7 +152,7 @@ public class HibernateDAOTest {
         for (int i = 0; i < testStacks.size(); ++i) {
             assertEquals(ctrl.getAllStacks().get(i).getList(), loadedController.getAllStacks().get(i).getList());
         }
-
+        deleteTest();
     }
 
 

@@ -99,8 +99,7 @@ public class HibernateDAO implements SaveSinglePlayerDAO {
         if(hibernateControllerData != null)
             return hibernateControllerData.getController();
         else {
-            UIController controller = new Controller(2);
-            return controller;
+            return null;
         }
     }
 
