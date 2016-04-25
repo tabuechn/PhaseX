@@ -3,7 +3,6 @@ package controller;
 import controller.states.AbstractState;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
-import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.stack.ICardStack;
 import util.IObservable;
@@ -161,4 +160,6 @@ public interface UIController extends IObservable {
     void setRoundState(String roundState);
 
     void setStatusMessage(String statusMessage);
+
+    void setCurrentPlayer(int index);
 }

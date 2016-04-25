@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import controller.UIController;
 import controller.impl.Controller;
 import model.card.ICard;
-import model.card.impl.Card;
 import model.card.impl.CardDeserializer;
 import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
@@ -14,7 +13,6 @@ import model.player.impl.Player;
 import model.stack.ICardStack;
 import model.stack.impl.StackDeserializer;
 import persistence.IControllerData;
-
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,7 +23,7 @@ import java.util.List;
  * Created by tabuechn on 05.04.2016.
  */
 @Entity
-@Table(name = "PhaseX_Controller14")
+@Table(name = "PhaseX_Controller15")
 public class HibernateControllerData implements Serializable, IControllerData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +42,9 @@ public class HibernateControllerData implements Serializable, IControllerData {
     private String player2Pile;
     @Column(name = "PhaseX_Player2Phase")
     private String player2PhaseString;
+
+    @Column(name="PhaseX_CurrentPlayerIndex")
+    private int currentPlayerIndex;
 
     @Column(name = "PhaseX_DiscardPile", length = Integer.MAX_VALUE)
     private String discardPile;
@@ -246,6 +247,7 @@ public class HibernateControllerData implements Serializable, IControllerData {
         player2.setDeckOfCards(gson.fromJson(this.getPlayer2Pile(),DeckOfCards.class));
         controller.setPlayer2(player2);
 
+        controller.setCurrentPlayer(this.currentPlayerIndex);
 
         controller.setDrawPile(gson.fromJson(this.drawPile,DeckOfCards.class));
         controller.setDiscardPile(gson.fromJson(this.discardPile,DeckOfCards.class));
@@ -274,6 +276,14 @@ public class HibernateControllerData implements Serializable, IControllerData {
         if(stack4 != null) {
             allStacks.add(gson.fromJson(stack4,ICardStack.class));
         }
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
     }
 }
 

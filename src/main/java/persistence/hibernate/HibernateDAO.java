@@ -3,10 +3,8 @@ package persistence.hibernate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.UIController;
-import controller.impl.Controller;
 import model.card.ICard;
 import model.card.impl.CardDeserializer;
-import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
@@ -45,7 +43,6 @@ public class HibernateDAO implements SaveSinglePlayerDAO {
         Player player2 = (Player)players[1];
 
 
-
         cd.setPlayer1(player1);
         cd.setPlayer1PhaseString(player1.getPhase().toString());
         String player1Hand = gsonNormal.toJson(player1.getDeckOfCards());
@@ -55,6 +52,8 @@ public class HibernateDAO implements SaveSinglePlayerDAO {
         cd.setPlayer2PhaseString(player2.getPhase().toString());
         String player2Hand = gsonNormal.toJson(player2.getDeckOfCards());
         cd.setPlayer2Pile(player2Hand);
+
+        cd.setCurrentPlayerIndex(controller.getCurrentPlayerIndex());
 
         cd.setDiscardPile(gsonNormal.toJson(controller.getDiscardPile()));
         cd.setDrawPile(gsonNormal.toJson(controller.getDrawPile()));

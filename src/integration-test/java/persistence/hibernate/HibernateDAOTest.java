@@ -24,9 +24,6 @@ import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import persistence.hibernate.HibernateControllerData;
-import persistence.hibernate.HibernateDAO;
-import persistence.hibernate.HibernateUtil;
 import util.CardCreator;
 
 import java.util.LinkedList;
@@ -97,6 +94,7 @@ public class HibernateDAOTest {
         ctrl.setAllStacks(testStacks);
 
         hdao.saveGame(ctrl);
+        //ljkhgfdghj
 
         Session session = HibernateUtil.getInstance().getCurrentSession();
         Transaction trans = session.beginTransaction();
@@ -194,6 +192,7 @@ public class HibernateDAOTest {
             assertEquals(ctrl.getPlayers()[1].getDeckOfCards(), klausDeck);
             assertEquals(ctrl.getPlayers()[1].getPhase().toString(), cd.getPlayer2PhaseString());
 
+            assertEquals(ctrl.getCurrentPlayerIndex(),cd.getCurrentPlayerIndex());
 
             session.delete(o);
             i++;

@@ -3,7 +3,10 @@ package controller.impl;
 import controller.IController;
 import controller.UIController;
 import controller.states.AbstractState;
-import controller.states.impl.*;
+import controller.states.impl.DrawPhase;
+import controller.states.impl.PlayerTurnFinished;
+import controller.states.impl.PlayerTurnNotFinished;
+import controller.states.impl.StartPhase;
 import model.card.ICard;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
@@ -247,6 +250,11 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    @Override
+    public void setCurrentPlayer(int index) {
+        this.currentPlayer = players[index];
     }
 
     @Override
