@@ -5,9 +5,20 @@ import model.card.CardValue;
 import model.card.ICard;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.DeserializationContext;
+import org.codehaus.jackson.map.JsonDeserializer;
+import org.codehaus.jackson.map.JsonSerializer;
+import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -15,18 +26,25 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "PhaseX_Card5")
+@JsonSerialize(using = Card.Serializer.class)
+@JsonDeserialize(using = Card.Deserializer.class)
 public class Card implements ICard, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @JsonProperty("_id")
+    private String id;
+
+    @JsonProperty("_rev")
+    private String revision;
 
     @Column(name = "PhaseX_CardValue5")
     private CardValue number;
     @Column(name = "PhaseX_CardColor5")
     private CardColor color;
 
-    public Card() {}
+    public Card() {
+    }
 
     public Card(CardValue cardNumber, CardColor cardColor) {
         this.number = cardNumber;
@@ -39,6 +57,11 @@ public class Card implements ICard, Serializable {
     }
 
     @Override
+    public void setNumber(CardValue value) {
+        this.number = value;
+    }
+
+    @Override
     public CardColor getColor() {
         return color;
     }
@@ -47,12 +70,6 @@ public class Card implements ICard, Serializable {
     public void setColor(CardColor color) {
         this.color = color;
     }
-
-    @Override
-    public void setNumber(CardValue value) {
-        this.number = value;
-    }
-
 
     @Override
     public int compareTo(@Nonnull ICard other) {
@@ -77,11 +94,42 @@ public class Card implements ICard, Serializable {
                 .isEquals();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRevision() {
+        return revision;
+    }
+
+    public void setRevision(String revision) {
+        this.revision = revision;
+    }
+
+    public static class Serializer extends JsonSerializer<Card> {
+
+
+        @Override
+        public void serialize(Card value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+            jgen.writeStartObject();
+            jgen.writeNumberField("Color", value.getColor().ordinal());
+            jgen.writeNumberField("Value", value.getNumber().ordinal());
+            jgen.writeEndObject();
+        }
+    }
+
+    public static class Deserializer extends JsonDeserializer<Card> {
+        @Override
+        public Card deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+            JsonNode node = jp.getCodec().readTree(jp);
+            CardColor color = CardColor.byOrdinal(Integer.parseInt(node.get("color").getTextValue()));
+            CardValue value = CardValue.byOrdinal(Integer.parseInt(node.get("value").getTextValue()));
+            return new Card(value, color);
+        }
     }
 }

@@ -1,11 +1,12 @@
 package model.deck.impl;
 
 import com.google.gson.Gson;
-import com.sun.javafx.beans.IDProperty;
 import model.card.ICard;
+import model.card.impl.Card;
 import model.deck.IDeckOfCards;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,14 +16,16 @@ import java.util.List;
  * created by Konraifen88 on 24.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-
 public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Serializable {
+
+    @JsonProperty("_id")
+    private String id;
 
     public DeckOfCards() {
         super();
     }
 
-    public DeckOfCards(List<ICard> cards) {
+    public DeckOfCards(@JsonDeserialize(as = Card.class) List<ICard> cards) {
         super(cards);
     }
 
@@ -33,6 +36,14 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Seri
 
     public List<ICard> getCards() {
         return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }
