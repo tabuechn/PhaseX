@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class CouchDbDAOTest {
 
-    public static final String PLAYER_NAME = "player1";
+    public static final String PLAYER_NAME = "player1234";
     private static CouchDbDAO testee;
 
     private UIController controller;
@@ -47,11 +47,10 @@ public class CouchDbDAOTest {
 
     @Test
     public void saveDeckOfCards() {
-        testee.saveDeck(controller);
         ICard card = controller.getCurrentPlayersHand().get(0);
+        testee.saveCardToDB(card, PLAYER_NAME);
         System.out.println("Card: " + card.getColor() + "\t" + card.getNumber());
-        ICard dbCard = testee.findCardByUser(player);
-        System.out.println("dbCard: " + dbCard.getColor() + "\t" + dbCard.getNumber());
+        ICard dbCard = testee.getCardFromDB(PLAYER_NAME);
         assertEquals(card, dbCard);
     }
 

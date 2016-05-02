@@ -1,5 +1,6 @@
 package model.card.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
@@ -8,7 +9,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 import org.codehaus.jackson.map.JsonSerializer;
@@ -32,11 +32,8 @@ public class Card implements ICard, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty("_id")
+    @JsonIgnore
     private String id;
-
-    @JsonProperty("_rev")
-    private String revision;
 
     @Column(name = "PhaseX_CardValue5")
     private CardValue number;
@@ -98,21 +95,11 @@ public class Card implements ICard, Serializable {
         return id;
     }
 
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getRevision() {
-        return revision;
-    }
-
-    public void setRevision(String revision) {
-        this.revision = revision;
-    }
-
     public static class Serializer extends JsonSerializer<Card> {
-
 
         @Override
         public void serialize(Card value, JsonGenerator jgen, SerializerProvider provider) throws IOException {

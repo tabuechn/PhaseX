@@ -6,7 +6,6 @@ import model.card.impl.Card;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.ektorp.support.CouchDbDocument;
-import org.ektorp.support.TypeDiscriminator;
 
 /**
  * If everything works right this class was
@@ -17,11 +16,7 @@ import org.ektorp.support.TypeDiscriminator;
 public class CouchCardData extends CouchDbDocument {
 
     @JsonProperty("_id")
-    @TypeDiscriminator
     private String id;
-
-    @JsonProperty("_rev")
-    private String rev;
 
     @JsonDeserialize(as = Card.class)
     private ICard card;
@@ -40,7 +35,7 @@ public class CouchCardData extends CouchDbDocument {
         return card;
     }
 
-    public void setDeck(ICard card) {
+    public void setCard(ICard card) {
         this.card = card;
     }
 
@@ -52,13 +47,5 @@ public class CouchCardData extends CouchDbDocument {
     @Override
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getRev() {
-        return rev;
-    }
-
-    public void setRev(String rev) {
-        this.rev = rev;
     }
 }

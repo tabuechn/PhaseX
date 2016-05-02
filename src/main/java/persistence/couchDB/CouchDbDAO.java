@@ -6,17 +6,13 @@ import model.card.ICard;
 import model.player.IPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ektorp.CouchDbConnector;
-import org.ektorp.CouchDbInstance;
-import org.ektorp.ViewQuery;
-import org.ektorp.ViewResult;
+import org.ektorp.*;
 import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 import persistence.SaveSinglePlayerDAO;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,13 +25,13 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
     private static final Logger LOGGER = LogManager.getLogger(CouchDbDAO.class);
     private CouchDbConnector db;
 
-    public CouchDbDAO(){
+    public CouchDbDAO() {
         HttpClient client;
         try {
             client = new StdHttpClient.Builder().url(
                     "http://lenny2.in.htwg-konstanz.de:5984").build();
             CouchDbInstance dbInstance = new StdCouchDbInstance(client);
-            db = dbInstance.createConnector("phase_x_db_card_test", true);
+            db = dbInstance.createConnector("a_aphase_x_db_card_test", true);
             db.createDatabaseIfNotExists();
         } catch (MalformedURLException e) {
             LOGGER.error("Cant connect to Couch DB", e);
@@ -45,7 +41,7 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
     @Override
     public void saveGame(UIController controller) {
         CouchControllerData data = new CouchControllerData(controller);
-        if (containsGame(data.getPlayerName())){
+        if (containsGame(data.getPlayerName())) {
             db.update(data);
         } else {
             db.create(data);
@@ -55,45 +51,53 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
     @Override
     public UIController loadGame(IPlayer player) {
         CouchControllerData data = db.find(CouchControllerData.class, player.getPlayerName());
-        if (data != null){
+        if (data != null) {
             return data.getController();
         }
         return new Controller();
     }
 
-    public void saveDeck(UIController controller) {
+    public void saveCardToDB(ICard card, String name) {
         CouchCardData data = new CouchCardData();
-        data.setPlayerName(controller.getPlayers()[0].getPlayerName());
-        data.setDeck(controller.getCurrentPlayersHand().get(0));
-        String id = controller.getPlayers()[0].getPlayerName();
-        if (containsGame(id)) {
-            data.setId(id);
-            db.update(data);
-        } else {
+        data.setCard(card);
+        data.setPlayerName(name);
+        if (!containsGame(name)) {
             db.create(data);
+        } else {
+            CouchCardData old = getCardDataFromDB(name);
+            data.setId(old.getId());
+            data.setRevision(old.getRevision());
+            db.update(data);
         }
     }
 
-
-    public ICard findCardByUser(IPlayer player) {
-        List<CouchCardData> users = new ArrayList<>();
-
-        ViewQuery query = new ViewQuery().allDocs();
-        ViewResult vr = db.queryView(query);
-
-        return getUserById(vr.getRows().get(0).getId()).getCard();
+    public ICard getCardFromDB(String name) {
+        return getCardDataFromDB(name).getCard();
     }
 
-    public CouchCardData getUserById(String id) {
-        CouchCardData user = db.find(CouchCardData.class, id);
-        if (user == null) {
-            return null;
-        }
-        return user;
+    private CouchCardData getCardDataFromDB(String name) {
+        ViewQuery query = getUserQuery(name);
+        List<CouchCardData> result = db.queryView(query, CouchCardData.class);
+        return result.get(0);
     }
 
     private boolean containsGame(String playerName) {
-        return db.find(CouchCardData.class, playerName) != null;
+        ViewQuery query = getUserQuery(playerName);
+        ViewResult result;
+        try {
+            result = db.queryView(query);
+        } catch (DocumentNotFoundException e) {
+            return false;
+        }
+        return result.getSize() == 1;
     }
 
+    private ViewQuery getUserQuery(String name) {
+        return new ViewQuery()
+                .allDocs()
+                .includeDocs(true)
+                .designDocId("_design/card_data")
+                .viewName("find_card_by_name")
+                .key(name);
+    }
 }
