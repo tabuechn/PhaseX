@@ -1,20 +1,16 @@
 package model.card.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.DeserializationContext;
-import org.codehaus.jackson.map.JsonDeserializer;
-import org.codehaus.jackson.map.JsonSerializer;
-import org.codehaus.jackson.map.SerializerProvider;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
@@ -113,9 +109,10 @@ public class Card implements ICard, Serializable {
     public static class Deserializer extends JsonDeserializer<Card> {
         @Override
         public Card deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-            JsonNode node = jp.getCodec().readTree(jp);
-            CardColor color = CardColor.byOrdinal(Integer.parseInt(node.get("color").getTextValue()));
-            CardValue value = CardValue.byOrdinal(Integer.parseInt(node.get("value").getTextValue()));
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(jp);
+            CardColor color = CardColor.byOrdinal(node.get("Color").asInt());
+            CardValue value = CardValue.byOrdinal(node.get("Value").asInt());
             return new Card(value, color);
         }
     }

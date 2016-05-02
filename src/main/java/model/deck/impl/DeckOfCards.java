@@ -1,5 +1,6 @@
 package model.deck.impl;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.gson.Gson;
 import model.card.ICard;
 import model.card.impl.Card;
@@ -25,7 +26,8 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Seri
         super();
     }
 
-    public DeckOfCards(@JsonDeserialize(as = Card.class) List<ICard> cards) {
+    @JsonCreator
+    public DeckOfCards(@JsonDeserialize(contentAs = Card.class) List<ICard> cards) {
         super(cards);
     }
 
