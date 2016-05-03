@@ -100,8 +100,8 @@ public class Card implements ICard, Serializable {
         @Override
         public void serialize(Card value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
             jgen.writeStartObject();
-            jgen.writeNumberField("Color", value.getColor().ordinal());
-            jgen.writeNumberField("Value", value.getNumber().ordinal());
+            jgen.writeNumberField("color", value.getColor().ordinal());
+            jgen.writeNumberField("value", value.getNumber().ordinal());
             jgen.writeEndObject();
         }
     }
@@ -111,8 +111,8 @@ public class Card implements ICard, Serializable {
         public Card deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(jp);
-            CardColor color = CardColor.byOrdinal(node.get("Color").asInt());
-            CardValue value = CardValue.byOrdinal(node.get("Value").asInt());
+            CardColor color = CardColor.byOrdinal(node.get("color").asInt());
+            CardValue value = CardValue.byOrdinal(node.get("value").asInt());
             return new Card(value, color);
         }
     }
