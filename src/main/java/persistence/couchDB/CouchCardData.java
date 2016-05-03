@@ -3,8 +3,7 @@ package persistence.couchDB;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import model.player.IPlayer;
-import model.player.impl.Player;
+import model.stack.ICardStack;
 import org.ektorp.support.CouchDbDocument;
 
 /**
@@ -13,13 +12,13 @@ import org.ektorp.support.CouchDbDocument;
  * If it doesn't work I don't know who the hell wrote it.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CouchCardData extends CouchDbDocument {
+class CouchCardData extends CouchDbDocument {
 
     @JsonProperty("_id")
     private String id;
 
-    @JsonDeserialize(as = Player.class)
-    private IPlayer player;
+    @JsonDeserialize(as = ICardStack.class)
+    private ICardStack stack;
 
     private String playerName;
 
@@ -27,7 +26,7 @@ public class CouchCardData extends CouchDbDocument {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
+    void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
@@ -41,11 +40,11 @@ public class CouchCardData extends CouchDbDocument {
         this.id = id;
     }
 
-    public IPlayer getPlayer() {
-        return player;
+    public ICardStack getStack() {
+        return stack;
     }
 
-    public void setPlayer(IPlayer player) {
-        this.player = player;
+    public void setStack(ICardStack stack) {
+        this.stack = stack;
     }
 }

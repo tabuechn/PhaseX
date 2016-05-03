@@ -1,4 +1,4 @@
-package model.stack.impl;
+package model.stack.json;
 
 import com.google.gson.*;
 import model.card.CardColor;
@@ -8,13 +8,16 @@ import model.card.impl.Card;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.stack.ICardStack;
+import model.stack.impl.ColorStack;
+import model.stack.impl.PairStack;
+import model.stack.impl.StreetStack;
 
 import java.lang.reflect.Type;
 
 /**
  * Created by tabuechn on 16.04.2016.
  */
-public class StackDeserializer implements JsonDeserializer<ICardStack> {
+public class GsonStackDeserializer implements JsonDeserializer<ICardStack> {
 
     @Override
     public ICardStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

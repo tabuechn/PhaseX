@@ -3,6 +3,7 @@ package persistence.couchDB;
 import controller.UIController;
 import controller.impl.Controller;
 import model.player.IPlayer;
+import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ektorp.*;
@@ -56,9 +57,9 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
         return new Controller();
     }
 
-    public void saveCardToDB(IPlayer player, String name) {
+    public void saveCardToDB(ICardStack player, String name) {
         CouchCardData data = new CouchCardData();
-        data.setPlayer(player);
+        data.setStack(player);
         data.setPlayerName(name);
         if (!containsGame(name)) {
             db.create(data);
@@ -70,8 +71,8 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
         }
     }
 
-    public IPlayer getCardFromDB(String name) {
-        return getCardDataFromDB(name).getPlayer();
+    public ICardStack getCardFromDB(String name) {
+        return getCardDataFromDB(name).getStack();
     }
 
     private CouchCardData getCardDataFromDB(String name) {

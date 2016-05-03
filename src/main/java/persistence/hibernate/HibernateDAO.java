@@ -6,11 +6,10 @@ import controller.UIController;
 import controller.impl.Controller;
 import model.card.ICard;
 import model.card.impl.CardDeserializer;
-import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
-import model.stack.impl.StackDeserializer;
+import model.stack.json.GsonStackDeserializer;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,15 +22,14 @@ import java.util.List;
  */
 public class HibernateDAO implements SaveSinglePlayerDAO {
 
+    public static final int NUMBER_OF_STACKS = 4;
     Gson gson;
     Gson gsonNormal;
-
-    public static  final int NUMBER_OF_STACKS = 4;
 
     public HibernateDAO() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
-        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
         gson = gsonBuilder.create();
         gsonNormal = new Gson();
     }
