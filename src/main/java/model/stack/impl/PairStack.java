@@ -63,7 +63,7 @@ public class PairStack implements ICardStack, Serializable {
         this.id = id;
     }
 
-    public CardValue getStackNumber() {
+    CardValue getStackNumber() {
         return stackNumber;
     }
 

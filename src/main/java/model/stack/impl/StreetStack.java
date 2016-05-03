@@ -37,11 +37,11 @@ public class StreetStack implements ICardStack, Serializable {
         this.type = StackType.STREET;
     }
 
-    public CardValue getHighestCardNumber() {
+    CardValue getHighestCardNumber() {
         return highestCard.getNumber();
     }
 
-    public CardValue getLowestCardNumber() {
+    CardValue getLowestCardNumber() {
         return lowestCard.getNumber();
     }
 

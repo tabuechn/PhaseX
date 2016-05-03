@@ -53,7 +53,7 @@ public class ColorStack implements ICardStack, Serializable {
         return this.type;
     }
 
-    public CardColor getStackColor() {
+    CardColor getStackColor() {
         return this.color;
     }
 
