@@ -1,10 +1,10 @@
 package persistence.couchDB;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import model.deck.IDeckOfCards;
-import model.deck.impl.DeckOfCards;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
+import model.player.IPlayer;
+import model.player.impl.Player;
 import org.ektorp.support.CouchDbDocument;
 
 /**
@@ -18,8 +18,8 @@ public class CouchCardData extends CouchDbDocument {
     @JsonProperty("_id")
     private String id;
 
-    @JsonDeserialize(as = DeckOfCards.class)
-    private IDeckOfCards cards;
+    @JsonDeserialize(as = Player.class)
+    private IPlayer player;
 
     private String playerName;
 
@@ -41,11 +41,11 @@ public class CouchCardData extends CouchDbDocument {
         this.id = id;
     }
 
-    public IDeckOfCards getCards() {
-        return cards;
+    public IPlayer getPlayer() {
+        return player;
     }
 
-    public void setCards(IDeckOfCards cards) {
-        this.cards = cards;
+    public void setPlayer(IPlayer player) {
+        this.player = player;
     }
 }

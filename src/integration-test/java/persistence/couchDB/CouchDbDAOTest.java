@@ -2,7 +2,6 @@ package persistence.couchDB;
 
 import controller.UIController;
 import controller.impl.Controller;
-import model.deck.IDeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
 import org.junit.Before;
@@ -47,12 +46,12 @@ public class CouchDbDAOTest {
 
     @Test
     public void saveDeckOfCards() {
-        IDeckOfCards cards = controller.getCurrentPlayersHand();
-        testee.saveCardToDB(cards, PLAYER_NAME);
-        System.out.println("in: " + cards);
-        IDeckOfCards dbCards = testee.getCardFromDB(PLAYER_NAME);
-        System.out.println("out: " + dbCards);
-        assertEquals(cards, dbCards);
+        IPlayer play = controller.getCurrentPlayer();
+        testee.saveCardToDB(play, PLAYER_NAME);
+        System.out.println("in: " + play);
+        IPlayer dbPlayer = testee.getCardFromDB(PLAYER_NAME);
+        System.out.println("out: " + dbPlayer);
+        assertEquals(play, dbPlayer);
     }
 
 }
