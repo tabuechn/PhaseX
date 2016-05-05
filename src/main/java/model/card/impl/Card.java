@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
@@ -22,8 +20,6 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "PhaseX_Card5")
-@JsonSerialize(using = Card.Serializer.class)
-@JsonDeserialize(using = Card.Deserializer.class)
 public class Card implements ICard, Serializable {
 
     @Id

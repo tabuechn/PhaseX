@@ -2,14 +2,10 @@ package persistence.couchDB;
 
 import controller.UIController;
 import controller.impl.Controller;
-import model.deck.IDeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
-import model.stack.ICardStack;
-import model.stack.impl.ColorStack;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -41,25 +37,13 @@ public class CouchDbDAOTest {
     }
 
     @Test
-    @Ignore
     public void saveAndLoadFromDatabaseWorksCorrectly() {
+        System.out.println("in: " + controller.toString());
         testee.saveGame(controller);
-        assertEquals(PLAYER_NAME, testee.loadGame(player).getPlayers()[0].getPlayerName());
+        UIController dbController = testee.loadGame(player);
+        System.out.println("out: " + dbController.toString());
+        assertEquals(PLAYER_NAME, dbController.getPlayers()[0].getPlayerName());
     }
 
-    @Test
-    public void saveDeckOfCards() {
-        IDeckOfCards play = controller.getCurrentPlayer().getDeckOfCards();
-        ICardStack stack = new ColorStack(play);
-        testee.saveCardToDB(stack, PLAYER_NAME);
-        System.out.println("in: " + stack);
-        System.out.println("in type: " + stack.getStackType());
-        System.out.println("in cards: " + stack.getList().toString());
-        ICardStack dbStack = testee.getCardFromDB(PLAYER_NAME);
-        System.out.println("out: " + dbStack);
-        System.out.println("out type: " + dbStack.getStackType());
-        System.out.println("out: " + dbStack.getList().toString());
-        assertEquals(stack, dbStack);
-    }
 
 }

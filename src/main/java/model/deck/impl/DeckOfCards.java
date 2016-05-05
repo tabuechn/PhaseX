@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.gson.Gson;
 import model.card.ICard;
 import model.card.impl.Card;
@@ -23,7 +22,6 @@ import java.util.List;
  * created by Konraifen88 on 24.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
-@JsonDeserialize(using = DeckOfCards.Deserializer.class)
 public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Serializable {
 
     @JsonProperty("_id")

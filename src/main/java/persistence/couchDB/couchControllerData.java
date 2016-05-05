@@ -1,6 +1,10 @@
 package persistence.couchDB;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import controller.UIController;
+import controller.impl.Controller;
 import org.ektorp.support.CouchDbDocument;
 import persistence.IControllerData;
 
@@ -11,6 +15,11 @@ import persistence.IControllerData;
  */
 class CouchControllerData extends CouchDbDocument implements IControllerData {
 
+    @JsonProperty("_id")
+    private String id;
+
+    @JsonSerialize(as = Controller.class)
+    @JsonDeserialize(as = Controller.class)
     private UIController controller;
 
     private String playerName;
@@ -44,5 +53,15 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 }

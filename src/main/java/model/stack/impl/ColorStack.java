@@ -1,14 +1,10 @@
 package model.stack.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.card.CardColor;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.stack.ICardStack;
-import model.stack.json.JacksonStackDeserializer;
-import model.stack.json.JacksonStackSerializer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -17,8 +13,6 @@ import java.io.Serializable;
 /**
  * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
-@JsonSerialize(using = JacksonStackSerializer.class)
-@JsonDeserialize(using = JacksonStackDeserializer.class)
 public class ColorStack implements ICardStack, Serializable {
 
     private final StackType type;

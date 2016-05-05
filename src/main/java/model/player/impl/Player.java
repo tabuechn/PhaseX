@@ -3,8 +3,6 @@ package model.player.impl;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.card.ICard;
 import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
@@ -27,8 +25,6 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "PhaseX_Player6")
-@JsonSerialize(using = Player.Serializer.class)
-@JsonDeserialize(using = Player.Deserializer.class)
 public class Player implements IPlayer, Serializable {
 
     @Id

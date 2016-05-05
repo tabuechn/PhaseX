@@ -1,5 +1,9 @@
 package model.card;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.card.impl.Card;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -7,14 +11,16 @@ import javax.annotation.Nonnull;
  * created by Konraifen88 on 22.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
+@JsonSerialize(using = Card.Serializer.class)
+@JsonDeserialize(using = Card.Deserializer.class)
 public interface ICard extends Comparable<ICard> {
     CardValue getNumber();
+
+    void setNumber(CardValue value);
 
     CardColor getColor();
 
     void setColor(CardColor color);
-
-    void setNumber(CardValue value);
 
     @Override
     int compareTo(@Nonnull ICard other);

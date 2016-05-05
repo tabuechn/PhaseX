@@ -1,6 +1,8 @@
 package model.deck;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import model.card.ICard;
+import model.deck.impl.DeckOfCards;
 
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
  * created by Konraifen88 on 24.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
+@JsonDeserialize(using = DeckOfCards.Deserializer.class)
 public interface IDeckOfCards extends List<ICard> {
     /**
      * Removes the last card from the current deck.

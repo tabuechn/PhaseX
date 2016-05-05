@@ -3,7 +3,6 @@ package controller;
 import controller.states.AbstractState;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
-import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.stack.ICardStack;
 import util.IObservable;
@@ -76,12 +75,16 @@ public interface UIController extends IObservable {
      */
     List<ICardStack> getAllStacks();
 
+    void setAllStacks(List<ICardStack> allStacks);
+
     /**
      * Getter for the UIs to let them know, in which state the game is right now
      *
      * @return the current State
      */
     AbstractState getRoundState();
+
+    void setRoundState(String roundState);
 
     /**
      * Getter for the draw pile
@@ -90,12 +93,16 @@ public interface UIController extends IObservable {
      */
     IDeckOfCards getDrawPile();
 
+    void setDrawPile(IDeckOfCards deck);
+
     /**
      * Getter for the discard pile
      *
      * @return the discard pile
      */
     IDeckOfCards getDiscardPile();
+
+    void setDiscardPile(IDeckOfCards deck);
 
     /**
      * Getter for the current player
@@ -116,12 +123,13 @@ public interface UIController extends IObservable {
      */
     void exitEvent();
 
-
     /**
      * Getter for the status message
      * @return the current status message
      */
     String getStatusMessage();
+
+    void setStatusMessage(String statusMessage);
 
     /**
      * Getter for the phase description
@@ -144,6 +152,8 @@ public interface UIController extends IObservable {
      */
     IPlayer[] getPlayers();
 
+    void setPlayers(IPlayer[] players);
+
     int getCurrentPlayerIndex();
 
     void setCurrentPlayerIndex(int index);
@@ -151,14 +161,4 @@ public interface UIController extends IObservable {
     void setPlayer1(IPlayer player1);
 
     void setPlayer2(IPlayer player2);
-
-    void setAllStacks(List<ICardStack> allStacks);
-
-    void setDrawPile(IDeckOfCards deck);
-
-    void setDiscardPile(IDeckOfCards deck);
-
-    void setRoundState(String roundState);
-
-    void setStatusMessage(String statusMessage);
 }

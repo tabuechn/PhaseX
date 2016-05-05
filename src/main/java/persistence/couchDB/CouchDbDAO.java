@@ -3,7 +3,6 @@ package persistence.couchDB;
 import controller.UIController;
 import controller.impl.Controller;
 import model.player.IPlayer;
-import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ektorp.*;
@@ -23,6 +22,9 @@ import java.util.List;
 public class CouchDbDAO implements SaveSinglePlayerDAO {
 
     private static final Logger LOGGER = LogManager.getLogger(CouchDbDAO.class);
+    private static final String CONTROLLER_FUNCTION = "function(doc) {emit(doc.playerName, doc);}";
+    private static final String CONTROLLER_DOC_ID = "find_player_by_name";
+    private static final String CONTROLLER_DESIGN_DOC_ID = "_design/player_data";
     private CouchDbConnector db;
 
     public CouchDbDAO() {
@@ -33,6 +35,7 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
             CouchDbInstance dbInstance = new StdCouchDbInstance(client);
             db = dbInstance.createConnector("a_aphase_x_db_card_test", true);
             db.createDatabaseIfNotExists();
+//            db.callUpdateHandler(CONTROLLER_DESIGN_DOC_ID, CONTROLLER_FUNCTION, CONTROLLER_DOC_ID);
         } catch (MalformedURLException e) {
             LOGGER.error("Cant connect to Couch DB", e);
         }
@@ -42,6 +45,9 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
     public void saveGame(UIController controller) {
         CouchControllerData data = new CouchControllerData(controller);
         if (containsGame(data.getPlayerName())) {
+            CouchControllerData old = getControllerDataFromDB(data.getPlayerName());
+            data.setRevision(old.getRevision());
+            data.setId(old.getId());
             db.update(data);
         } else {
             db.create(data);
@@ -50,34 +56,17 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
 
     @Override
     public UIController loadGame(IPlayer player) {
-        CouchControllerData data = db.find(CouchControllerData.class, player.getPlayerName());
+        CouchControllerData data = getControllerDataFromDB(player.getPlayerName());
         if (data != null) {
             return data.getController();
         }
         return new Controller();
     }
 
-    public void saveCardToDB(ICardStack player, String name) {
-        CouchCardData data = new CouchCardData();
-        data.setStack(player);
-        data.setPlayerName(name);
-        if (!containsGame(name)) {
-            db.create(data);
-        } else {
-            CouchCardData old = getCardDataFromDB(name);
-            data.setId(old.getId());
-            data.setRevision(old.getRevision());
-            db.update(data);
-        }
-    }
 
-    public ICardStack getCardFromDB(String name) {
-        return getCardDataFromDB(name).getStack();
-    }
-
-    private CouchCardData getCardDataFromDB(String name) {
+    private CouchControllerData getControllerDataFromDB(String name) {
         ViewQuery query = getUserQuery(name);
-        List<CouchCardData> result = db.queryView(query, CouchCardData.class);
+        List<CouchControllerData> result = db.queryView(query, CouchControllerData.class);
         return result.get(0);
     }
 
@@ -89,15 +78,15 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
         } catch (DocumentNotFoundException e) {
             return false;
         }
-        return result.getSize() == 1;
+        return !result.isEmpty();
     }
 
     private ViewQuery getUserQuery(String name) {
         return new ViewQuery()
                 .allDocs()
                 .includeDocs(true)
-                .designDocId("_design/player_data")
-                .viewName("find_player_by_name")
+                .designDocId(CONTROLLER_DESIGN_DOC_ID)
+                .viewName(CONTROLLER_DOC_ID)
                 .key(name);
     }
 }
