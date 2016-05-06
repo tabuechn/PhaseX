@@ -194,8 +194,8 @@ public class Player implements IPlayer, Serializable {
             tmp.setPhase(node.get("phase").asText());
 
             JsonNode cards = node.path("cards");
-            IDeckOfCards deck = mapper.readValue(cards.traverse(), DeckOfCards.class);
-            tmp.setDeckOfCards(deck);
+            IDeckOfCards deckOfCards = mapper.readValue(cards.traverse(), DeckOfCards.class);
+            tmp.setDeckOfCards(deckOfCards);
 
             return tmp;
         }

@@ -41,8 +41,19 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Seri
         return new Gson().toJson(this);
     }
 
+    @Override
     public List<ICard> getCards() {
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 
     public String getId() {
@@ -52,7 +63,6 @@ public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Seri
     public void setId(String id) {
         this.id = id;
     }
-
 
     public static class Deserializer extends JsonDeserializer<DeckOfCards> {
         @Override

@@ -1,4 +1,4 @@
-package persistence.couchDB;
+package persistence.couchdb;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

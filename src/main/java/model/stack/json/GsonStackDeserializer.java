@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 public class GsonStackDeserializer implements JsonDeserializer<ICardStack> {
 
     @Override
-    public ICardStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public ICardStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
         final JsonObject jsonObject = json.getAsJsonObject();
         final JsonElement jsonStackNumber = jsonObject.get("stackNumber");
         if(jsonStackNumber != null) {

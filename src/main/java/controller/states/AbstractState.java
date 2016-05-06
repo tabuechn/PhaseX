@@ -25,7 +25,8 @@ public abstract class AbstractState {
     protected static final String PLAYER_TURN_FINISED = "PlayerTurnFinished";
     protected static final String START_PHASE = "StartPhase";
 
-    public static AbstractState getStateFromString(String state) throws IllegalArgumentException {
+    @SuppressWarnings("squid:MethodCyclomaticComplexity")
+    public static AbstractState getStateFromString(String state) {
         switch (state) {
             case DRAW_PHASE:
                 return new DrawPhase();

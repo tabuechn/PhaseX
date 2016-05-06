@@ -6,7 +6,7 @@ import controller.IController;
 import controller.UIController;
 import controller.impl.Controller;
 import persistence.SaveSinglePlayerDAO;
-import persistence.couchDB.CouchDbDAO;
+import persistence.couchdb.CouchDbDAO;
 
 
 /**

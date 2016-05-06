@@ -107,9 +107,9 @@ public class Card implements ICard, Serializable {
         public Card deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(jp);
-            CardColor color = CardColor.byOrdinal(node.get("color").asInt());
-            CardValue value = CardValue.byOrdinal(node.get("value").asInt());
-            return new Card(value, color);
+            CardColor col = CardColor.byOrdinal(node.get("color").asInt());
+            CardValue val = CardValue.byOrdinal(node.get("value").asInt());
+            return new Card(val, col);
         }
     }
 }

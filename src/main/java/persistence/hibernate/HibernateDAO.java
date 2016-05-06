@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class HibernateDAO implements SaveSinglePlayerDAO {
 
-    public static final int NUMBER_OF_STACKS = 4;
-    Gson gson;
-    Gson gsonNormal;
+    private static final int NUMBER_OF_STACKS = 4;
+    private Gson gson;
+    private Gson gsonNormal;
 
     public HibernateDAO() {
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -97,8 +97,7 @@ public class HibernateDAO implements SaveSinglePlayerDAO {
         if(hibernateControllerData != null)
             return hibernateControllerData.getController();
         else {
-            UIController controller = new Controller(2);
-            return controller;
+            return new Controller(2);
         }
     }
 
