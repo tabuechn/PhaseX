@@ -1,4 +1,4 @@
-package persistence.couchdb;
+package persistence.couch;
 
 import controller.UIController;
 import controller.impl.Controller;

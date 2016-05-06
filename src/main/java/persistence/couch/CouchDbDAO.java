@@ -1,4 +1,4 @@
-package persistence.couchDB;
+package persistence.couch;
 
 import controller.UIController;
 import controller.impl.Controller;
@@ -55,7 +55,6 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
                         .socketTimeout(DB_TIMEOUT)
                         .build();
             }
-//                    "http://lenny2.in.htwg-konstanz.de:5984").build();
             CouchDbInstance dbInstance = new StdCouchDbInstance(client);
             if (designDocName != null) {
                 db = dbInstance.createConnector(designDocName, true);

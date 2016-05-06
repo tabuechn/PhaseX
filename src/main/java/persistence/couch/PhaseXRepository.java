@@ -1,4 +1,4 @@
-package persistence.couchdb;
+package persistence.couch;
 
 import org.ektorp.CouchDbConnector;
 import org.ektorp.support.CouchDbRepositorySupport;
