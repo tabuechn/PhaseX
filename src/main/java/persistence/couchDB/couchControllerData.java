@@ -15,6 +15,7 @@ import persistence.IControllerData;
  */
 class CouchControllerData extends CouchDbDocument implements IControllerData {
 
+    protected static final String COUCH_DB_CONTROLLE_TYPE = "controller";
     @JsonProperty("_id")
     private String id;
 
@@ -24,13 +25,17 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
 
     private String playerName;
 
+    @JsonProperty("type")
+    private String type;
+
     public CouchControllerData() {
-        //Do Nothing
+        type = COUCH_DB_CONTROLLE_TYPE;
     }
 
     CouchControllerData(UIController controller) {
         this.controller = controller;
-        playerName = getPlayerNameFromController(controller);
+        this.playerName = getPlayerNameFromController(controller);
+        this.type = COUCH_DB_CONTROLLE_TYPE;
     }
 
     @Override

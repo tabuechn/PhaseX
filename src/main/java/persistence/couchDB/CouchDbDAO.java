@@ -5,14 +5,15 @@ import controller.impl.Controller;
 import model.player.IPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ektorp.*;
+import org.ektorp.CouchDbConnector;
+import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
+import persistence.IControllerData;
 import persistence.SaveSinglePlayerDAO;
 
 import java.net.MalformedURLException;
-import java.util.List;
 
 /**
  * If everything works right this class was
@@ -21,21 +22,44 @@ import java.util.List;
  */
 public class CouchDbDAO implements SaveSinglePlayerDAO {
 
+    public static final int DB_TIMEOUT = 60000;
     private static final Logger LOGGER = LogManager.getLogger(CouchDbDAO.class);
-    private static final String CONTROLLER_FUNCTION = "function(doc) {emit(doc.playerName, doc);}";
-    private static final String CONTROLLER_DOC_ID = "find_player_by_name";
-    private static final String CONTROLLER_DESIGN_DOC_ID = "_design/player_data";
     private CouchDbConnector db;
+    private PhaseXRepository repo;
 
     public CouchDbDAO() {
+        this(System.getProperty("couchDbLink", "http://lenny2.in.htwg-konstanz.de:5984"), System.getProperty("couchDbUser", null), System.getProperty("couchDbPassword"), System.getProperty("couchDbDocName", "phasex_controller"));
+    }
+
+
+    /**
+     * Constructor with creating of the connection
+     *
+     * @param link     link to the db
+     * @param userName username for db, set null if not needed
+     * @param password password for db, set null if not needed
+     */
+    private CouchDbDAO(String link, String userName, String password, String designDocName) {
         HttpClient client;
         try {
-            client = new StdHttpClient.Builder().url(
-                    "http://lenny2.in.htwg-konstanz.de:5984").build();
+            if (userName == null) {
+                client = new StdHttpClient.Builder()
+                        .url(link)
+                        .connectionTimeout(DB_TIMEOUT)
+                        .build();
+            } else {
+                client = new StdHttpClient.Builder()
+                        .url(link)
+                        .username(userName)
+                        .password(password)
+                        .socketTimeout(DB_TIMEOUT)
+                        .build();
+            }
+//                    "http://lenny2.in.htwg-konstanz.de:5984").build();
             CouchDbInstance dbInstance = new StdCouchDbInstance(client);
-            db = dbInstance.createConnector("a_aphase_x_db_card_test", true);
+            db = dbInstance.createConnector(designDocName, true);
             db.createDatabaseIfNotExists();
-//            db.callUpdateHandler(CONTROLLER_DESIGN_DOC_ID, CONTROLLER_FUNCTION, CONTROLLER_DOC_ID);
+            repo = new PhaseXRepository(CouchControllerData.class, db, true);
         } catch (MalformedURLException e) {
             LOGGER.error("Cant connect to Couch DB", e);
         }
@@ -56,7 +80,7 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
 
     @Override
     public UIController loadGame(IPlayer player) {
-        CouchControllerData data = getControllerDataFromDB(player.getPlayerName());
+        IControllerData data = getControllerDataFromDB(player.getPlayerName());
         if (data != null) {
             return data.getController();
         }
@@ -65,28 +89,11 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
 
 
     private CouchControllerData getControllerDataFromDB(String name) {
-        ViewQuery query = getUserQuery(name);
-        List<CouchControllerData> result = db.queryView(query, CouchControllerData.class);
-        return result.get(0);
+        return repo.findByName(name);
     }
 
     private boolean containsGame(String playerName) {
-        ViewQuery query = getUserQuery(playerName);
-        ViewResult result;
-        try {
-            result = db.queryView(query);
-        } catch (DocumentNotFoundException e) {
-            return false;
-        }
-        return !result.isEmpty();
-    }
-
-    private ViewQuery getUserQuery(String name) {
-        return new ViewQuery()
-                .allDocs()
-                .includeDocs(true)
-                .designDocId(CONTROLLER_DESIGN_DOC_ID)
-                .viewName(CONTROLLER_DOC_ID)
-                .key(name);
+        IControllerData result = repo.findByName(playerName);
+        return result != null;
     }
 }
