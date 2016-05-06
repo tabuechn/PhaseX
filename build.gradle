@@ -1,5 +1,5 @@
 plugins {
-    id "org.sonarqube" version "1.2"
+    id "org.sonarqube" version "1.1"
     id "jacoco"
 }
 group 'de.htwg.se.CardGame.PhaseX'
