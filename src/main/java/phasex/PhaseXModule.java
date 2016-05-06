@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 import controller.IController;
 import controller.UIController;
 import controller.impl.Controller;
-import persistence.IPhaseXDao;
 import persistence.SaveSinglePlayerDAO;
 import persistence.couchDB.CouchDbDAO;
 
