@@ -28,7 +28,7 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
     private PhaseXRepository repo;
 
     public CouchDbDAO() {
-        this(System.getProperty("couchDbLink", "http://lenny2.in.htwg-konstanz.de:5984"), System.getProperty("couchDbUser", null), System.getProperty("couchDbPassword"), System.getProperty("couchDbDocName", "phasex_controller"));
+        this(System.getenv("couchDbLink"), System.getenv("couchDbUser"), System.getenv("couchDbPassword"), System.getenv("couchDbDocName"));
     }
 
 
@@ -42,9 +42,9 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
     private CouchDbDAO(String link, String userName, String password, String designDocName) {
         HttpClient client;
         try {
-            if (userName == null) {
+            if (link == null || userName == null) {
                 client = new StdHttpClient.Builder()
-                        .url(link)
+                        .url("http://lenny2.in.htwg-konstanz.de:5984")
                         .connectionTimeout(DB_TIMEOUT)
                         .build();
             } else {
@@ -57,7 +57,11 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
             }
 //                    "http://lenny2.in.htwg-konstanz.de:5984").build();
             CouchDbInstance dbInstance = new StdCouchDbInstance(client);
-            db = dbInstance.createConnector(designDocName, true);
+            if (designDocName != null) {
+                db = dbInstance.createConnector(designDocName, true);
+            } else {
+                db = dbInstance.createConnector("phasex_controller_data", true);
+            }
             db.createDatabaseIfNotExists();
             repo = new PhaseXRepository(CouchControllerData.class, db, true);
         } catch (MalformedURLException e) {
