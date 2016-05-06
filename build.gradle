@@ -17,18 +17,6 @@ repositories {
     mavenCentral()
 }
 
-allprojects {
-    println System.properties.couchDbLink
-    System.setProperty("couchDbLink", System.properties.couchDbLink)
-    System.setProperty("couchDbUser", System.properties.couchDbUser)
-    System.setProperty("couchDbPassword", System.properties.couchDbPassword)
-    System.setProperty("couchDbDocName", System.properties.couchDbDocName)
-//    systemProperty "couchDbLink", 'couchDbLink'
-//    systemProperty "couchDbUser", couchDbUser
-//    systemProperty "couchDbPassword", couchDbPassword
-//    systemProperty "couchDbDocName", couchDbDocName
-}
-
 sourceSets {
     integration {
         java {
