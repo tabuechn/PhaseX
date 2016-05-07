@@ -69,6 +69,10 @@ dependencies {
     compile 'org.ektorp:org.ektorp:1.4.2'
     compile 'org.opencredo.couchdb:couchdb-si-support:0.1'
 
+    //Akka
+    compile 'com.typesafe.akka:akka-actor_2.11:2.4.4'
+
+
 }
 
 
