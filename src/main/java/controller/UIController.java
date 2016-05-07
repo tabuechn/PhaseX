@@ -75,12 +75,16 @@ public interface UIController extends IObservable {
      */
     List<ICardStack> getAllStacks();
 
+    void setAllStacks(List<ICardStack> allStacks);
+
     /**
      * Getter for the UIs to let them know, in which state the game is right now
      *
      * @return the current State
      */
     AbstractState getRoundState();
+
+    void setRoundState(String roundState);
 
     /**
      * Getter for the draw pile
@@ -89,12 +93,16 @@ public interface UIController extends IObservable {
      */
     IDeckOfCards getDrawPile();
 
+    void setDrawPile(IDeckOfCards deck);
+
     /**
      * Getter for the discard pile
      *
      * @return the discard pile
      */
     IDeckOfCards getDiscardPile();
+
+    void setDiscardPile(IDeckOfCards deck);
 
     /**
      * Getter for the current player
@@ -115,12 +123,13 @@ public interface UIController extends IObservable {
      */
     void exitEvent();
 
-
     /**
      * Getter for the status message
      * @return the current status message
      */
     String getStatusMessage();
+
+    void setStatusMessage(String statusMessage);
 
     /**
      * Getter for the phase description
@@ -142,6 +151,8 @@ public interface UIController extends IObservable {
      * @return Array of all Players
      */
     IPlayer[] getPlayers();
+
+    void setPlayers(IPlayer[] players);
 
     int getCurrentPlayerIndex();
 

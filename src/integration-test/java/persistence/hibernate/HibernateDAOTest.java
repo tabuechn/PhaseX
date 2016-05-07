@@ -16,8 +16,8 @@ import model.player.impl.Player;
 import model.stack.ICardStack;
 import model.stack.impl.ColorStack;
 import model.stack.impl.PairStack;
-import model.stack.impl.StackDeserializer;
 import model.stack.impl.StreetStack;
+import model.stack.json.GsonStackDeserializer;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -51,7 +51,7 @@ public class HibernateDAOTest {
         ctrlData = new HibernateControllerData();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
-        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
         gson = gsonBuilder.create();
         hdao = new HibernateDAO();
     }

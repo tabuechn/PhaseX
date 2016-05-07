@@ -1,13 +1,18 @@
 package model.player;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.deck.IDeckOfCards;
 import model.phase.IPhase;
+import model.player.impl.Player;
 
 /**
  * If everything works right this class was
  * created by Konraifen88 on 22.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
+@JsonSerialize(using = Player.Serializer.class)
+@JsonDeserialize(using = Player.Deserializer.class)
 public interface IPlayer {
     /**
      * Getter for the display name of a player
@@ -36,6 +41,12 @@ public interface IPlayer {
      * @return phase of the player.
      */
     IPhase getPhase();
+
+    /**
+     * set she phase of the player by the name of the phase
+     * @param phaseName name of the phase
+     */
+    void setPhase(String phaseName);
 
     /**
      * Method to set the next phase for the current player.
@@ -73,10 +84,4 @@ public interface IPlayer {
     int getPoints();
 
     void setName(String name);
-
-    /**
-     * set she phase of the player by the name of the phase
-     * @param phaseName name of the phase
-     */
-    void setPhase(String phaseName);
 }

@@ -1,6 +1,9 @@
 package model.card.impl;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
@@ -12,7 +15,7 @@ import java.lang.reflect.Type;
  */
 public class CardDeserializer implements JsonDeserializer<ICard> {
     @Override
-    public ICard deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public ICard deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 
         ICard card = new Card();
 

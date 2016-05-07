@@ -1,5 +1,9 @@
 package model.card.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.*;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
@@ -8,6 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -19,14 +24,16 @@ public class Card implements ICard, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @JsonIgnore
+    private String id;
 
     @Column(name = "PhaseX_CardValue5")
     private CardValue number;
     @Column(name = "PhaseX_CardColor5")
     private CardColor color;
 
-    public Card() {}
+    public Card() {
+    }
 
     public Card(CardValue cardNumber, CardColor cardColor) {
         this.number = cardNumber;
@@ -39,6 +46,11 @@ public class Card implements ICard, Serializable {
     }
 
     @Override
+    public void setNumber(CardValue value) {
+        this.number = value;
+    }
+
+    @Override
     public CardColor getColor() {
         return color;
     }
@@ -47,12 +59,6 @@ public class Card implements ICard, Serializable {
     public void setColor(CardColor color) {
         this.color = color;
     }
-
-    @Override
-    public void setNumber(CardValue value) {
-        this.number = value;
-    }
-
 
     @Override
     public int compareTo(@Nonnull ICard other) {
@@ -77,11 +83,33 @@ public class Card implements ICard, Serializable {
                 .isEquals();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public static class Serializer extends JsonSerializer<Card> {
+
+        @Override
+        public void serialize(Card value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+            jgen.writeStartObject();
+            jgen.writeNumberField("color", value.getColor().ordinal());
+            jgen.writeNumberField("value", value.getNumber().ordinal());
+            jgen.writeEndObject();
+        }
+    }
+
+    public static class Deserializer extends JsonDeserializer<Card> {
+        @Override
+        public Card deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(jp);
+            CardColor col = CardColor.byOrdinal(node.get("color").asInt());
+            CardValue val = CardValue.byOrdinal(node.get("value").asInt());
+            return new Card(val, col);
+        }
     }
 }

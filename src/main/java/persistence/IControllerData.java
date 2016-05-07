@@ -1,7 +1,6 @@
 package persistence;
 
 import controller.UIController;
-import model.player.IPlayer;
 
 /**
  * Created by tabuechn on 19.04.2016.

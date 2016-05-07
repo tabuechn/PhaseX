@@ -1,5 +1,8 @@
 package controller.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import controller.IController;
 import controller.UIController;
 import controller.states.AbstractState;
@@ -30,22 +33,28 @@ public class Controller extends Observable implements IController, UIController 
 
     private final int playerCount;
 
+    @JsonDeserialize(as = AbstractState.class)
     private AbstractState roundState;
 
     private IPlayer[] players;
 
+    @JsonDeserialize(as = IPlayer.class)
     private IPlayer currentPlayer;
 
     private int currentPlayerIndex;
 
+    @JsonDeserialize(contentAs = ICardStack.class)
     private List<ICardStack> allPhases;
 
+    @JsonDeserialize(as = IDeckOfCards.class)
     private IDeckOfCards drawPile;
 
+    @JsonDeserialize(as = IDeckOfCards.class)
     private IDeckOfCards discardPile;
 
     private String statusMessage;
 
+    @JsonIgnore
     private IPlayer winner;
 
 
@@ -109,6 +118,7 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    @JsonIgnore
     public IDeckOfCards getCurrentPlayersHand() {
         return currentPlayer.getDeckOfCards();
     }
@@ -154,6 +164,11 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    public void setAllStacks(List<ICardStack> allStacks) {
+        this.allPhases = allStacks;
+    }
+
+    @Override
     public void drawOpenCard() {
         IDeckOfCards currentDeck = currentPlayer.getDeckOfCards();
         currentDeck.add(discardPile.removeLast());
@@ -181,6 +196,12 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    public void setRoundState(String roundState) {
+        this.roundState = AbstractState.getStateFromString(roundState);
+    }
+
+    @Override
+    @JsonProperty("roundState")
     public void setRoundState(AbstractState roundState) {
         this.roundState = roundState;
     }
@@ -216,8 +237,18 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    public void setDrawPile(IDeckOfCards deck) {
+        this.drawPile = deck;
+    }
+
+    @Override
     public IDeckOfCards getDiscardPile() {
         return this.discardPile;
+    }
+
+    @Override
+    public void setDiscardPile(IDeckOfCards deck) {
+        this.discardPile = deck;
     }
 
     @Override
@@ -226,6 +257,7 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    @JsonIgnore
     public IPlayer getOpponentPlayer() {
         for(IPlayer player : players) {
             if (!player.equals(currentPlayer)) {
@@ -258,16 +290,19 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    @JsonIgnore
     public String getCurrentPhaseDescription() {
         return currentPlayer.getPhase().getDescription();
     }
 
     @Override
+    @JsonIgnore
     public boolean isGameFinished() {
         return currentPlayer.isPhaseDone() && (currentPlayer.getPhase().getPhaseNumber() == Phase5.PHASE_NUMBER);
     }
 
     @Override
+    @JsonIgnore
     public int getPlayerCount() {
         return playerCount;
     }
@@ -380,6 +415,11 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    public void setPlayers(@JsonProperty("players") IPlayer[] players) {
+        this.players = players;
+    }
+
+    @Override
     public int getCurrentPlayerIndex() {
         return this.currentPlayerIndex;
     }
@@ -397,26 +437,6 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public void setPlayer2(IPlayer player2) {
         this.players[1] = player2;
-    }
-
-    @Override
-    public void setAllStacks(List<ICardStack> allStacks) {
-        this.allPhases = allStacks;
-    }
-
-    @Override
-    public void setDrawPile(IDeckOfCards deck) {
-        this.drawPile = deck;
-    }
-
-    @Override
-    public void setDiscardPile(IDeckOfCards deck) {
-        this.discardPile = deck;
-    }
-
-    @Override
-    public void setRoundState(String roundState) {
-        this.roundState = AbstractState.getStateFromString(roundState);
     }
 
     @Override

@@ -1,9 +1,13 @@
 package model.player.impl;
 
-import model.card.impl.Card;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.*;
+import model.card.ICard;
 import model.card.impl.CardColorComparator;
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
 import model.phase.impl.*;
 import model.player.IPlayer;
@@ -11,6 +15,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -24,7 +29,7 @@ public class Player implements IPlayer, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String id;
 
     @Column(name = "PhaseX_PlayerNumber")
     private int playerNumber;
@@ -77,6 +82,29 @@ public class Player implements IPlayer, Serializable {
     }
 
     @Override
+    public void setPhase(String phaseName) {
+        switch (phaseName) {
+            case "Phase1":
+                this.phase = new Phase1();
+                break;
+            case "Phase2":
+                this.phase = new Phase2();
+                break;
+            case "Phase3":
+                this.phase = new Phase3();
+                break;
+            case "Phase4":
+                this.phase = new Phase4();
+                break;
+            case "Phase5":
+                this.phase = new Phase5();
+                break;
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    @Override
     public void nextPhase() {
         this.phase = phase.getNextPhase();
     }
@@ -114,29 +142,6 @@ public class Player implements IPlayer, Serializable {
     }
 
     @Override
-    public void setPhase(String phaseName) {
-        switch (phaseName) {
-            case "Phase1":
-                this.phase = new Phase1();
-                break;
-            case "Phase2":
-                this.phase = new Phase2();
-                break;
-            case "Phase3":
-                this.phase = new Phase3();
-                break;
-            case "Phase4":
-                this.phase = new Phase4();
-                break;
-            case "Phase5":
-                this.phase = new Phase5();
-                break;
-            default:
-                throw new IllegalStateException();
-        }
-    }
-
-    @Override
     public int hashCode() {
         return new HashCodeBuilder().append(name).toHashCode();
     }
@@ -153,11 +158,46 @@ public class Player implements IPlayer, Serializable {
         }
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public static class Serializer extends JsonSerializer<Player> {
+
+        @Override
+        public void serialize(Player value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+            jgen.writeStartObject();
+            jgen.writeNumberField("playerNumber", value.getPlayerNumber());
+            jgen.writeStringField("name", value.getPlayerName());
+            jgen.writeStringField("phase", value.getPhase().toString());
+            jgen.writeArrayFieldStart("cards");
+            for (ICard card : value.getDeckOfCards()) {
+                jgen.writeObject(card);
+            }
+            jgen.writeEndArray();
+            jgen.writeEndObject();
+        }
+    }
+
+
+    public static class Deserializer extends JsonDeserializer<Player> {
+        @Override
+        public Player deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(jp);
+            Player tmp = new Player(node.get("playerNumber").asInt());
+            tmp.setName(node.get("name").asText());
+            tmp.setPhase(node.get("phase").asText());
+
+            JsonNode cards = node.path("cards");
+            IDeckOfCards deckOfCards = mapper.readValue(cards.traverse(), DeckOfCards.class);
+            tmp.setDeckOfCards(deckOfCards);
+
+            return tmp;
+        }
     }
 }

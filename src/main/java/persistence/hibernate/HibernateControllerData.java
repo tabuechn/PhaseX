@@ -11,7 +11,7 @@ import model.phase.IPhase;
 import model.player.IPlayer;
 import model.player.impl.Player;
 import model.stack.ICardStack;
-import model.stack.impl.StackDeserializer;
+import model.stack.json.GsonStackDeserializer;
 import persistence.IControllerData;
 
 import javax.persistence.*;
@@ -231,7 +231,7 @@ public class HibernateControllerData implements Serializable, IControllerData {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
-        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
         Gson gson = gsonBuilder.create();
 
         controller.setRoundState(this.roundState);
@@ -262,7 +262,7 @@ public class HibernateControllerData implements Serializable, IControllerData {
     private void fillAllStacks(List<ICardStack> allStacks) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
-        gsonBuilder.registerTypeAdapter(ICardStack.class, new StackDeserializer());
+        gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
         Gson gson = gsonBuilder.create();
         if(stack1 != null) {
             allStacks.add(gson.fromJson(stack1,ICardStack.class));

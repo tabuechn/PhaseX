@@ -1,7 +1,5 @@
 package model.card;
 
-import java.util.IllegalFormatException;
-
 /**
  * If everything works right this class was
  * created by Konraifen88 on 11.10.2015.
@@ -40,36 +38,6 @@ public enum CardValue {
     }
 
     public static CardValue getValueByString(String value) {
-        switch(value) {
-            case "ZERO":
-                return ZERO;
-            case "ONE":
-                return ONE;
-            case "TWO":
-                return TWO;
-            case "THREE":
-                return THREE;
-            case "FOUR":
-                return FOUR;
-            case "FIVE":
-                return FIVE;
-            case "SIX":
-                return SIX;
-            case "SEVEN":
-                return SEVEN;
-            case "EIGHT":
-                return EIGHT;
-            case "NINE":
-                return NINE;
-            case "TEN":
-                return TEN;
-            case "ELEVEN":
-                return ELEVEN;
-            case "TWELVE":
-                return TWELVE;
-            default:
-                throw new IllegalStateException();
-        }
+        return CardValue.valueOf(value);
     }
-
 }
