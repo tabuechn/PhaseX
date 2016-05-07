@@ -3,6 +3,7 @@ package model.stack.impl;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import model.card.CardColor;
 import model.card.ICard;
+import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
 import model.stack.ICardStack;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -35,6 +36,7 @@ public class ColorStack implements ICardStack, Serializable {
     @Override
     public void addCardToStack(ICard card) {
         list.add(card);
+        list.sort(new CardValueComparator());
     }
 
     @Override
