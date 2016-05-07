@@ -47,6 +47,7 @@ public class CouchDbDAOTest {
         System.out.println("out: " + dbController.toString());
         assertEquals(PLAYER_NAME, dbController.getPlayers()[0].getPlayerName());
         assertEquals(controller1.getCurrentPlayersHand(), dbController.getCurrentPlayersHand());
+        assertEquals(controller1.getAllStacks(), dbController.getAllStacks());
     }
 
     @Test

@@ -111,6 +111,8 @@ public interface UIController extends IObservable {
      */
     IPlayer getCurrentPlayer();
 
+    void setCurrentPlayer(IPlayer player);
+
     void setCurrentPlayer(int index);
 
     /**

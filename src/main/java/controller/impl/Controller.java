@@ -41,6 +41,7 @@ public class Controller extends Observable implements IController, UIController 
     @JsonDeserialize(as = IPlayer.class)
     private IPlayer currentPlayer;
 
+    @JsonIgnore
     private int currentPlayerIndex;
 
     @JsonDeserialize(contentAs = ICardStack.class)
@@ -196,14 +197,14 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
-    public void setRoundState(String roundState) {
-        this.roundState = AbstractState.getStateFromString(roundState);
-    }
-
-    @Override
     @JsonProperty("roundState")
     public void setRoundState(AbstractState roundState) {
         this.roundState = roundState;
+    }
+
+    @Override
+    public void setRoundState(String roundState) {
+        this.roundState = AbstractState.getStateFromString(roundState);
     }
 
     @Override
@@ -254,6 +255,12 @@ public class Controller extends Observable implements IController, UIController 
     @Override
     public IPlayer getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    @Override
+    @JsonProperty("currentPlayer")
+    public void setCurrentPlayer(IPlayer player) {
+        this.currentPlayer = player;
     }
 
     @Override
@@ -425,6 +432,7 @@ public class Controller extends Observable implements IController, UIController 
     }
 
     @Override
+    @JsonIgnore
     public void setCurrentPlayerIndex(int index) {
         this.currentPlayerIndex = index;
     }
