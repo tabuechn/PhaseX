@@ -111,6 +111,8 @@ public interface UIController extends IObservable {
      */
     IPlayer getCurrentPlayer();
 
+    void setCurrentPlayer(int index);
+
     /**
      * Getter for the opponent player
      *
@@ -161,16 +163,4 @@ public interface UIController extends IObservable {
     void setPlayer1(IPlayer player1);
 
     void setPlayer2(IPlayer player2);
-
-    void setAllStacks(List<ICardStack> allStacks);
-
-    void setDrawPile(IDeckOfCards deck);
-
-    void setDiscardPile(IDeckOfCards deck);
-
-    void setRoundState(String roundState);
-
-    void setStatusMessage(String statusMessage);
-
-    void setCurrentPlayer(int index);
 }
