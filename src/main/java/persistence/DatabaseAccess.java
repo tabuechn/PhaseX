@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import controller.UIController;
 import model.player.IPlayer;
 import persistence.hibernate.HibernateDAO;
+import phasex.CouchedbModule;
 import phasex.HibernateModule;
 import phasex.PhaseXModule;
 
@@ -16,8 +17,12 @@ public class DatabaseAccess {
     private SaveSinglePlayerDAO saveSinglePlayerDAO;
     private Injector in;
 
-    public DatabaseAccess() {
-        in = Guice.createInjector(new HibernateModule());
+    public DatabaseAccess(DBEnum type) {
+        if(type == DBEnum.HIBERNATE) {
+            in = Guice.createInjector(new HibernateModule());
+        } else {
+            in = Guice.createInjector(new CouchedbModule());
+        }
         saveSinglePlayerDAO = in.getInstance(SaveSinglePlayerDAO.class);
     }
 

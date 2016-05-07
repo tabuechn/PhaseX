@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import persistence.DBEnum;
 import persistence.DatabaseAccess;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class DatabaseAccessTest {
 
     @Before
     public void setUp() throws Exception {
-        dbtest = new DatabaseAccess();
+        dbtest = new DatabaseAccess(DBEnum.HIBERNATE);
     }
 
     @Test
