@@ -9,9 +9,11 @@ import controller.IController;
 import controller.states.impl.*;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
+import model.player.IPlayer;
 import model.stack.ICardStack;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by Tarek on 25.09.2015. Be grateful for this superior Code!
@@ -43,10 +45,12 @@ public abstract class AbstractState {
         }
     }
 
-    public void drawOpen(final IController controller) {
+    public AbstractState drawOpen(IDeckOfCards discardPile, IDeckOfCards drawPile, IPlayer currentPlayer) {
+        return this;
     }
 
-    public void drawHidden(final IController controller) {
+    public AbstractState drawHidden(IDeckOfCards discardPile, IDeckOfCards drawPile, IPlayer currentPlayer) {
+        return this;
     }
 
     public void addToFinishedPhase(final IController controller, ICard card, ICardStack stack) {
@@ -58,7 +62,7 @@ public abstract class AbstractState {
     public void playPhase(final IController controller, IDeckOfCards phase) {
     }
 
-    public void start(final IController controller) {
+    public void start(IPlayer[] players, int playerCount, IDeckOfCards drawPile, IDeckOfCards discardPile, LinkedList<ICardStack> allPhases) {
     }
 
     @Override

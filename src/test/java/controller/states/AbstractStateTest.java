@@ -24,8 +24,8 @@ public class AbstractStateTest {
     public void testAllButStart() {
         testee.addToFinishedPhase(null, null, null);
         testee.discard(null, null);
-        testee.drawHidden(null);
-        testee.drawOpen(null);
+        testee.drawHidden(null,null,null);
+        testee.drawOpen(null,null,null);
         testee.playPhase(null, null);
         assertEquals(testee.toString(), "StartPhase");
     }

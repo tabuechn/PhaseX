@@ -82,13 +82,14 @@ public class Controller extends Observable implements IController, UIController 
 
     @Override
     public void drawOpen() {
-        roundState.drawOpen(this);
+        //roundState.drawOpen(this);
+        this.roundState = roundState.drawOpen(discardPile,drawPile,currentPlayer);
         notifyObservers();
     }
 
     @Override
     public void drawHidden() {
-        roundState.drawHidden(this);
+        this.roundState= roundState.drawHidden(discardPile,drawPile,currentPlayer);
         notifyObservers();
     }
 

@@ -64,28 +64,21 @@ public class ControllerTest implements IObserver {
         observed = false;
     }
 
-    @Test
-    public void startGameShouldCallTheStateToStart() {
-        testee.initGame();
-        doNothing().when(stateMock).start(any(Controller.class));
-        testee.startGame("Player1");
-        verify(stateMock, times(1)).start(eq(testee));
-        checkIfObserverWasNotified();
-    }
 
     @Test
     public void drawOpenShouldCallTheStateToDrawACardFromTheOpenPile() {
-        doNothing().when(stateMock).drawOpen(any(Controller.class));
+        //doNothing().when(stateMock).drawOpen(any(Controller.class));
+        doNothing().when(stateMock).drawOpen(any(IDeckOfCards.class),any(IDeckOfCards.class),any(IPlayer.class));
         testee.drawOpen();
-        verify(stateMock, times(1)).drawOpen(eq(testee));
+        verify(stateMock, times(1)).drawOpen(eq(testee.getDiscardPile()),eq(testee.getDrawPile()),eq(testee.getCurrentPlayer()));
         checkIfObserverWasNotified();
     }
 
     @Test
     public void drawHiddenShouldCallTheStateToDrawACardFromTheHiddenPile() {
-        doNothing().when(stateMock).drawHidden(any(Controller.class));
+        doNothing().when(stateMock).drawHidden(any(IDeckOfCards.class),any(IDeckOfCards.class),any(IPlayer.class));
         testee.drawHidden();
-        verify(stateMock, times(1)).drawHidden(eq(testee));
+        verify(stateMock, times(1)).drawHidden(eq(testee.getDiscardPile()),eq(testee.getDrawPile()),eq(testee.getCurrentPlayer()));
         checkIfObserverWasNotified();
     }
 
