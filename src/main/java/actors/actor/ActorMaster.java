@@ -1,19 +1,18 @@
 package actors.actor;
 
-import akka.actor.Props;
-import akka.actor.UntypedActor;
 import actors.message.DrawHiddenMessage;
 import actors.message.DrawOpenMessage;
+import akka.actor.UntypedActor;
+import akka.japi.Creator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import scala.collection.mutable.ArraySeq;
 
 /**
  * If everything works right this class was
  * created by konraifen88 on 10.05.2016.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class ActorMaster extends UntypedActor {
+public class ActorMaster extends UntypedActor implements Creator<ActorMaster>{
 
     private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
 
@@ -28,5 +27,10 @@ public class ActorMaster extends UntypedActor {
             LOG.error("unknown message received");
             unhandled(message);
         }
+    }
+
+    @Override
+    public ActorMaster create() throws Exception {
+        return this;
     }
 }

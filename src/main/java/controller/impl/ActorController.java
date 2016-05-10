@@ -4,7 +4,6 @@ import actors.actor.ActorMaster;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.actor.UntypedActor;
 import controller.UIController;
 import controller.playerContainer.impl.PlayerContainer;
 import model.card.ICard;
