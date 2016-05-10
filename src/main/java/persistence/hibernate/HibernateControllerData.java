@@ -3,7 +3,7 @@ package persistence.hibernate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.UIController;
-import controller.impl.Controller;
+import controller.impl.ActorController;
 import model.card.ICard;
 import model.card.impl.CardDeserializer;
 import model.deck.impl.DeckOfCards;
@@ -226,7 +226,7 @@ public class HibernateControllerData implements Serializable, IControllerData {
 
     @Override
     public UIController getController() {
-        UIController controller = new Controller();
+        UIController controller = new ActorController();
         controller.startGame(player1.getPlayerName());
 
         GsonBuilder gsonBuilder = new GsonBuilder();

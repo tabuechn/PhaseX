@@ -2,12 +2,8 @@ package phasex;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import controller.IController;
 import controller.UIController;
-import controller.impl.Controller;
-import persistence.SaveSinglePlayerDAO;
-import persistence.couch.CouchDbDAO;
-import persistence.hibernate.HibernateDAO;
+import controller.impl.ActorController;
 
 
 /**
@@ -17,8 +13,7 @@ public class PhaseXModule extends AbstractModule {
 
     @Override
     public void configure() {
-        bind(IController.class).to(Controller.class).in(Singleton.class);
-        bind(UIController.class).to(Controller.class).in(Singleton.class);
+        bind(UIController.class).to(ActorController.class).in(Singleton.class);
     }
 
 

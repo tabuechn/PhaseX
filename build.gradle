@@ -70,9 +70,8 @@ dependencies {
     compile 'org.opencredo.couchdb:couchdb-si-support:0.1'
 
     //Akka
-    compile 'com.typesafe.akka:akka-actor_2.11:2.3.13'
-
-
+    compile 'com.typesafe.akka:akka-actor_2.11:2.4.4'
+//    compile 'com.typesafe.akka:akka-actor_2.11:2.3.13'
 }
 
 

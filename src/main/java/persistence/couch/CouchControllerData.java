@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import controller.UIController;
-import controller.impl.Controller;
+import controller.impl.ActorController;
 import org.ektorp.support.CouchDbDocument;
 import persistence.IControllerData;
 
@@ -19,8 +19,8 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
     @JsonProperty("_id")
     private String id;
 
-    @JsonSerialize(as = Controller.class)
-    @JsonDeserialize(as = Controller.class)
+    @JsonSerialize(as = ActorController.class)
+    @JsonDeserialize(as = ActorController.class)
     private UIController controller;
 
     private String playerName;

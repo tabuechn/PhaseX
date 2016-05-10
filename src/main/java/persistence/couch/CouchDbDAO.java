@@ -1,7 +1,6 @@
 package persistence.couch;
 
 import controller.UIController;
-import controller.impl.Controller;
 import model.player.IPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -87,7 +86,7 @@ public class CouchDbDAO implements SaveSinglePlayerDAO {
         if (data != null) {
             return data.getController();
         }
-        return new Controller();
+        return null;
     }
 
 

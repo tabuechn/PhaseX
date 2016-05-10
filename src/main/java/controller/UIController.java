@@ -1,6 +1,6 @@
 package controller;
 
-import controller.states.AbstractState;
+import model.roundState.StateEnum;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.player.IPlayer;
@@ -82,7 +82,7 @@ public interface UIController extends IObservable {
      *
      * @return the current State
      */
-    AbstractState getRoundState();
+    StateEnum getRoundState();
 
     void setRoundState(String roundState);
 
