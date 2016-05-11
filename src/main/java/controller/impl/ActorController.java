@@ -7,9 +7,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.pattern.Patterns;
-import akka.util.LineNumbers;
 import akka.util.Timeout;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import controller.UIController;
 import controller.playerContainer.impl.PlayerContainer;
 import model.card.ICard;
@@ -21,6 +19,7 @@ import model.roundState.StateEnum;
 import model.roundState.impl.RoundState;
 import model.stack.ICardStack;
 import scala.concurrent.Await;
+import scala.concurrent.Future;
 import util.CardCreator;
 import util.Observable;
 
@@ -28,7 +27,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import scala.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -205,7 +203,7 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void setCurrentPlayer(IPlayer player) {
-
+        //lol
     }
 
     @Override
