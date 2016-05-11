@@ -4,6 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import controller.UIController;
 import controller.impl.ActorController;
+import view.UI;
+import view.tui.TUI;
 
 
 /**

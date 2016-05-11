@@ -13,6 +13,7 @@ public class DrawOpenMessage {
     private IDeckOfCards hand;
 
     /**
+     * sdfghj
      * @param pile the discard pile of the controller
      * @param hand hand of the current player
      */

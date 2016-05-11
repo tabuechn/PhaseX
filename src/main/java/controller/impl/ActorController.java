@@ -1,6 +1,8 @@
 package controller.impl;
 
 import actors.actor.ActorMaster;
+import actors.message.DrawHiddenMessage;
+import actors.message.DrawOpenMessage;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
@@ -88,13 +90,14 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void drawOpen() {
-
-
+        System.out.println("Sending draw Open");
+        DrawOpenMessage dom = new DrawOpenMessage(discardPile,players.getCurrentPlayer().getDeckOfCards());
     }
 
     @Override
     public void drawHidden() {
-
+        System.out.println("Sending draw Hidden");
+        DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile,players.getCurrentPlayer().getDeckOfCards());
     }
 
     @Override
@@ -119,7 +122,7 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public IDeckOfCards getCurrentPlayersHand() {
-        return null;
+        return players.getCurrentPlayer().getDeckOfCards();
     }
 
     @Override
@@ -129,42 +132,41 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public List<ICardStack> getAllStacks() {
-        return null;
+        return cardStacks;
     }
 
     @Override
     public void setAllStacks(List<ICardStack> allStacks) {
-
+        this.cardStacks = allStacks;
     }
 
     @Override
     public StateEnum getRoundState() {
-        return null;
+        return state.getState();
     }
 
     @Override
     public void setRoundState(String roundState) {
-
     }
 
     @Override
     public IDeckOfCards getDrawPile() {
-        return null;
+        return drawPile;
     }
 
     @Override
     public void setDrawPile(IDeckOfCards deck) {
-
+        this.drawPile = deck;
     }
 
     @Override
     public IDeckOfCards getDiscardPile() {
-        return null;
+        return discardPile;
     }
 
     @Override
     public void setDiscardPile(IDeckOfCards deck) {
-
+        this.discardPile = deck;
     }
 
     @Override
@@ -184,12 +186,12 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public IPlayer getOpponentPlayer() {
-        return null;
+        return players.getOtherPlayer();
     }
 
     @Override
     public void exitEvent() {
-
+        System.out.println("Exiting now");
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
  * created by konraifen88 on 10.05.2016.
  * If it doesn't work I don't know who the hell wrote it.
  */
-public class ActorMaster extends UntypedActor implements Creator<ActorMaster>{
+public class ActorMaster extends UntypedActor {
 
     private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
 
@@ -29,8 +29,5 @@ public class ActorMaster extends UntypedActor implements Creator<ActorMaster>{
         }
     }
 
-    @Override
-    public ActorMaster create() throws Exception {
-        return new ActorMaster();
-    }
+
 }

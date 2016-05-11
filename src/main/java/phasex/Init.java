@@ -3,10 +3,13 @@ package phasex;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import controller.UIController;
+import controller.impl.ActorController;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import view.gui.GUI;
 import view.tui.TUI;
 
+import java.nio.channels.AcceptPendingException;
 import java.util.Scanner;
 
 /**
@@ -23,6 +26,8 @@ public class Init {
 
     private Init() {
         in = Guice.createInjector(new PhaseXModule());
+
+        UIController ctrl = new ActorController();
 
         tui = in.getInstance(TUI.class);
 

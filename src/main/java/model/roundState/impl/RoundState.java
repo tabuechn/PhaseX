@@ -25,4 +25,9 @@ public class RoundState implements IRoundState {
     public void setState(StateEnum state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

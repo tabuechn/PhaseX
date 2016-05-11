@@ -6,6 +6,7 @@ import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
+import model.roundState.StateEnum;
 import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,21 +44,21 @@ public class TUI implements IObserver {
     }
 
     public void processInputLine(String input) {
-        String status = controller.getRoundState().toString();
+        StateEnum status = controller.getRoundState();
         switch (status) {
-            case "StartPhase":
+            case START_PHASE:
                 checkStartPhase(input);
                 break;
-            case "DrawPhase":
+            case DRAW_PHASE:
                 checkDrawPhase(input);
                 break;
-            case "PlayerTurnNotFinished":
+            case PLAYER_TURN_NOT_FINISHED:
                 checkPlayerTurnNotFinished(input);
                 break;
-            case "PlayerTurnFinished":
+            case PLAYER_TURN_FINISHED:
                 checkPlayerTurnFinished(input);
                 break;
-            case "EndPhase":
+            case END_PHASE:
                 checkStartPhase(input);
                 break;
             default:
@@ -156,6 +157,7 @@ public class TUI implements IObserver {
             case "start":
                 controller.startGame("Player1");
                 controller.setSecondPlayerName("Player2");
+                System.out.println("Started game");
                 break;
             case "exit":
                 controller.exitEvent();
@@ -224,26 +226,27 @@ public class TUI implements IObserver {
 
     private void printStart() {
         this.log("Welcome to PhaseX");
+        System.out.println("Start game");
         this.log("Enter start to start a new game and exit to close the application");
     }
 
     @Override
     public void update(Event e) {
-        String status = controller.getRoundState().toString();
+        StateEnum status = controller.getRoundState();
         switch (status) {
-            case "StartPhase":
+            case START_PHASE:
                 printStart();
                 break;
-            case "DrawPhase":
+            case DRAW_PHASE:
                 printDraw();
                 break;
-            case "PlayerTurnNotFinished":
+            case PLAYER_TURN_NOT_FINISHED:
                 printPlayerTurnNotFinished();
                 break;
-            case "PlayerTurnFinished":
+            case PLAYER_TURN_FINISHED:
                 printPlayerTurnFinished();
                 break;
-            case "EndPhase":
+            case END_PHASE:
                 printEnd();
                 break;
             default:
