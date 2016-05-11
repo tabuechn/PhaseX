@@ -31,6 +31,6 @@ public class ActorMaster extends UntypedActor implements Creator<ActorMaster>{
 
     @Override
     public ActorMaster create() throws Exception {
-        return this;
+        return new ActorMaster();
     }
 }
