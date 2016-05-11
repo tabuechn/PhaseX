@@ -19,7 +19,6 @@ public class Init {
     private static Init instance;
 
     private TUI tui;
-    private GUI gui;
     private Injector in;
 
     private Init() {
@@ -44,10 +43,6 @@ public class Init {
 
     public TUI getTui() {
         return tui;
-    }
-
-    public GUI getGui() {
-        return gui;
     }
 
     @SuppressFBWarnings("DM_DEFAULT_ENCODING")

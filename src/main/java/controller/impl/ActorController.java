@@ -44,7 +44,7 @@ public class ActorController extends Observable implements UIController {
         discardPile = new DeckOfCards();
         cardStacks = new LinkedList<>();
         phaseXActorSystem = ActorSystem.create("PhaseXActorSystem");
-        master = phaseXActorSystem.actorOf(Props.create(new ActorMaster()), "game");
+        master = phaseXActorSystem.actorOf(Props.create(ActorMaster.class), "game");
     }
 
     @Override
