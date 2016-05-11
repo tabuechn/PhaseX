@@ -226,7 +226,6 @@ public class TUI implements IObserver {
 
     private void printStart() {
         this.log("Welcome to PhaseX");
-        System.out.println("Start game");
         this.log("Enter start to start a new game and exit to close the application");
     }
 

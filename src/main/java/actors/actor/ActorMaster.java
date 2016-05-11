@@ -20,11 +20,15 @@ public class ActorMaster extends UntypedActor {
     public void onReceive(Object message) throws Exception {
         if(message instanceof DrawOpenMessage){
             LOG.debug("DrawOpenMessage received");
+            System.out.println("got draw open message");
+            getSender().tell(true,getSelf());
         } else if (message instanceof DrawHiddenMessage){
             LOG.debug("DrawHiddenMessage received");
+            System.out.println("got draw hidden message");
 
         } else {
             LOG.error("unknown message received");
+            System.out.println("unknown message received");
             unhandled(message);
         }
     }

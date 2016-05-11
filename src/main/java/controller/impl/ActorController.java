@@ -6,6 +6,10 @@ import actors.message.DrawOpenMessage;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.pattern.Patterns;
+import akka.util.LineNumbers;
+import akka.util.Timeout;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import controller.UIController;
 import controller.playerContainer.impl.PlayerContainer;
 import model.card.ICard;
@@ -16,6 +20,7 @@ import model.roundState.IRoundState;
 import model.roundState.StateEnum;
 import model.roundState.impl.RoundState;
 import model.stack.ICardStack;
+import scala.concurrent.Await;
 import util.CardCreator;
 import util.Observable;
 
@@ -23,6 +28,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import scala.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * If everything works right this class was
@@ -30,6 +37,8 @@ import java.util.Map;
  * If it doesn't work I don't know who the hell wrote it.
  */
 public class ActorController extends Observable implements UIController {
+
+    private static final Timeout TIMEOUT = new Timeout(60, TimeUnit.SECONDS);
 
     private static final int PLAYER_STARTING_DECK_SIZE = 10;
     private PlayerContainer players;
@@ -51,7 +60,7 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void startGame(String firstPlayerName) {
-        if (this.state.equals(StateEnum.START_PHASE)){
+        if (this.state.getState().equals(StateEnum.START_PHASE)){
             initGame(firstPlayerName);
         }
     }
@@ -92,6 +101,19 @@ public class ActorController extends Observable implements UIController {
     public void drawOpen() {
         System.out.println("Sending draw Open");
         DrawOpenMessage dom = new DrawOpenMessage(discardPile,players.getCurrentPlayer().getDeckOfCards());
+        Future<Object> fut = Patterns.ask(master,dom,TIMEOUT);
+        boolean result = false;
+        try {
+            result = (boolean) Await.result(fut,TIMEOUT.duration());
+            System.out.println("Got response");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendToMasterActor(Object o) {
+
+
     }
 
     @Override
