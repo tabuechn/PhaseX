@@ -63,6 +63,7 @@ public class ActorController extends Observable implements UIController {
         if (this.state.getState().equals(StateEnum.START_PHASE)){
             initGame(firstPlayerName);
         }
+        notifyObservers();
     }
 
     private void initGame(String firstPlayerName) {
@@ -109,37 +110,43 @@ public class ActorController extends Observable implements UIController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void sendToMasterActor(Object o) {
-
-
+        notifyObservers();
     }
 
     @Override
     public void drawHidden() {
         System.out.println("Sending draw Hidden");
         DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile,players.getCurrentPlayer().getDeckOfCards());
+        Future<Object> fut = Patterns.ask(master,dhm,TIMEOUT);
+        boolean result = false;
+        try {
+            result = (boolean) Await.result(fut,TIMEOUT.duration());
+            System.out.println("Got response");
+            //TODO reset Draw Pile
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        notifyObservers();
     }
 
     @Override
     public void discard(ICard card) {
-
+        notifyObservers();
     }
 
     @Override
     public void playPhase(IDeckOfCards phase) {
-
+        notifyObservers();
     }
 
     @Override
     public void addToFinishedPhase(ICard card, ICardStack stack) {
-
+        notifyObservers();
     }
 
     @Override
     public void addMultipleCardsToFinishedPhase(List<ICard> cards, ICardStack stack) {
-
+        notifyObservers();
     }
 
     @Override
@@ -193,7 +200,7 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public IPlayer getCurrentPlayer() {
-        return null;
+        return players.getCurrentPlayer();
     }
 
     @Override

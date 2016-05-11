@@ -33,5 +33,11 @@ public class ActorMaster extends UntypedActor {
         }
     }
 
+    private void drawOpenCard(DrawOpenMessage dom) {
+        if(!dom.getPile().isEmpty()) {
+
+        }
+    }
+
 
 }
