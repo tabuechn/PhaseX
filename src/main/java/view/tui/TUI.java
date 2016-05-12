@@ -157,7 +157,6 @@ public class TUI implements IObserver {
             case "start":
                 controller.startGame("Player1");
                 controller.setSecondPlayerName("Player2");
-                System.out.println("Started game");
                 break;
             case "exit":
                 controller.exitEvent();

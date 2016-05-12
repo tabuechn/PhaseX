@@ -23,10 +23,7 @@ import scala.concurrent.Future;
 import util.CardCreator;
 import util.Observable;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -98,13 +95,11 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void drawOpen() {
-        System.out.println("Sending draw Open");
         DrawOpenMessage dom = new DrawOpenMessage(discardPile,players.getCurrentPlayer().getDeckOfCards());
         Future<Object> fut = Patterns.ask(master,dom,TIMEOUT);
         boolean result = false;
         try {
             result = (boolean) Await.result(fut,TIMEOUT.duration());
-            System.out.println("Got response");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,13 +108,11 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void drawHidden() {
-        System.out.println("Sending draw Hidden");
         DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile,players.getCurrentPlayer().getDeckOfCards());
         Future<Object> fut = Patterns.ask(master,dhm,TIMEOUT);
         boolean result = false;
         try {
             result = (boolean) Await.result(fut,TIMEOUT.duration());
-            System.out.println("Got response");
             //TODO reset Draw Pile
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,7 +147,9 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public Map<Integer, Integer> getNumberOfCardsForNextPlayer() {
-        return null;
+        Map<Integer, Integer> returnMap = new TreeMap<>();
+        returnMap.put(0, players.getOtherPlayer().getDeckOfCards().size());
+        return returnMap;
     }
 
     @Override
@@ -174,6 +169,7 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void setRoundState(String roundState) {
+        state.setState(StateEnum.getRoundNameByString(roundState));
     }
 
     @Override
@@ -203,12 +199,12 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void setCurrentPlayer(IPlayer player) {
-        //lol
+        players.setCurrentPlayer(player);
     }
 
     @Override
     public void setCurrentPlayer(int index) {
-
+        players.setCurrentPlayerIndex(index);
     }
 
     @Override
@@ -223,12 +219,12 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public String getStatusMessage() {
-        return null;
+        return "TODO: create status messages";
     }
 
     @Override
     public void setStatusMessage(String statusMessage) {
-
+        //TODO: implement status message
     }
 
     @Override
@@ -243,36 +239,36 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void setSecondPlayerName(String name) {
-
+        players.getOtherPlayer().setName(name);
     }
 
     @Override
     public IPlayer[] getPlayers() {
-        return new IPlayer[0];
+        return players.getPlayers();
     }
 
     @Override
     public void setPlayers(IPlayer[] players) {
-
+        this.players.setPlayers(players);
     }
 
     @Override
     public int getCurrentPlayerIndex() {
-        return 0;
+        return players.getCurrentPlayerIndex();
     }
 
     @Override
     public void setCurrentPlayerIndex(int index) {
-
+        players.setCurrentPlayerIndex(index);
     }
 
     @Override
     public void setPlayer1(IPlayer player1) {
-
+        players.getPlayers()[0] = player1;
     }
 
     @Override
     public void setPlayer2(IPlayer player2) {
-
+        players.getPlayers()[1] = player2;
     }
 }

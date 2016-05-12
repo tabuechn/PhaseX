@@ -27,7 +27,20 @@ public enum StateEnum {
         return null;
     }
 
-    public static StateEnum getRoundNameByString(String color) {
-        return StateEnum.valueOf(color);
+    public static StateEnum getRoundNameByString(String stateString) {
+        switch (stateString) {
+            case "START_PHASE":
+                return START_PHASE;
+            case "END_PHASE":
+                return END_PHASE;
+            case "DRAW_PHASE":
+                return DRAW_PHASE;
+            case "PLAYER_TURN_NOT_FINISHED":
+                return PLAYER_TURN_NOT_FINISHED;
+            case "PLAYER_TURN_FINISHED":
+                return PLAYER_TURN_FINISHED;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }

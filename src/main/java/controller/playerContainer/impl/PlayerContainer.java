@@ -28,6 +28,36 @@ public class PlayerContainer implements IPlayerContainer {
     }
 
     @Override
+    public IPlayer[] getPlayers() {
+        return players;
+    }
+
+    @Override
+    public void setPlayers(IPlayer[] players) {
+        this.players = players;
+    }
+
+    @Override
+    public void setCurrentPlayer(IPlayer player) {
+        players[0] = player;
+    }
+
+    @Override
+    public void setOtherPlayer(IPlayer player) {
+        players[1] = player;
+    }
+
+    @Override
+    public void setCurrentPlayerIndex(int index) {
+        currentPlayer = index;
+    }
+
+    @Override
+    public int getCurrentPlayerIndex() {
+        return currentPlayer;
+    }
+
+    @Override
     public IPlayer getCurrentPlayer() {
         return players[currentPlayer];
     }
