@@ -95,25 +95,47 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void drawOpen() {
-        DrawOpenMessage dom = new DrawOpenMessage(discardPile,players.getCurrentPlayer().getDeckOfCards());
+        DrawOpenMessage dom = new DrawOpenMessage(discardPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
         Future<Object> fut = Patterns.ask(master,dom,TIMEOUT);
         boolean result = false;
         try {
             result = (boolean) Await.result(fut,TIMEOUT.duration());
+            afterDraw();
         } catch (Exception e) {
             e.printStackTrace();
         }
         notifyObservers();
     }
 
+    private void afterDraw() {
+        if (players.getCurrentPlayer().isPhaseDone()) {
+            state.setState(StateEnum.PLAYER_TURN_FINISHED);
+        } else {
+            state.setState(StateEnum.PLAYER_TURN_NOT_FINISHED);
+        }
+        drawPileCheck();
+    }
+
+    private void drawPileCheck() {
+        if (this.drawPile.isEmpty()) {
+            DeckOfCards newDiscardPile = new DeckOfCards();
+            newDiscardPile.add(discardPile.removeLast());
+            DeckOfCards newDrawPile = new DeckOfCards(discardPile);
+            Collections.shuffle(newDrawPile);
+            Collections.shuffle(newDrawPile);
+            this.drawPile = newDrawPile;
+            this.discardPile = newDiscardPile;
+        }
+    }
+
     @Override
     public void drawHidden() {
-        DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile,players.getCurrentPlayer().getDeckOfCards());
+        DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
         Future<Object> fut = Patterns.ask(master,dhm,TIMEOUT);
         boolean result = false;
         try {
             result = (boolean) Await.result(fut,TIMEOUT.duration());
-            //TODO reset Draw Pile
+            afterDraw();
         } catch (Exception e) {
             e.printStackTrace();
         }

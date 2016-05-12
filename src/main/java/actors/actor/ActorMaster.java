@@ -1,9 +1,9 @@
 package actors.actor;
 
-import actors.message.DrawHiddenMessage;
-import actors.message.DrawOpenMessage;
+import actors.message.MasterMessage;
+import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.actor.UntypedActor;
-import akka.japi.Creator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,26 +16,25 @@ public class ActorMaster extends UntypedActor {
 
     private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
 
+    private final ActorRef drawPhaseHandler = getContext().actorOf(Props.create(DrawPhaseActor.class), "drawPhaseHandler");
+
     @Override
     public void onReceive(Object message) throws Exception {
-        if(message instanceof DrawOpenMessage){
-            LOG.debug("DrawOpenMessage received");
-            System.out.println("got draw open message");
-            getSender().tell(true,getSelf());
-        } else if (message instanceof DrawHiddenMessage){
-            LOG.debug("DrawHiddenMessage received");
-            System.out.println("got draw hidden message");
-
+        if (message instanceof MasterMessage) {
+            stateSwitcher((MasterMessage) message);
         } else {
             LOG.error("unknown message received");
-            System.out.println("unknown message received");
             unhandled(message);
         }
     }
 
-    private void drawOpenCard(DrawOpenMessage dom) {
-        if(!dom.getPile().isEmpty()) {
-
+    private void stateSwitcher(MasterMessage message) {
+        switch (message.getRoundState().getState()) {
+            case DRAW_PHASE:
+                drawPhaseHandler.forward(message, getContext());
+                break;
+            default:
+                throw new IllegalStateException();
         }
     }
 
