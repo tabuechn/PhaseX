@@ -17,6 +17,7 @@ public class ActorMaster extends UntypedActor {
     private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
 
     private final ActorRef drawPhaseHandler = getContext().actorOf(Props.create(DrawPhaseActor.class), "drawPhaseHandler");
+    private final ActorRef playerTurnFinishedActor = getContext().actorOf(Props.create(PlayerTurnFinishedActor.class), "playerTurnFinishedHandler");
 
     @Override
     public void onReceive(Object message) throws Exception {
@@ -32,6 +33,9 @@ public class ActorMaster extends UntypedActor {
         switch (message.getRoundState().getState()) {
             case DRAW_PHASE:
                 drawPhaseHandler.forward(message, getContext());
+                break;
+            case PLAYER_TURN_FINISHED:
+                playerTurnFinishedActor.forward(message, getContext());
                 break;
             default:
                 throw new IllegalStateException();

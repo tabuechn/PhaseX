@@ -70,11 +70,8 @@ public class ActorController extends Observable implements UIController {
         drawPile = new DeckOfCards();
         discardPile = new DeckOfCards();
         cardStacks = new LinkedList<>();
-
         initCards();
-
         state.setState(StateEnum.DRAW_PHASE);
-
     }
 
     private void initCards() {
@@ -91,6 +88,20 @@ public class ActorController extends Observable implements UIController {
             deck.add(drawPile.removeLast());
         }
         return deck;
+    }
+
+    @Override
+    public void drawHidden() {
+        DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
+        Future<Object> fut = Patterns.ask(master, dhm, TIMEOUT);
+        boolean result = false;
+        try {
+            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            afterDraw();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        notifyObservers();
     }
 
     @Override
@@ -126,20 +137,6 @@ public class ActorController extends Observable implements UIController {
             this.drawPile = newDrawPile;
             this.discardPile = newDiscardPile;
         }
-    }
-
-    @Override
-    public void drawHidden() {
-        DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
-        Future<Object> fut = Patterns.ask(master,dhm,TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut,TIMEOUT.duration());
-            afterDraw();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        notifyObservers();
     }
 
     @Override

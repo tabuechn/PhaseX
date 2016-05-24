@@ -24,7 +24,7 @@ public class DrawPhaseActor extends UntypedActor {
             drawHiddenCard((DrawHiddenMessage) message);
             getSender().tell(true, getSelf());
         } else {
-            LOG.error("unknown message received");
+            LOG.error("unhandled message received");
             unhandled(message);
         }
     }
