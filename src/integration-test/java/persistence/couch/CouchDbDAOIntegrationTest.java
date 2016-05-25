@@ -1,19 +1,12 @@
 package persistence.couch;
 
-import controller.UIController;
-import controller.impl.Controller;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * If everything works right this class was
  * created by Konraifen88 on 21.04.2016.
  * If it doesn't work I don't know who the hell wrote it.
  */
 public class CouchDbDAOIntegrationTest {
+    /*
 
     private static final String PLAYER_NAME = "player1";
     private static final String SECOND_PLAYER_NAME = "player2";
@@ -58,5 +51,5 @@ public class CouchDbDAOIntegrationTest {
         assertEquals(controller2.getCurrentPlayersHand(), dbController.getCurrentPlayersHand());
     }
 
-
+    */
 }

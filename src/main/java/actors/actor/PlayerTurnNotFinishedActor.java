@@ -8,11 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Created by tabuechn on 24.05.2016.
+ * Created by tabuechn on 25.05.2016.
  */
-public class PlayerTurnFinishedActor extends UntypedActor {
+public class PlayerTurnNotFinishedActor extends UntypedActor {
 
-    private static final Logger LOG = LogManager.getLogger(PlayerTurnFinishedActor.class);
+    private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
     private final ActorRef discardActor = getContext().actorOf(Props.create(DiscardActor.class), "discardActor");
 
     @Override

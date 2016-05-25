@@ -64,7 +64,7 @@ public class PilePane extends JPanel {
                 if (("DrawPhase").equals(controller.getRoundState().toString())) {
                     controller.drawOpen();
                 } else if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
-                        "PlayerTurnNotFinished".equals(controller.getRoundState().toString()))) {
+                        "PlayerTurnNotFinishedActor".equals(controller.getRoundState().toString()))) {
                     checkIfOnlyOneCardIsSelected(player.getChosenCards());
                 }
             }

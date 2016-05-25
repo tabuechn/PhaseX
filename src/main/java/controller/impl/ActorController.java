@@ -1,6 +1,7 @@
 package controller.impl;
 
 import actors.actor.ActorMaster;
+import actors.message.DiscardMessage;
 import actors.message.DrawHiddenMessage;
 import actors.message.DrawOpenMessage;
 import akka.actor.ActorRef;
@@ -10,9 +11,12 @@ import akka.pattern.Patterns;
 import akka.util.Timeout;
 import controller.UIController;
 import controller.playerContainer.impl.PlayerContainer;
+import controller.statusMessage.IStatusMessage;
+import controller.statusMessage.impl.StatusMessage;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
+import model.phase.impl.Phase5;
 import model.player.IPlayer;
 import model.roundState.IRoundState;
 import model.roundState.StateEnum;
@@ -43,6 +47,8 @@ public class ActorController extends Observable implements UIController {
     private List<ICardStack> cardStacks;
     private ActorSystem phaseXActorSystem;
     private ActorRef master;
+    private IStatusMessage statusMessage;
+    private IPlayer winner;
 
     public ActorController(){
         state = new RoundState();
@@ -51,6 +57,7 @@ public class ActorController extends Observable implements UIController {
         cardStacks = new LinkedList<>();
         phaseXActorSystem = ActorSystem.create("PhaseXActorSystem");
         master = phaseXActorSystem.actorOf(Props.create(ActorMaster.class), "game");
+        statusMessage = new StatusMessage();
     }
 
     @Override
@@ -118,6 +125,89 @@ public class ActorController extends Observable implements UIController {
         notifyObservers();
     }
 
+    @Override
+    public void discard(ICard card) {
+        DiscardMessage dm = new DiscardMessage(state, discardPile, card, players.getCurrentPlayer());
+        Future<Object> fut = Patterns.ask(master, dm, TIMEOUT);
+        boolean result = false;
+        try {
+            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            afterDiscard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        notifyObservers();
+    }
+
+    private void afterDiscard() {
+        if (players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
+            endOfTurn();
+        } else {
+            nextPlayer();
+            state.setState(StateEnum.DRAW_PHASE);
+        }
+    }
+
+    private void nextPlayer() {
+        if (players.getCurrentPlayerIndex() == 1) {
+            players.setCurrentPlayerIndex(0);
+            players.setCurrentPlayer(players.getPlayers()[0]);
+        } else {
+            players.setCurrentPlayerIndex(1);
+            players.setCurrentPlayer(players.getPlayers()[1]);
+        }
+    }
+
+    private void endOfTurn() {
+        if (isGameFinished()) {
+            state.setState(StateEnum.END_PHASE);
+            setWinner();
+            statusMessage.setStatusMessage("Player " + players.getCurrentPlayer().getPlayerName() + " has won");
+        } else {
+            endRound();
+            newRound();
+        }
+    }
+
+    private void endRound() {
+        getAllLosers().forEach(this::calcAndAddPoints);
+        incrementPhases();
+    }
+
+    private void incrementPhases() {
+        for (IPlayer player : players.getPlayers()) {
+            checkAndIncrementPhases(player);
+        }
+    }
+
+    private void checkAndIncrementPhases(IPlayer player) {
+        if (player.isPhaseDone()) {
+            player.nextPhase();
+            player.setPhaseDone(false);
+        }
+    }
+
+    private List<IPlayer> getAllLosers() {
+        List<IPlayer> losers = new LinkedList<>();
+        losers.add(players.getOtherPlayer());
+        return losers;
+    }
+
+    private void calcAndAddPoints(IPlayer player) {
+        for (ICard leftOverCard : player.getDeckOfCards()) {
+            player.addPoints(leftOverCard.getNumber().ordinal());
+        }
+    }
+
+    private void setWinner() {
+        this.winner = players.getCurrentPlayer();
+    }
+
+    private boolean isGameFinished() {
+        IPlayer currentPlayer = players.getCurrentPlayer();
+        return currentPlayer.isPhaseDone() && (currentPlayer.getPhase().getPhaseNumber() == Phase5.PHASE_NUMBER);
+    }
+
     private void afterDraw() {
         if (players.getCurrentPlayer().isPhaseDone()) {
             state.setState(StateEnum.PLAYER_TURN_FINISHED);
@@ -140,22 +230,22 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void discard(ICard card) {
-        notifyObservers();
-    }
-
-    @Override
     public void playPhase(IDeckOfCards phase) {
+        //TODO implement play phase
         notifyObservers();
     }
 
     @Override
     public void addToFinishedPhase(ICard card, ICardStack stack) {
+        //TODO implement add to finishedPhase
         notifyObservers();
     }
 
     @Override
     public void addMultipleCardsToFinishedPhase(List<ICard> cards, ICardStack stack) {
+        for (ICard card : cards) {
+            addToFinishedPhase(card, stack);
+        }
         notifyObservers();
     }
 

@@ -52,7 +52,7 @@ public class GUI implements IObserver {
             case "DrawPhase":
                 drawPhase();
                 break;
-            case "PlayerTurnNotFinished":
+            case "PlayerTurnNotFinishedActor":
                 playerTurnNotFinished();
                 break;
             case "PlayerTurnFinished":
