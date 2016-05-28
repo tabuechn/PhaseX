@@ -1,9 +1,7 @@
 package controller.impl;
 
 import actors.actor.ActorMaster;
-import actors.message.DiscardMessage;
-import actors.message.DrawHiddenMessage;
-import actors.message.DrawOpenMessage;
+import actors.message.*;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
@@ -151,10 +149,10 @@ public class ActorController extends Observable implements UIController {
     private void nextPlayer() {
         if (players.getCurrentPlayerIndex() == 1) {
             players.setCurrentPlayerIndex(0);
-            players.setCurrentPlayer(players.getPlayers()[0]);
+            //players.setCurrentPlayer(players.getPlayers()[0]);
         } else {
             players.setCurrentPlayerIndex(1);
-            players.setCurrentPlayer(players.getPlayers()[1]);
+            //players.setCurrentPlayer(players.getPlayers()[1]);
         }
     }
 
@@ -231,13 +229,30 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void playPhase(IDeckOfCards phase) {
-        //TODO implement play phase
+        PlayPhaseMessage ppm = new PlayPhaseMessage(state, phase, players.getCurrentPlayer(), cardStacks);
+        Future<Object> fut = Patterns.ask(master, ppm, TIMEOUT);
+        boolean result = false;
+        try {
+            result = (boolean) Await.result(fut, TIMEOUT.duration());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         notifyObservers();
     }
 
     @Override
     public void addToFinishedPhase(ICard card, ICardStack stack) {
-        //TODO implement add to finishedPhase
+        AddToPhaseMessage dtpm = new AddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
+        Future<Object> fut = Patterns.ask(master, dtpm, TIMEOUT);
+        boolean result = false;
+        try {
+            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            if (players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
+                endOfTurn();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         notifyObservers();
     }
 
