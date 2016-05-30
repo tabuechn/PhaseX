@@ -1,7 +1,7 @@
 package actors.actor;
 
-import actors.message.AddToPhaseMessage;
 import actors.message.DiscardMessage;
+import actors.message.zAddToPhaseMessage;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
@@ -23,8 +23,8 @@ public class PlayerTurnFinishedActor extends UntypedActor {
     public void onReceive(Object message) throws Exception {
         if (message instanceof DiscardMessage) {
             discardActor.forward(message, getContext());
-        } else if (message instanceof AddToPhaseMessage) {
-            addToFinishedPhase((AddToPhaseMessage) message);
+        } else if (message instanceof zAddToPhaseMessage) {
+            addToFinishedPhase((zAddToPhaseMessage) message);
             getSender().tell(true, getSelf());
         } else {
             LOG.error("unhandled message received");
@@ -32,7 +32,7 @@ public class PlayerTurnFinishedActor extends UntypedActor {
         }
     }
 
-    private void addToFinishedPhase(AddToPhaseMessage message) {
+    private void addToFinishedPhase(zAddToPhaseMessage message) {
         ICardStack stack = message.getStack();
         ICard card = message.getCard();
         IPlayer currentPlayer = message.getCurrentPlayer();

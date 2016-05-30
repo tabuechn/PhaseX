@@ -10,7 +10,7 @@ import akka.util.Timeout;
 import controller.UIController;
 import controller.playerContainer.impl.PlayerContainer;
 import controller.statusMessage.IStatusMessage;
-import controller.statusMessage.impl.StatusMessage;
+import controller.statusMessage.impl.zStatusMessage;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
@@ -55,7 +55,7 @@ public class ActorController extends Observable implements UIController {
         cardStacks = new LinkedList<>();
         phaseXActorSystem = ActorSystem.create("PhaseXActorSystem");
         master = phaseXActorSystem.actorOf(Props.create(ActorMaster.class), "game");
-        statusMessage = new StatusMessage();
+        statusMessage = new zStatusMessage();
     }
 
     @Override
@@ -242,7 +242,7 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public void addToFinishedPhase(ICard card, ICardStack stack) {
-        AddToPhaseMessage dtpm = new AddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
+        zAddToPhaseMessage dtpm = new zAddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dtpm, TIMEOUT);
         boolean result = false;
         try {
@@ -322,13 +322,13 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void setCurrentPlayer(IPlayer player) {
-        players.setCurrentPlayer(player);
+    public void setCurrentPlayer(int index) {
+        players.setCurrentPlayerIndex(index);
     }
 
     @Override
-    public void setCurrentPlayer(int index) {
-        players.setCurrentPlayerIndex(index);
+    public void setCurrentPlayer(IPlayer player) {
+        players.setCurrentPlayer(player);
     }
 
     @Override

@@ -6,10 +6,8 @@ import com.google.inject.Injector;
 import controller.UIController;
 import controller.impl.ActorController;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import view.gui.GUI;
 import view.tui.TUI;
 
-import java.nio.channels.AcceptPendingException;
 import java.util.Scanner;
 
 /**
@@ -31,6 +29,7 @@ public class Init {
 
         tui = in.getInstance(TUI.class);
 
+
 //        gui = in.getInstance(GUI.class);
 //        gui.start();
     }
@@ -40,14 +39,6 @@ public class Init {
             instance = new Init();
         }
         return instance;
-    }
-
-    public Injector getIn() {
-        return in;
-    }
-
-    public TUI getTui() {
-        return tui;
     }
 
     @SuppressFBWarnings("DM_DEFAULT_ENCODING")
@@ -62,5 +53,13 @@ public class Init {
             in.tui.processInputLine(scanner.nextLine());
         }
 
+    }
+
+    public Injector getIn() {
+        return in;
+    }
+
+    public TUI getTui() {
+        return tui;
     }
 }

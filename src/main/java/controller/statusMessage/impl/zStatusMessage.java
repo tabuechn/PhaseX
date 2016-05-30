@@ -5,11 +5,11 @@ import controller.statusMessage.IStatusMessage;
 /**
  * Created by tabuechn on 25.05.2016.
  */
-public class StatusMessage implements IStatusMessage {
+public class zStatusMessage implements IStatusMessage {
 
     private String statusMessage;
 
-    public StatusMessage() {
+    public zStatusMessage() {
         statusMessage = "";
     }
 
