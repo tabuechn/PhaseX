@@ -26,7 +26,7 @@ public class ActorMaster extends UntypedActor {
             stateSwitcher((MasterMessage) message);
         } else {
             LOG.error("unknown message received");
-            unhandled(message);
+            getSender().tell(false, getSelf());
         }
     }
 

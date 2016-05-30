@@ -22,7 +22,7 @@ public class DiscardActor extends UntypedActor {
             getSender().tell(true, getSelf());
         } else {
             LOG.error("unhandled message received");
-            unhandled(message);
+            getSender().tell(false, getSelf());
         }
     }
 
