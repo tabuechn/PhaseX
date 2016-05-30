@@ -8,7 +8,7 @@ import model.stack.ICardStack;
 /**
  * Created by tabuechn on 28.05.2016.
  */
-public class zAddToPhaseMessage extends MasterMessage {
+public class AddToPhaseMessage extends MasterMessage {
 
     private ICard card;
 
@@ -16,7 +16,7 @@ public class zAddToPhaseMessage extends MasterMessage {
 
     private IPlayer currentPlayer;
 
-    public zAddToPhaseMessage(IRoundState roundState, ICard card, ICardStack stack, IPlayer currentPlayer) {
+    public AddToPhaseMessage(IRoundState roundState, ICard card, ICardStack stack, IPlayer currentPlayer) {
         super(roundState);
         this.card = card;
         this.stack = stack;
