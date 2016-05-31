@@ -100,6 +100,7 @@ public class ActorController extends Observable implements UIController {
         DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
         Future<Object> fut = Patterns.ask(master, dhm, TIMEOUT);
         drawCard(fut);
+        drawPileCheck();
         notifyObservers();
     }
 
@@ -112,9 +113,8 @@ public class ActorController extends Observable implements UIController {
     }
 
     private void drawCard(Future<Object> fut) {
-        boolean result;
         try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result) {
                 afterDraw();
             }
@@ -127,9 +127,8 @@ public class ActorController extends Observable implements UIController {
     public void discard(ICard card) {
         DiscardMessage dm = new DiscardMessage(state, discardPile, card, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dm, TIMEOUT);
-        boolean result;
         try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result) {
                 afterDiscard();
             }
@@ -208,7 +207,6 @@ public class ActorController extends Observable implements UIController {
         } else {
             state.setState(StateEnum.PLAYER_TURN_NOT_FINISHED);
         }
-        drawPileCheck();
     }
 
     private void drawPileCheck() {
@@ -239,9 +237,8 @@ public class ActorController extends Observable implements UIController {
     public void addToFinishedPhase(ICard card, ICardStack stack) {
         AddToPhaseMessage dtpm = new AddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dtpm, TIMEOUT);
-        boolean result;
         try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result && players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
                 endOfTurn();
             }

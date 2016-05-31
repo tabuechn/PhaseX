@@ -4,31 +4,21 @@ import actors.message.MasterMessage;
 import akka.actor.ActorRef;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
-import controller.UIController;
 import model.deck.IDeckOfCards;
-import model.player.IPlayer;
-import model.roundState.IRoundState;
 import model.roundState.StateEnum;
-import model.roundState.impl.RoundState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import scala.concurrent.Await;
 import scala.concurrent.duration.FiniteDuration;
 
-import java.util.concurrent.Future;
-
-import static com.sun.javaws.JnlpxArgs.verify;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
@@ -50,23 +40,57 @@ public class ActorControllerTest {
     private IDeckOfCards drawPileMock;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         initMocks(this);
     }
 
     @Test
-    public void dummyTest(){
+    public void dummyTest() {
         assertTrue(true);
     }
 
     @Test
-    public void drawHiddenShouldNotChangeThePlayersIfActorWorkedCorrectly() throws Exception {
+    public void drawHiddenShouldChangeTheStateIfActorWorkedCorrectly() throws Exception {
         testee.startGame(TEST_PLAYER_1);
-        settingUpMocksForDraw();
-        IPlayer playerBefore = testee.getCurrentPlayer();
+        settingUpMocksForDraw(true);
+        StateEnum stateBefore = testee.getRoundState();
         testee.drawHidden();
         verifyThatActorIsCalledCorrect();
-        assertEquals(testee.getCurrentPlayer(), playerBefore);
+        assertNotEquals(testee.getRoundState(), stateBefore);
+        assertEquals(testee.getRoundState(), StateEnum.PLAYER_TURN_NOT_FINISHED);
+    }
+
+    @Test
+    public void drawHiddenShouldNotChangeTheStateIfActorFails() throws Exception {
+        testee.startGame(TEST_PLAYER_1);
+        settingUpMocksForDraw(false);
+        StateEnum stateBefore = testee.getRoundState();
+        testee.drawHidden();
+        verifyThatActorIsCalledCorrect();
+        assertEquals(testee.getRoundState(), stateBefore);
+        assertNotEquals(testee.getRoundState(), StateEnum.PLAYER_TURN_NOT_FINISHED);
+    }
+
+    @Test
+    public void drawOpenShouldChangeTheStateIfActorWorkedCorrectly() throws Exception {
+        testee.startGame(TEST_PLAYER_1);
+        settingUpMocksForDraw(true);
+        StateEnum stateBefore = testee.getRoundState();
+        testee.drawOpen();
+        verifyThatActorIsCalledCorrect();
+        assertNotEquals(testee.getRoundState(), stateBefore);
+        assertEquals(testee.getRoundState(), StateEnum.PLAYER_TURN_NOT_FINISHED);
+    }
+
+    @Test
+    public void drawOpenShouldNotChangeTheStateIfActorFails() throws Exception {
+        testee.startGame(TEST_PLAYER_1);
+        settingUpMocksForDraw(false);
+        StateEnum stateBefore = testee.getRoundState();
+        testee.drawOpen();
+        verifyThatActorIsCalledCorrect();
+        assertEquals(testee.getRoundState(), stateBefore);
+        assertNotEquals(testee.getRoundState(), StateEnum.PLAYER_TURN_NOT_FINISHED);
     }
 
     private void verifyThatActorIsCalledCorrect() throws Exception {
@@ -76,11 +100,11 @@ public class ActorControllerTest {
         Await.result(any(), any(FiniteDuration.class));
     }
 
-    private void settingUpMocksForDraw() throws Exception {
+    private void settingUpMocksForDraw(boolean ret) throws Exception {
         PowerMockito.mockStatic(Patterns.class);
         PowerMockito.when(Patterns.ask(any(ActorRef.class), any(MasterMessage.class), any(Timeout.class))).thenReturn(null);
         PowerMockito.mockStatic(Await.class);
-        PowerMockito.when(Await.result(any(), any(FiniteDuration.class))).thenReturn(true);
+        PowerMockito.when(Await.result(any(), any(FiniteDuration.class))).thenReturn(ret);
     }
 
 }
