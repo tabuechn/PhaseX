@@ -99,7 +99,20 @@ public class ActorController extends Observable implements UIController {
     public void drawHidden() {
         DrawHiddenMessage dhm = new DrawHiddenMessage(drawPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
         Future<Object> fut = Patterns.ask(master, dhm, TIMEOUT);
-        boolean result = false;
+        drawCard(fut);
+        notifyObservers();
+    }
+
+    @Override
+    public void drawOpen() {
+        DrawOpenMessage dom = new DrawOpenMessage(discardPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
+        Future<Object> fut = Patterns.ask(master,dom,TIMEOUT);
+        drawCard(fut);
+        notifyObservers();
+    }
+
+    private void drawCard(Future<Object> fut) {
+        boolean result;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result) {
@@ -108,30 +121,13 @@ public class ActorController extends Observable implements UIController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        notifyObservers();
-    }
-
-    @Override
-    public void drawOpen() {
-        DrawOpenMessage dom = new DrawOpenMessage(discardPile, players.getCurrentPlayer().getDeckOfCards(), players.getCurrentPlayer(), state);
-        Future<Object> fut = Patterns.ask(master,dom,TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut,TIMEOUT.duration());
-            if (result) {
-                afterDraw();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        notifyObservers();
     }
 
     @Override
     public void discard(ICard card) {
         DiscardMessage dm = new DiscardMessage(state, discardPile, card, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dm, TIMEOUT);
-        boolean result = false;
+        boolean result;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result) {
@@ -231,9 +227,8 @@ public class ActorController extends Observable implements UIController {
     public void playPhase(IDeckOfCards phase) {
         PlayPhaseMessage ppm = new PlayPhaseMessage(state, phase, players.getCurrentPlayer(), cardStacks);
         Future<Object> fut = Patterns.ask(master, ppm, TIMEOUT);
-        boolean result = false;
         try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            Await.result(fut, TIMEOUT.duration());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,7 +239,7 @@ public class ActorController extends Observable implements UIController {
     public void addToFinishedPhase(ICard card, ICardStack stack) {
         AddToPhaseMessage dtpm = new AddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dtpm, TIMEOUT);
-        boolean result = false;
+        boolean result;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result && players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
