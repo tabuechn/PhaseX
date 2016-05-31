@@ -153,13 +153,7 @@ public class ActorController extends Observable implements UIController {
     }
 
     private void nextPlayer() {
-        if (players.getCurrentPlayerIndex() == 1) {
-            players.setCurrentPlayerIndex(0);
-            //players.setCurrentPlayer(players.getPlayers()[0]);
-        } else {
-            players.setCurrentPlayerIndex(1);
-            //players.setCurrentPlayer(players.getPlayers()[1]);
-        }
+        players.nextPlayer();
     }
 
     private void endOfTurn() {
