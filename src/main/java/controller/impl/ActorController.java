@@ -102,7 +102,9 @@ public class ActorController extends Observable implements UIController {
         boolean result = false;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
-            afterDraw();
+            if (result) {
+                afterDraw();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,7 +118,9 @@ public class ActorController extends Observable implements UIController {
         boolean result = false;
         try {
             result = (boolean) Await.result(fut,TIMEOUT.duration());
-            afterDraw();
+            if (result) {
+                afterDraw();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +134,9 @@ public class ActorController extends Observable implements UIController {
         boolean result = false;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
-            afterDiscard();
+            if (result) {
+                afterDiscard();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -247,7 +253,7 @@ public class ActorController extends Observable implements UIController {
         boolean result = false;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
-            if (players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
+            if (result && players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
                 endOfTurn();
             }
         } catch (Exception e) {
@@ -322,13 +328,13 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void setCurrentPlayer(IPlayer player) {
-        players.setCurrentPlayer(player);
+    public void setCurrentPlayer(int index) {
+        players.setCurrentPlayerIndex(index);
     }
 
     @Override
-    public void setCurrentPlayer(int index) {
-        players.setCurrentPlayerIndex(index);
+    public void setCurrentPlayer(IPlayer player) {
+        players.setCurrentPlayer(player);
     }
 
     @Override
@@ -343,22 +349,22 @@ public class ActorController extends Observable implements UIController {
 
     @Override
     public String getStatusMessage() {
-        return "TODO: create status messages";
+        return statusMessage.getStatusMessage();
     }
 
     @Override
     public void setStatusMessage(String statusMessage) {
-        //TODO: implement status message
+        this.statusMessage.setStatusMessage(statusMessage);
     }
 
     @Override
     public String getCurrentPhaseDescription() {
-        return null;
+        return players.getCurrentPlayer().getPhase().getDescription();
     }
 
     @Override
     public IPlayer getWinner() {
-        return null;
+        return winner;
     }
 
     @Override
