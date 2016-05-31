@@ -42,7 +42,7 @@ public class ActorMaster extends UntypedActor {
                 playerTurnNotFinishedActor.forward(message, getContext());
                 break;
             default:
-                throw new IllegalStateException();
+                getSender().tell(false, getSelf());
         }
     }
 
