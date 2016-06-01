@@ -1,9 +1,24 @@
 package persistence.hibernate;
 
+import com.google.gson.Gson;
+import controller.UIController;
+import controller.statusMessage.impl.StatusMessage;
+import model.card.CardColor;
+import model.card.CardValue;
+import model.card.ICard;
+import model.card.impl.Card;
+import model.deck.IDeckOfCards;
+import model.deck.impl.DeckOfCards;
 import model.phase.impl.Phase1;
 import model.player.impl.Player;
+import model.roundState.IRoundState;
+import model.roundState.StateEnum;
+import model.roundState.impl.RoundState;
+import model.stack.ICardStack;
+import model.stack.impl.ColorStack;
 import org.junit.Before;
 import org.junit.Test;
+import util.CardCreator;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -117,6 +132,12 @@ public class HibernateControllerDataTest {
     }
 
     @Test
+    public void getAndSetCurrentPlayerIndex() {
+        hibernateControllerData.setCurrentPlayerIndex(1);
+        assertEquals(1, hibernateControllerData.getCurrentPlayerIndex());
+    }
+
+    @Test
     public void testGetAndSetStacks() {
         hibernateControllerData.setStack("stack1", 1);
         hibernateControllerData.setStack("stack2", 2);
@@ -141,9 +162,13 @@ public class HibernateControllerDataTest {
 
     @Test
     public void getControllerTest() {
-        /*
+
         Player player1 = new Player(0);
+        IDeckOfCards player1Hand = new DeckOfCards();
+        player1.setDeckOfCards(player1Hand);
         Player player2 = new Player(1);
+        IDeckOfCards player2Hand = new DeckOfCards();
+        player2.setDeckOfCards(player2Hand);
 
         IDeckOfCards drawPile = CardCreator.giveDeckOfCards();
         for(int i = 0; i < 10;++i) {
@@ -157,7 +182,44 @@ public class HibernateControllerDataTest {
         state.setState(StateEnum.DRAW_PHASE);
         StatusMessage statusMessage = new StatusMessage();
         statusMessage.setStatusMessage("start");
+        hibernateControllerData.setPlayer1(player1);
+        hibernateControllerData.setPlayer1Pile(player1.getDeckOfCards().getJSon());
+        hibernateControllerData.setPlayer1PhaseString(player1.getPhase());
 
-        UIController controller = hibernateControllerData.getController();*/
+        hibernateControllerData.setPlayer2(player2);
+        hibernateControllerData.setPlayer2Pile(player2.getDeckOfCards().getJSon());
+        hibernateControllerData.setPlayer2PhaseString(player2.getPhase());
+
+        hibernateControllerData.setCurrentPlayerIndex(currentPlayerIndex);
+
+        hibernateControllerData.setDiscardPile(discardPile.getJSon());
+        hibernateControllerData.setDrawPile(drawPile.getJSon());
+
+        hibernateControllerData.setRoundState(state.toString());
+        hibernateControllerData.setStatusMessage(statusMessage.getStatusMessage());
+
+        UIController controller = hibernateControllerData.getController();
+        Gson gsonNormal = new Gson();
+
+        ICardStack stack1 = new ColorStack(getColorStack(CardColor.BLUE));
+        ICardStack stack2 = new ColorStack(getColorStack(CardColor.BLUE));
+        ICardStack stack3 = new ColorStack(getColorStack(CardColor.BLUE));
+        ICardStack stack4 = new ColorStack(getColorStack(CardColor.BLUE));
+        hibernateControllerData.setStack1(gsonNormal.toJson(stack1));
+        hibernateControllerData.setStack2(gsonNormal.toJson(stack2));
+        hibernateControllerData.setStack3(gsonNormal.toJson(stack3));
+        hibernateControllerData.setStack4(gsonNormal.toJson(stack4));
+        controller = hibernateControllerData.getController();
     }
+
+    private IDeckOfCards getColorStack(CardColor color) {
+        IDeckOfCards retDeck = new DeckOfCards();
+        for (int i = 1; i < 9; i++) {
+            ICard card = new Card(CardValue.byOrdinal(i), color);
+            retDeck.add(card);
+        }
+        return retDeck;
+    }
+
+
 }

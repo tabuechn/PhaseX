@@ -173,6 +173,14 @@ public class HibernateControllerData implements Serializable, IControllerData {
         this.statusMessage = statusMessage;
     }
 
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
+    }
+
     public String getStack1() {
         return stack1;
     }
@@ -278,12 +286,6 @@ public class HibernateControllerData implements Serializable, IControllerData {
         }
     }
 
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
-    }
 
-    public void setCurrentPlayerIndex(int currentPlayerIndex) {
-        this.currentPlayerIndex = currentPlayerIndex;
-    }
 }
 
