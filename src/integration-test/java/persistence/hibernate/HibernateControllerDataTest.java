@@ -1,12 +1,11 @@
 package persistence.hibernate;
 
-import model.player.IPlayer;
+import model.phase.impl.Phase1;
 import model.player.impl.Player;
 import org.junit.Before;
 import org.junit.Test;
-import persistence.hibernate.HibernateControllerData;
-import util.CardCreator;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 
@@ -99,6 +98,66 @@ public class HibernateControllerDataTest {
         assertEquals(hibernateControllerData.getRoundState(), "test");
     }
 
+    @Test
+    public void setPlayer1PhaseString() {
+        hibernateControllerData.setPlayer1PhaseString(new Phase1());
+        assertEquals("Phase1", hibernateControllerData.getPlayer1PhaseString());
+    }
 
+    @Test
+    public void setPlayer2PhaseString() {
+        hibernateControllerData.setPlayer2PhaseString(new Phase1());
+        assertEquals("Phase1", hibernateControllerData.getPlayer2PhaseString());
+    }
 
+    @Test
+    public void testAndGetStatusMessage() {
+        hibernateControllerData.setStatusMessage("testnachricht");
+        assertEquals("testnachricht", hibernateControllerData.getStatusMessage());
+    }
+
+    @Test
+    public void testGetAndSetStacks() {
+        hibernateControllerData.setStack("stack1", 1);
+        hibernateControllerData.setStack("stack2", 2);
+        hibernateControllerData.setStack("stack3", 3);
+        hibernateControllerData.setStack("stack4", 4);
+        assertEquals("stack1", hibernateControllerData.getStack1());
+        assertEquals("stack2", hibernateControllerData.getStack2());
+        assertEquals("stack3", hibernateControllerData.getStack3());
+        assertEquals("stack4", hibernateControllerData.getStack4());
+    }
+
+    @Test
+    public void setInvalidStack() {
+        boolean error = false;
+        try {
+            hibernateControllerData.setStack("error", 5);
+        } catch (IllegalArgumentException iae) {
+            error = true;
+        }
+        assertTrue(error);
+    }
+
+    @Test
+    public void getControllerTest() {
+        /*
+        Player player1 = new Player(0);
+        Player player2 = new Player(1);
+
+        IDeckOfCards drawPile = CardCreator.giveDeckOfCards();
+        for(int i = 0; i < 10;++i) {
+            player1.getDeckOfCards().add(drawPile.removeLast());
+            player2.getDeckOfCards().add(drawPile.removeLast());
+        }
+        IDeckOfCards discardPile = new DeckOfCards();
+        discardPile.add(drawPile.removeLast());
+        int currentPlayerIndex = 0;
+        IRoundState state = new RoundState();
+        state.setState(StateEnum.DRAW_PHASE);
+        StatusMessage statusMessage = new StatusMessage();
+        statusMessage.setStatusMessage("start");
+
+        UIController controller = hibernateControllerData.getController();*/
+    }
 }
