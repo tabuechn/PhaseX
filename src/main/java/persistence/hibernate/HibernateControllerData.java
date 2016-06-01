@@ -10,6 +10,7 @@ import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
 import model.player.IPlayer;
 import model.player.impl.Player;
+import model.roundState.StateEnum;
 import model.stack.ICardStack;
 import model.stack.json.GsonStackDeserializer;
 import persistence.IControllerData;
@@ -242,7 +243,7 @@ public class HibernateControllerData implements Serializable, IControllerData {
         gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
         Gson gson = gsonBuilder.create();
 
-        controller.setRoundState(this.roundState);
+        controller.setRoundState(StateEnum.getRoundNameByString(this.roundState));
         controller.setStatusMessage(this.statusMessage);
 
         IPlayer player1 = this.player1;

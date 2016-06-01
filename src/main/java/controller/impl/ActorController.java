@@ -284,8 +284,8 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void setRoundState(String roundState) {
-        state.setState(StateEnum.getRoundNameByString(roundState));
+    public void setRoundState(StateEnum roundState) {
+        state.setState(roundState);
     }
 
     @Override

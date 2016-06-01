@@ -84,7 +84,7 @@ public interface UIController extends IObservable {
      */
     StateEnum getRoundState();
 
-    void setRoundState(String roundState);
+    void setRoundState(StateEnum roundState);
 
     /**
      * Getter for the draw pile

@@ -1,6 +1,6 @@
 package actors.actor;
 
-import actors.message.DrawHiddenMessage;
+import actors.message.DrawMessage;
 import actors.message.DrawOpenMessage;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -36,7 +36,7 @@ public class DrawPhaseActorTest {
     private ActorSystem phaseXActorSystem;
     private ActorRef drawPhaseActor;
     private DrawOpenMessage drawOpenMessage;
-    private DrawHiddenMessage drawHiddenMessage;
+    private DrawMessage drawMessage;
     private IDeckOfCards playerHand;
     private IDeckOfCards discardPile;
     private IDeckOfCards drawPile;
@@ -64,7 +64,7 @@ public class DrawPhaseActorTest {
         player = new Player(0);
         player.setDeckOfCards(playerHand);
         drawOpenMessage = new DrawOpenMessage(discardPile, playerHand, player, state);
-        drawHiddenMessage = new DrawHiddenMessage(drawPile, playerHand, player, state);
+        drawMessage = new DrawMessage(drawPile, playerHand, player, state);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class DrawPhaseActorTest {
     public void validDrawHidden() {
         int decksize = drawPile.size();
         int handsize = playerHand.size();
-        Future<Object> fut = Patterns.ask(drawPhaseActor, drawHiddenMessage, TIMEOUT);
+        Future<Object> fut = Patterns.ask(drawPhaseActor, drawMessage, TIMEOUT);
         boolean result = false;
         try {
             result = (boolean) Await.result(fut, TIMEOUT.duration());
