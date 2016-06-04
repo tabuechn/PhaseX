@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Created by Tarek on 31.05.2016. Be grateful for this superior Code!
  */
 public class DrawHiddenMessageTest {
-    private DrawMessage drawMessage;
+    private DrawHiddenMessage drawMessage;
     private IRoundState state;
     private IPlayer player;
     private ICardStack stack;
@@ -38,7 +38,7 @@ public class DrawHiddenMessageTest {
         }
         stack = new ColorStack(deck);
         card = new Card(CardValue.SEVEN, CardColor.BLUE);
-        drawMessage = new DrawMessage(deck, deck, player, state);
+        drawMessage = new DrawHiddenMessage(deck, deck, player, state);
     }
 
     @Test

@@ -62,30 +62,36 @@ public class DiscardActorTest {
     public void discardMessage() {
 
         Future<Object> fut = Patterns.ask(discardActor, discardMessage, TIMEOUT);
-        boolean result = false;
+        DiscardMessage result = null;
         try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            Object o = Await.result(fut, TIMEOUT.duration());
+            if (o instanceof DiscardMessage) {
+                result = (DiscardMessage) o;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertTrue(result);
-        assertEquals(1, discardPile.size());
-        assertEquals(1, playerHand.size());
-        assertEquals(card, discardPile.get(0));
-        assertEquals(card2, player.getDeckOfCards().get(0));
+        assertNotNull(result);
+        assertEquals(1, result.getDiscardPile().size());
+        assertEquals(1, result.getCurrentPlayer().getDeckOfCards().size());
+        assertEquals(card, result.getDiscardPile().get(0));
+        assertEquals(card2, result.getCurrentPlayer().getDeckOfCards().get(0));
     }
 
     @Test
     public void wrongMessage() throws Exception {
         Future<Object> fut = Patterns.ask(discardActor, new Object(), TIMEOUT);
-        boolean result = false;
+        DiscardMessage result = null;
         try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
+            Object o = Await.result(fut, TIMEOUT.duration());
+            if (o instanceof DiscardMessage) {
+                result = (DiscardMessage) o;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        assertFalse(result);
+        assertNull(result);
     }
 
 }

@@ -4,7 +4,6 @@ import actors.message.MasterMessage;
 import akka.actor.ActorRef;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
-import com.google.common.collect.Lists;
 import model.card.CardColor;
 import model.card.CardValue;
 import model.card.ICard;
@@ -25,12 +24,11 @@ import scala.concurrent.Await;
 import scala.concurrent.duration.FiniteDuration;
 import util.CardCreator;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -170,6 +168,7 @@ public class ActorControllerTest {
         testee.drawHidden();
         testee.getCurrentPlayer().setPhaseDone(true);
         testee.getCurrentPlayer().setDeckOfCards(new DeckOfCards());
+        testee.setRoundState(StateEnum.PLAYER_TURN_FINISHED);
         int phaseNumber = testee.getCurrentPlayer().getPhase().getPhaseNumber();
         testee.discard(TEST_CARD);
         assertNotEquals(phaseNumber, testee.getCurrentPlayer().getPhase().getPhaseNumber());

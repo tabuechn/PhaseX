@@ -128,8 +128,8 @@ public class ActorController extends Observable implements UIController {
         DiscardMessage dm = new DiscardMessage(state, discardPile, card, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dm, TIMEOUT);
         try {
-            boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
-            if (result) {
+            Object result = Await.result(fut, TIMEOUT.duration());
+            if (result instanceof DiscardMessage) {
                 afterDiscard();
             }
         } catch (Exception e) {

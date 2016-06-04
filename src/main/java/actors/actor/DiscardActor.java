@@ -19,7 +19,7 @@ public class DiscardActor extends UntypedActor {
     public void onReceive(Object message) throws Exception {
         if (message instanceof DiscardMessage) {
             discard((DiscardMessage) message);
-            getSender().tell(true, getSelf());
+            getSender().tell(message, getSelf());
         } else {
             LOG.error("unhandled message received");
             getSender().tell(false, getSelf());
