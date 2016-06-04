@@ -241,6 +241,7 @@ public class ActorController extends Observable implements UIController {
         try {
             boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
             if (result && players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
+                // TODO don't forget the Stack
                 endOfTurn();
             }
         } catch (Exception e) {
@@ -395,6 +396,23 @@ public class ActorController extends Observable implements UIController {
             DiscardMessage dm = (DiscardMessage) message;
             this.setCurrentPlayer(dm.getCurrentPlayer());
             this.setDiscardPile(dm.getDiscardPile());
+        } else if (message instanceof AddToPhaseMessage) {
+            AddToPhaseMessage atpm = (AddToPhaseMessage) message;
+            this.setCurrentPlayer(atpm.getCurrentPlayer());
+        } else if (message instanceof DrawHiddenMessage) {
+            DrawHiddenMessage dhm = (DrawHiddenMessage) message;
+            this.setCurrentPlayer(dhm.getCurrentPlayer());
+            this.setDrawPile(dhm.getPile());
+        } else if (message instanceof DrawOpenMessage) {
+            DrawOpenMessage dom = (DrawOpenMessage) message;
+            this.setCurrentPlayer(dom.getCurrentPlayer());
+            this.setDiscardPile(dom.getPile());
+        } else if (message instanceof PlayPhaseMessage) {
+            PlayPhaseMessage ppm = (PlayPhaseMessage) message;
+            this.setCurrentPlayer(ppm.getCurrentPlayer());
+            this.setAllStacks(ppm.getAllStacks());
+        } else {
+            throw new IllegalStateException();
         }
     }
 }
