@@ -19,7 +19,6 @@ import model.roundState.StateEnum;
 import model.roundState.impl.RoundState;
 import org.junit.Before;
 import org.junit.Test;
-import scala.concurrent.Await;
 import scala.concurrent.Future;
 
 import java.util.concurrent.TimeUnit;
@@ -60,17 +59,8 @@ public class DiscardActorTest {
 
     @Test
     public void discardMessage() {
-
         Future<Object> fut = Patterns.ask(discardActor, discardMessage, TIMEOUT);
-        DiscardMessage result = null;
-        try {
-            Object o = Await.result(fut, TIMEOUT.duration());
-            if (o instanceof DiscardMessage) {
-                result = (DiscardMessage) o;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNotNull(result);
         assertEquals(1, result.getDiscardPile().size());
         assertEquals(1, result.getCurrentPlayer().getDeckOfCards().size());
@@ -81,16 +71,7 @@ public class DiscardActorTest {
     @Test
     public void wrongMessage() throws Exception {
         Future<Object> fut = Patterns.ask(discardActor, new Object(), TIMEOUT);
-        DiscardMessage result = null;
-        try {
-            Object o = Await.result(fut, TIMEOUT.duration());
-            if (o instanceof DiscardMessage) {
-                result = (DiscardMessage) o;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNull(result);
     }
 
