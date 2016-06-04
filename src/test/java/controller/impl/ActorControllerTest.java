@@ -1,5 +1,6 @@
 package controller.impl;
 
+import actors.message.DiscardMessage;
 import actors.message.MasterMessage;
 import akka.actor.ActorRef;
 import akka.pattern.Patterns;
@@ -11,7 +12,9 @@ import model.card.impl.Card;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
+import model.roundState.IRoundState;
 import model.roundState.StateEnum;
+import model.roundState.impl.RoundState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -170,8 +173,16 @@ public class ActorControllerTest {
         testee.getCurrentPlayer().setDeckOfCards(new DeckOfCards());
         testee.setRoundState(StateEnum.PLAYER_TURN_FINISHED);
         int phaseNumber = testee.getCurrentPlayer().getPhase().getPhaseNumber();
+        IRoundState state = new RoundState();
+        state.setState(StateEnum.PLAYER_TURN_FINISHED);
+        settingUpMocksForDiscard(new DiscardMessage(state, testee.getDiscardPile(), TEST_CARD, testee.getCurrentPlayer()));
         testee.discard(TEST_CARD);
         assertNotEquals(phaseNumber, testee.getCurrentPlayer().getPhase().getPhaseNumber());
+    }
+
+    private void settingUpMocksForDiscard(DiscardMessage discardMessage) throws Exception {
+        PowerMockito.mockStatic(Await.class);
+        PowerMockito.when(Await.result(any(), any(FiniteDuration.class))).thenReturn(discardMessage);
     }
 
     @Test
@@ -222,6 +233,7 @@ public class ActorControllerTest {
         PowerMockito.mockStatic(Await.class);
         PowerMockito.when(Await.result(any(), any(FiniteDuration.class))).thenReturn(ret);
     }
+
 
     private void mockCardCreator(){
         initMocks(this);

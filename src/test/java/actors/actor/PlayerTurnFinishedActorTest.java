@@ -74,13 +74,8 @@ public class PlayerTurnFinishedActorTest {
     @Test
     public void validDiscardMessage() {
         Future<Object> fut = Patterns.ask(playerTurnFinishedActor, discardMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue(result);
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
+        assertNotNull(result);
     }
 
     @Test

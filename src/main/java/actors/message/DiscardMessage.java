@@ -4,6 +4,9 @@ import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.player.IPlayer;
 import model.roundState.IRoundState;
+import scala.concurrent.Await;
+import scala.concurrent.Future;
+import scala.concurrent.duration.FiniteDuration;
 
 /**
  * Created by tabuechn on 12.05.2016.
@@ -33,5 +36,17 @@ public class DiscardMessage extends MasterMessage {
 
     public IPlayer getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public static DiscardMessage getDiscardMessage(Future<Object> fut, FiniteDuration dur) {
+        try {
+            Object o = Await.result(fut, dur);
+            if (o instanceof DiscardMessage) {
+                return (DiscardMessage) o;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

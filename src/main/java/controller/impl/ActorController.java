@@ -130,6 +130,7 @@ public class ActorController extends Observable implements UIController {
         try {
             Object result = Await.result(fut, TIMEOUT.duration());
             if (result instanceof DiscardMessage) {
+                setCurrentState((DiscardMessage) result);
                 afterDiscard();
             }
         } catch (Exception e) {
@@ -386,5 +387,14 @@ public class ActorController extends Observable implements UIController {
     @Override
     public void setPlayer2(IPlayer player2) {
         players.getPlayers()[1] = player2;
+    }
+
+    private void setCurrentState(MasterMessage message) {
+        this.setRoundState(message.getRoundState().getState());
+        if (message instanceof DiscardMessage) {
+            DiscardMessage dm = (DiscardMessage) message;
+            this.setCurrentPlayer(dm.getCurrentPlayer());
+            this.setDiscardPile(dm.getDiscardPile());
+        }
     }
 }

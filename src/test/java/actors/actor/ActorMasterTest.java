@@ -19,13 +19,12 @@ import model.roundState.StateEnum;
 import model.roundState.impl.RoundState;
 import org.junit.Before;
 import org.junit.Test;
-import scala.concurrent.Await;
 import scala.concurrent.Future;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
 /**
  * Created by Tarek on 31.05.2016. Be grateful for this superior Code!
@@ -62,13 +61,8 @@ public class ActorMasterTest {
     @Test
     public void validDiscardMessagePlayTurnFinished() {
         Future<Object> fut = Patterns.ask(masterActor, discardMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue(result);
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
+        assertNotNull(result);
     }
 
     @Test
@@ -76,27 +70,18 @@ public class ActorMasterTest {
         state.setState(StateEnum.PLAYER_TURN_NOT_FINISHED);
         DiscardMessage ptnfDiscardMessage = new DiscardMessage(state, discardPile, card, player);
         Future<Object> fut = Patterns.ask(masterActor, ptnfDiscardMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue(result);
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
+        assertNotNull(result);
     }
+
 
     @Test
     public void validDiscardMessageDrawPhase() {
         state.setState(StateEnum.DRAW_PHASE);
         DiscardMessage dpDiscardMessage = new DiscardMessage(state, discardPile, card, player);
         Future<Object> fut = Patterns.ask(masterActor, dpDiscardMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertFalse(result);
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
+        assertNull(result);
     }
 
     @Test
@@ -104,24 +89,15 @@ public class ActorMasterTest {
         state.setState(StateEnum.END_PHASE);
         DiscardMessage epDiscardMessage = new DiscardMessage(state, discardPile, card, player);
         Future<Object> fut = Patterns.ask(masterActor, epDiscardMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-        }
-        assertFalse(result);
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
+        assertNull(result);
     }
 
     @Test
     public void wrongMessage() throws Exception {
         Future<Object> fut = Patterns.ask(masterActor, new Object(), TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        assertFalse(result);
+        DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
+        assertNull(result);
     }
+
 }
