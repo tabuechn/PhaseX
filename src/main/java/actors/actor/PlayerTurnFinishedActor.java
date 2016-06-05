@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by tabuechn on 24.05.2016.
  */
-public class PlayerTurnFinishedActor extends UntypedActor {
+class PlayerTurnFinishedActor extends UntypedActor {
 
     private static final Logger LOG = LogManager.getLogger(PlayerTurnFinishedActor.class);
     private final ActorRef discardActor = getContext().actorOf(Props.create(DiscardActor.class), "discardActor");
@@ -25,7 +25,7 @@ public class PlayerTurnFinishedActor extends UntypedActor {
             discardActor.forward(message, getContext());
         } else if (message instanceof AddToPhaseMessage) {
             addToFinishedPhase((AddToPhaseMessage) message);
-            getSender().tell(true, getSelf());
+            getSender().tell(message, getSelf());
         } else {
             LOG.error("unhandled message received");
             getSender().tell(false, getSelf());

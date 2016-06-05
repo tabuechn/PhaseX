@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by tabuechn on 12.05.2016.
  */
-public class DrawPhaseActor extends UntypedActor {
+class DrawPhaseActor extends UntypedActor {
 
     private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
 
@@ -19,10 +19,10 @@ public class DrawPhaseActor extends UntypedActor {
     public void onReceive(Object message) throws Exception {
         if (message instanceof DrawOpenMessage) {
             drawOpenCard((DrawOpenMessage) message);
-            getSender().tell(true, getSelf());
+            getSender().tell(message, getSelf());
         } else if (message instanceof DrawHiddenMessage) {
             drawHiddenCard((DrawHiddenMessage) message);
-            getSender().tell(true, getSelf());
+            getSender().tell(message, getSelf());
         } else {
             LOG.error("unhandled message received");
             getSender().tell(false, getSelf());

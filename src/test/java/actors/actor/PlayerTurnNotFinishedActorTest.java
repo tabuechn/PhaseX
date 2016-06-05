@@ -1,133 +1,100 @@
 package actors.actor;
 
 import actors.message.DiscardMessage;
+import actors.message.MasterMessage;
 import actors.message.PlayPhaseMessage;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.pattern.Patterns;
-import akka.util.Timeout;
-import model.card.CardColor;
-import model.card.CardValue;
 import model.card.ICard;
-import model.card.impl.Card;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
-import model.player.IPlayer;
-import model.player.impl.Player;
-import model.roundState.IRoundState;
 import model.roundState.StateEnum;
-import model.roundState.impl.RoundState;
-import model.stack.ICardStack;
 import org.junit.Before;
 import org.junit.Test;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
 /**
  * Created by Tarek on 31.05.2016. Be grateful for this superior Code!
  */
-public class PlayerTurnNotFinishedActorTest {
-    private static final Timeout TIMEOUT = new Timeout(60, TimeUnit.SECONDS);
-    private ActorSystem phaseXActorSystem;
+public class PlayerTurnNotFinishedActorTest extends AbstractActorTest {
+    private static final int NUMBER_OF_PLAYED_PHASES = 2;
+    private static final int SIZE_OF_TWO_PHASES = 6;
     private ActorRef playerTurnNotFinishedActor;
-    private DiscardMessage discardMessage;
-    private PlayPhaseMessage validPlayPhaseMessage;
-    private PlayPhaseMessage invalidPlayPhaseMessage;
-    private IDeckOfCards playerHand;
-    private IDeckOfCards discardPile;
-    private ICard card;
-    private ICard card2;
-    private IRoundState state;
-    private IPlayer player;
-    private IPlayer invalidPlayer;
-    private List<ICardStack> allStacks;
 
     @Before
     public void setUp() {
-        phaseXActorSystem = ActorSystem.create("PhaseXTestActorSystem");
+        ActorSystem phaseXActorSystem = ActorSystem.create("PhaseXTestActorSystem");
         playerTurnNotFinishedActor = phaseXActorSystem.actorOf(Props.create(PlayerTurnNotFinishedActor.class), "PlayerTurnNotTest");
-        state = new RoundState();
-        state.setState(StateEnum.PLAYER_TURN_FINISHED);
-        discardPile = new DeckOfCards();
-        playerHand = new DeckOfCards();
-        card = new Card(CardValue.EIGHT, CardColor.BLUE);
-        card2 = new Card(CardValue.ELEVEN, CardColor.GREEN);
-        playerHand.add(card);
-        playerHand.add(card2);
-        player = new Player(0);
-        player.setDeckOfCards(playerHand);
-        discardMessage = new DiscardMessage(state, discardPile, card, player);
-        IDeckOfCards validPhase = new DeckOfCards();
-        for (int i = 0; i < 6; i++) {
-            ICard tmpCard = new Card(CardValue.EIGHT, CardColor.BLUE);
-            validPhase.add(tmpCard);
-            playerHand.add(tmpCard);
-        }
-        allStacks = new LinkedList<>();
-        invalidPlayer = new Player(0);
-        IDeckOfCards invalidPhase = new DeckOfCards();
-        invalidPlayer.setDeckOfCards(invalidPhase);
-        invalidPhase.add(new Card(CardValue.EIGHT, CardColor.BLUE));
-        invalidPhase.add(new Card(CardValue.FOUR, CardColor.GREEN));
-        validPlayPhaseMessage = new PlayPhaseMessage(state, validPhase, player, allStacks);
-        invalidPlayPhaseMessage = new PlayPhaseMessage(state, invalidPhase, invalidPlayer, allStacks);
+        setState(StateEnum.PLAYER_TURN_FINISHED);
+        initPiles();
+        initPlayer();
     }
 
     @Test
-    public void validPlayPhaseMessage() {
-        int handsize = playerHand.size();
+    public void validPlayPhaseMessageShouldReturnExtractedPhase() throws Exception {
+        setDeckForCurrentPlayer(getDeckWithValidPhase());
+        player.getDeckOfCards().add(TEST_CARD_3);
+        int handSize = player.getDeckOfCards().size();
         int numberOfPlayedPhases = allStacks.size();
-        Future<Object> fut = Patterns.ask(playerTurnNotFinishedActor, validPlayPhaseMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue(result);
-        assertEquals(handsize - 6, player.getDeckOfCards().size());
-        assertEquals(numberOfPlayedPhases + 2, allStacks.size());
+        PlayPhaseMessage message = new PlayPhaseMessage(state, getDeckWithValidPhase(), player, allStacks);
+        Future<Object> fut = Patterns.ask(playerTurnNotFinishedActor, message, TIMEOUT);
+        Object result = Await.result(fut, TIMEOUT.duration());
+        assertTrue(result instanceof PlayPhaseMessage);
+        PlayPhaseMessage ret = (PlayPhaseMessage) result;
+        assertEquals(handSize - SIZE_OF_TWO_PHASES, ret.getCurrentPlayer().getDeckOfCards().size());
+        assertEquals(numberOfPlayedPhases + NUMBER_OF_PLAYED_PHASES, ret.getAllStacks().size());
     }
 
     @Test
-    public void invalidPlayPhaseMessage() {
-        int handsize = invalidPlayer.getDeckOfCards().size();
+    public void invalidPlayPhaseMessageShouldNotChangeAnything() throws Exception {
+        setDeckForCurrentPlayer(getDeckWithInvalidPhase());
+        int handSize = player.getDeckOfCards().size();
         int numberOfPlayedPhases = allStacks.size();
+        PlayPhaseMessage invalidPlayPhaseMessage = new PlayPhaseMessage(state, player.getDeckOfCards(), player, allStacks);
         Future<Object> fut = Patterns.ask(playerTurnNotFinishedActor, invalidPlayPhaseMessage, TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue(result);
-        assertEquals(handsize, invalidPlayer.getDeckOfCards().size());
+        Object result = Await.result(fut, TIMEOUT.duration());
+        assertTrue(result instanceof PlayPhaseMessage);
+        assertEquals(handSize, player.getDeckOfCards().size());
         assertEquals(numberOfPlayedPhases, allStacks.size());
     }
 
     @Test
-    public void validDiscardMessage() {
-        Future<Object> fut = Patterns.ask(playerTurnNotFinishedActor, discardMessage, TIMEOUT);
+    public void validDiscardMessageShouldBeForwardedToDiscardActor() {
+        DiscardMessage message = new DiscardMessage(state, discardPile, TEST_CARD, player);
+        Future<Object> fut = Patterns.ask(playerTurnNotFinishedActor, message, TIMEOUT);
         DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNotNull(result);
     }
 
     @Test
-    public void invalidMessage() {
+    public void invalidMessageShouldNotReturnAMasterMessage() throws Exception {
         Future<Object> fut = Patterns.ask(playerTurnNotFinishedActor, new Object(), TIMEOUT);
-        boolean result = false;
-        try {
-            result = (boolean) Await.result(fut, TIMEOUT.duration());
-        } catch (Exception e) {
-            e.printStackTrace();
+        Object result = Await.result(fut, TIMEOUT.duration());
+        assertFalse(result instanceof MasterMessage);
+    }
+
+    private IDeckOfCards getDeckWithValidPhase() {
+        IDeckOfCards validPhase = new DeckOfCards();
+        for (int i = 0; i < 6; i++) {
+            ICard tmpCard = TEST_CARD;
+            validPhase.add(tmpCard);
         }
-        assertFalse(result);
+        return validPhase;
+    }
+
+    private IDeckOfCards getDeckWithInvalidPhase() {
+        return new DeckOfCards(Arrays.asList(TEST_CARD, TEST_CARD_2, TEST_CARD_3));
+
+    }
+
+    private void setDeckForCurrentPlayer(IDeckOfCards deck) {
+        player.setDeckOfCards(deck);
     }
 }

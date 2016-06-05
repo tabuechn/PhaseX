@@ -8,8 +8,6 @@ import akka.actor.UntypedActor;
 import model.deck.IDeckOfCards;
 import model.phase.DeckNotFitException;
 import model.player.IPlayer;
-import model.roundState.IRoundState;
-import model.roundState.StateEnum;
 import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Created by tabuechn on 25.05.2016.
  */
-public class PlayerTurnNotFinishedActor extends UntypedActor {
+class PlayerTurnNotFinishedActor extends UntypedActor {
 
     private static final Logger LOG = LogManager.getLogger(ActorMaster.class);
     private final ActorRef discardActor = getContext().actorOf(Props.create(DiscardActor.class), "discardActor");
@@ -31,7 +29,6 @@ public class PlayerTurnNotFinishedActor extends UntypedActor {
             discardActor.forward(message, getContext());
         } else if (message instanceof PlayPhaseMessage) {
             playPhase((PlayPhaseMessage) message);
-            getSender().tell(true, getSelf());
         } else {
             LOG.error("unhandled message received");
             getSender().tell(false, getSelf());
@@ -39,28 +36,29 @@ public class PlayerTurnNotFinishedActor extends UntypedActor {
     }
 
     private void playPhase(PlayPhaseMessage message) {
-        IRoundState state = message.getRoundState();
         IPlayer currentPlayer = message.getCurrentPlayer();
-        IDeckOfCards phase = message.getPhase();
+        IDeckOfCards possiblePhase = message.getPhase();
         List<ICardStack> allStacks = message.getAllStacks();
         try {
-            List<ICardStack> phases = currentPlayer.getPhase().splitAndCheckPhase(phase);
+            List<ICardStack> phases = currentPlayer.getPhase().splitAndCheckPhase(message.getPhase());
             currentPlayer.setPhaseDone(true);
-            removePhasefromCurrentPlayer(phase, currentPlayer);
-            putDownStacks(phases, allStacks);
-            state.setState(StateEnum.PLAYER_TURN_FINISHED);
+            currentPlayer = removePhaseFromCurrentPlayer(possiblePhase, currentPlayer);
+            allStacks = putDownStacks(phases, allStacks);
         } catch (DeckNotFitException dnfe) {
             LOG.debug("Deck Not Fit Exception was thrown");
         }
+        getSender().tell(new PlayPhaseMessage(message.getRoundState(), null, currentPlayer, allStacks), getSelf());
     }
 
-    private void putDownStacks(List<ICardStack> phases, List<ICardStack> allStacks) {
-        allStacks.addAll(phases.stream().collect(Collectors.toList()));
+    private List<ICardStack> putDownStacks(List<ICardStack> phases, List<ICardStack> allStacks) {
+        return phases.stream().collect(Collectors.toList());
     }
 
-    private void removePhasefromCurrentPlayer(IDeckOfCards phase, IPlayer currentPlayer) {
+    private IPlayer removePhaseFromCurrentPlayer(IDeckOfCards phase, IPlayer currentPlayer) {
         IDeckOfCards playerDeck = currentPlayer.getDeckOfCards();
         phase.forEach(playerDeck::remove);
+        currentPlayer.setDeckOfCards(playerDeck);
+        return currentPlayer;
     }
 
 

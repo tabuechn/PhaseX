@@ -5,90 +5,65 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.pattern.Patterns;
-import akka.util.Timeout;
-import model.card.CardColor;
-import model.card.CardValue;
-import model.card.ICard;
-import model.card.impl.Card;
-import model.deck.IDeckOfCards;
-import model.deck.impl.DeckOfCards;
-import model.player.IPlayer;
-import model.player.impl.Player;
-import model.roundState.IRoundState;
 import model.roundState.StateEnum;
-import model.roundState.impl.RoundState;
 import org.junit.Before;
 import org.junit.Test;
 import scala.concurrent.Future;
 
-import java.util.concurrent.TimeUnit;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
+
 
 /**
  * Created by Tarek on 31.05.2016. Be grateful for this superior Code!
  */
-public class ActorMasterTest {
-    private static final Timeout TIMEOUT = new Timeout(60, TimeUnit.SECONDS);
-    private ActorSystem phaseXActorSystem;
+//TODO: Please provide more meaningful names for methods, describing what is tested
+public class ActorMasterTest extends AbstractActorTest {
+
     private ActorRef masterActor;
-    private DiscardMessage discardMessage;
-    private IDeckOfCards playerHand;
-    private IDeckOfCards discardPile;
-    private ICard card;
-    private ICard card2;
-    private IRoundState state;
-    private IPlayer player;
 
     @Before
     public void setUp() {
-        phaseXActorSystem = ActorSystem.create("PhaseXTestActorSystem");
+        ActorSystem phaseXActorSystem = ActorSystem.create("PhaseXTestActorSystem");
         masterActor = phaseXActorSystem.actorOf(Props.create(ActorMaster.class), "masterTest");
-        state = new RoundState();
-        state.setState(StateEnum.PLAYER_TURN_FINISHED);
-        discardPile = new DeckOfCards();
-        playerHand = new DeckOfCards();
-        card = new Card(CardValue.EIGHT, CardColor.BLUE);
-        card2 = new Card(CardValue.ELEVEN, CardColor.GREEN);
-        playerHand.add(card);
-        playerHand.add(card2);
-        player = new Player(0);
-        player.setDeckOfCards(playerHand);
-        discardMessage = new DiscardMessage(state, discardPile, card, player);
+        setState(StateEnum.PLAYER_TURN_FINISHED);
+        initPiles();
+        initPlayer();
     }
 
     @Test
-    public void validDiscardMessagePlayTurnFinished() {
-        Future<Object> fut = Patterns.ask(masterActor, discardMessage, TIMEOUT);
+    public void validDiscardMessagePlayTurnFinishedShouldBeForwardedToDiscardActor() {
+        DiscardMessage message = new DiscardMessage(state, discardPile, TEST_CARD, player);
+        Future<Object> fut = Patterns.ask(masterActor, message, TIMEOUT);
         DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNotNull(result);
     }
 
     @Test
-    public void validDiscardMessagePlayerTurnNotFinished() {
+    public void validDiscardMessagePlayerTurnNotFinishedShouldBeForwardedToDiscardActor() {
         state.setState(StateEnum.PLAYER_TURN_NOT_FINISHED);
-        DiscardMessage ptnfDiscardMessage = new DiscardMessage(state, discardPile, card, player);
-        Future<Object> fut = Patterns.ask(masterActor, ptnfDiscardMessage, TIMEOUT);
+        DiscardMessage message = new DiscardMessage(state, discardPile, TEST_CARD, player);
+        Future<Object> fut = Patterns.ask(masterActor, message, TIMEOUT);
         DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNotNull(result);
     }
 
-
     @Test
-    public void validDiscardMessageDrawPhase() {
-        state.setState(StateEnum.DRAW_PHASE);
-        DiscardMessage dpDiscardMessage = new DiscardMessage(state, discardPile, card, player);
-        Future<Object> fut = Patterns.ask(masterActor, dpDiscardMessage, TIMEOUT);
+    //TODO Correct in this case? Discard not allowed in DrawPhase?
+    public void validDiscardMessageDrawPhaseShouldBeForwardedToDiscardActor() {
+        setState(StateEnum.DRAW_PHASE);
+        DiscardMessage message = new DiscardMessage(state, discardPile, TEST_CARD, player);
+        Future<Object> fut = Patterns.ask(masterActor, message, TIMEOUT);
         DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNull(result);
     }
 
+
     @Test
     public void validDiscardMessageInvalidPhase() {
         state.setState(StateEnum.END_PHASE);
-        DiscardMessage epDiscardMessage = new DiscardMessage(state, discardPile, card, player);
-        Future<Object> fut = Patterns.ask(masterActor, epDiscardMessage, TIMEOUT);
+        DiscardMessage message = new DiscardMessage(state, discardPile, TEST_CARD, player);
+        Future<Object> fut = Patterns.ask(masterActor, message, TIMEOUT);
         DiscardMessage result = DiscardMessage.getDiscardMessage(fut, TIMEOUT.duration());
         assertNull(result);
     }

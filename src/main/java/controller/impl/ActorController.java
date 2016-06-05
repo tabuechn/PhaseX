@@ -114,10 +114,19 @@ public class ActorController extends Observable implements UIController {
 
     private void drawCard(Future<Object> fut) {
         try {
-            boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
-            if (result) {
-                afterDraw();
+            Object result = Await.result(fut, TIMEOUT.duration());
+            if (result instanceof DrawOpenMessage) {
+                DrawOpenMessage message = (DrawOpenMessage) result;
+                this.setCurrentPlayer(message.getCurrentPlayer());
+                this.setDiscardPile(message.getPile());
+                setRoundStateWithMasterMessage(message);
+            } else if (result instanceof DrawHiddenMessage) {
+                DrawHiddenMessage message = (DrawHiddenMessage) result;
+                this.setCurrentPlayer(message.getCurrentPlayer());
+                this.setDrawPile(message.getPile());
+                setRoundStateWithMasterMessage(message);
             }
+            afterDraw();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,13 +139,20 @@ public class ActorController extends Observable implements UIController {
         try {
             Object result = Await.result(fut, TIMEOUT.duration());
             if (result instanceof DiscardMessage) {
-                setCurrentState((DiscardMessage) result);
+                dm = (DiscardMessage) result;
+                this.setCurrentPlayer(dm.getCurrentPlayer());
+                this.setDiscardPile(dm.getDiscardPile());
+                setRoundStateWithMasterMessage(dm);
                 afterDiscard();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         notifyObservers();
+    }
+
+    private void setRoundStateWithMasterMessage(MasterMessage message) {
+        setRoundState(message.getRoundState().getState());
     }
 
     private void afterDiscard() {
@@ -227,7 +243,12 @@ public class ActorController extends Observable implements UIController {
         PlayPhaseMessage ppm = new PlayPhaseMessage(state, phase, players.getCurrentPlayer(), cardStacks);
         Future<Object> fut = Patterns.ask(master, ppm, TIMEOUT);
         try {
-            Await.result(fut, TIMEOUT.duration());
+            Object result = Await.result(fut, TIMEOUT.duration());
+            if (result instanceof PlayPhaseMessage) {
+                ppm = (PlayPhaseMessage) result;
+                this.setCurrentPlayer(ppm.getCurrentPlayer());
+                this.setAllStacks(ppm.getAllStacks());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -239,8 +260,10 @@ public class ActorController extends Observable implements UIController {
         AddToPhaseMessage dtpm = new AddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dtpm, TIMEOUT);
         try {
-            boolean result = (boolean) Await.result(fut, TIMEOUT.duration());
-            if (result && players.getCurrentPlayer().getDeckOfCards().isEmpty()) {
+            Object result = Await.result(fut, TIMEOUT.duration());
+            if (result instanceof AddToPhaseMessage) {
+                dtpm = (AddToPhaseMessage) result;
+                this.setCurrentPlayer(dtpm.getCurrentPlayer());
                 // TODO don't forget the Stack
                 endOfTurn();
             }
@@ -316,13 +339,13 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void setCurrentPlayer(int index) {
-        players.setCurrentPlayerIndex(index);
+    public void setCurrentPlayer(IPlayer player) {
+        players.setCurrentPlayer(player);
     }
 
     @Override
-    public void setCurrentPlayer(IPlayer player) {
-        players.setCurrentPlayer(player);
+    public void setCurrentPlayer(int index) {
+        players.setCurrentPlayerIndex(index);
     }
 
     @Override
@@ -390,29 +413,4 @@ public class ActorController extends Observable implements UIController {
         players.getPlayers()[1] = player2;
     }
 
-    private void setCurrentState(MasterMessage message) {
-        this.setRoundState(message.getRoundState().getState());
-        if (message instanceof DiscardMessage) {
-            DiscardMessage dm = (DiscardMessage) message;
-            this.setCurrentPlayer(dm.getCurrentPlayer());
-            this.setDiscardPile(dm.getDiscardPile());
-        } else if (message instanceof AddToPhaseMessage) {
-            AddToPhaseMessage atpm = (AddToPhaseMessage) message;
-            this.setCurrentPlayer(atpm.getCurrentPlayer());
-        } else if (message instanceof DrawHiddenMessage) {
-            DrawHiddenMessage dhm = (DrawHiddenMessage) message;
-            this.setCurrentPlayer(dhm.getCurrentPlayer());
-            this.setDrawPile(dhm.getPile());
-        } else if (message instanceof DrawOpenMessage) {
-            DrawOpenMessage dom = (DrawOpenMessage) message;
-            this.setCurrentPlayer(dom.getCurrentPlayer());
-            this.setDiscardPile(dom.getPile());
-        } else if (message instanceof PlayPhaseMessage) {
-            PlayPhaseMessage ppm = (PlayPhaseMessage) message;
-            this.setCurrentPlayer(ppm.getCurrentPlayer());
-            this.setAllStacks(ppm.getAllStacks());
-        } else {
-            throw new IllegalStateException();
-        }
-    }
 }
