@@ -136,7 +136,7 @@ public class Player implements IPlayer, Serializable {
 
     @Override
     public void setName(String name) {
-        if (this.name == null || this.name.isEmpty() || this.name.equals("player2")) {
+        if (this.name == null || this.name.isEmpty() || "player2".equals(this.name)) {
             this.name = name;
         }
     }

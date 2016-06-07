@@ -7,19 +7,19 @@ import controller.statusMessage.IStatusMessage;
  */
 public class StatusMessage implements IStatusMessage {
 
-    private String statusMessage;
+    private String statusMessageString;
 
     public StatusMessage() {
-        statusMessage = "";
+        statusMessageString = "";
     }
 
     @Override
     public String getStatusMessage() {
-        return statusMessage;
+        return statusMessageString;
     }
 
     @Override
     public void setStatusMessage(String statusMessage) {
-        this.statusMessage = statusMessage;
+        this.statusMessageString = statusMessage;
     }
 }

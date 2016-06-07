@@ -29,7 +29,6 @@ public class Init {
 
         tui = in.getInstance(TUI.class);
 
-
 //        gui = in.getInstance(GUI.class);
 //        gui.start();
     }
@@ -49,6 +48,7 @@ public class Init {
 
         Scanner scanner = new Scanner(System.in);
         //noinspection InfiniteLoopStatement
+
         while (true) {
             in.tui.processInputLine(scanner.nextLine());
         }

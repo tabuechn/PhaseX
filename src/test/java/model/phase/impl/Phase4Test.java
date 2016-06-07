@@ -106,6 +106,12 @@ public class Phase4Test {
         when(quadrupleCheckerMock.check(any())).thenReturn(passing);
     }
 
+    @Test
+    public void isNumberPhaseWithCorrectPhase() {
+        Phase4 testphase = new Phase4();
+        assertFalse(testphase.isNumberPhase());
+    }
+
     private void createCardDeck() {
         splittedDeck = new LinkedList<>();
 

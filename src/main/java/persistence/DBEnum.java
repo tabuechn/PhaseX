@@ -9,6 +9,8 @@ public enum DBEnum {
 
     private  int valueOrdinal = 0;
 
-    DBEnum(int ord) { this.valueOrdinal = ord; }
+    DBEnum(int ord) {
+        this.valueOrdinal = ord;
+    }
 
 }

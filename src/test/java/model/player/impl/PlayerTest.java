@@ -141,4 +141,15 @@ public class PlayerTest {
             assertEquals(phaseX,testee.getPhase().toString());
         }
     }
+
+    @Test
+    public void setIllegalPhaseTest() {
+        boolean checker = false;
+        try {
+            testee.setPhase("YOLO");
+        } catch (IllegalStateException ise) {
+            checker = true;
+        }
+        assertTrue(checker);
+    }
 }
