@@ -45,7 +45,7 @@ public class DiscardMessage extends MasterMessage {
                 return (DiscardMessage) o;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //got invalid message
         }
         return null;
     }

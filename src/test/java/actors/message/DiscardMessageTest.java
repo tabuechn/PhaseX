@@ -14,7 +14,9 @@ import model.stack.ICardStack;
 import model.stack.impl.ColorStack;
 import org.junit.Before;
 import org.junit.Test;
+import scala.concurrent.Future;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -47,5 +49,10 @@ public class DiscardMessageTest {
         assertEquals(player, discardMessage.getCurrentPlayer());
         assertEquals(deck, discardMessage.getDiscardPile());
         assertEquals(state, discardMessage.getRoundState());
+    }
+
+    @Test
+    public void getInvalidDiscardMessage() {
+        assertNull(DiscardMessage.getDiscardMessage(null,null));
     }
 }

@@ -64,4 +64,16 @@ public class ColorStackTest {
         assertNotEquals(testee, stack);
     }
 
+    @Test
+    public void setAndGetIDTest() {
+        String yolo = "YOLO";
+        testee.setId(yolo);
+        assertEquals(yolo,testee.getId());
+    }
+
+    @Test
+    public void hashCodeTest() {
+        assertNotNull(testee.hashCode());
+    }
+
 }

@@ -7,8 +7,7 @@ import model.deck.impl.DeckOfCards;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 /**
@@ -20,9 +19,11 @@ public class PairStackTest {
 
     private PairStack testee;
 
+    private DeckOfCards cardList;
+
     @Before
     public void setUp() throws Exception {
-        DeckOfCards cardList = new DeckOfCards();
+        cardList = new DeckOfCards();
         cardList.add(new Card(CARD_NUMBER_FOUR, CardColor.BLUE));
         cardList.add(new Card(CARD_NUMBER_FOUR, CardColor.GREEN));
         cardList.add(new Card(CARD_NUMBER_FOUR, CardColor.RED));
@@ -36,5 +37,39 @@ public class PairStackTest {
         assertTrue(testee.getList().size() == 4);
         assertTrue(testee.checkCardMatching(new Card(CARD_NUMBER_FOUR, CardColor.BLUE)));
         assertFalse(testee.checkCardMatching(new Card(CardValue.EIGHT, CardColor.GREEN)));
+    }
+
+    @Test
+    public void setAndGetIDTest() {
+        String yolo = "YOLO";
+        testee.setId(yolo);
+        assertEquals(yolo,testee.getId());
+    }
+
+    @Test
+    public void getStackType() {
+        assertEquals(testee.getStackType(),StackType.PAIR);
+    }
+
+    @Test
+    public void hashCodeTest() {
+        assertNotNull(testee.hashCode());
+    }
+
+    @Test
+    public void equalsWithNullShouldReturnFalse() {
+        assertFalse(testee.equals(null));
+    }
+
+    @Test
+    public void equalsWithSelfShouldReturnTrue() {
+        assertTrue(testee.equals(testee));
+    }
+
+    @Test
+    public void equalsWithOtherObjectShouldReturnFalse() {
+        DeckOfCards deck = new DeckOfCards();
+        deck.add(new Card(CARD_NUMBER_FOUR,CardColor.BLUE));
+        assertFalse(testee.equals(new PairStack(deck)));
     }
 }

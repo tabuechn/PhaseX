@@ -58,4 +58,25 @@ public class CardTest {
     public void hashTest() {
         assertNotNull(CARD_1.hashCode());
     }
+
+    @Test
+    public void emptyConstructorIsWorking() {
+        assertNotNull(new Card());
+    }
+
+    @Test
+    public void setValidNumberAndColor() {
+        CARD_1.setColor(CardColor.BLUE);
+        CARD_1.setNumber(CardValue.EIGHT);
+        assertEquals(CardColor.BLUE,CARD_1.getColor());
+        assertEquals(CardValue.EIGHT,CARD_1.getNumber());
+    }
+
+    @Test
+    public void setAndGetIDTest() {
+        Card card = new Card(CARD_NUMBER_FIVE,CardColor.BLUE);
+        String yolo = "YOLO";
+        card.setId(yolo);
+        assertEquals(yolo,card.getId());
+    }
 }

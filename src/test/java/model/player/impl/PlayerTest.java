@@ -1,5 +1,8 @@
 package model.player.impl;
 
+import model.card.CardColor;
+import model.card.CardValue;
+import model.card.impl.Card;
 import model.deck.impl.DeckOfCards;
 import model.phase.impl.Phase1;
 import model.player.IPlayer;
@@ -19,7 +22,7 @@ public class PlayerTest {
     private static final String PLAYER_NAME = "John";
     private static final String PHASE = "Phase";
 
-    private IPlayer testee;
+    private Player testee;
 
     @Before
     public void setUp() {
@@ -151,5 +154,37 @@ public class PlayerTest {
             checker = true;
         }
         assertTrue(checker);
+    }
+
+    @Test
+    public void equalsNullShouldReturnFalse() {
+        assertFalse(testee.equals(null));
+    }
+
+    @Test
+    public void getAndSetIDTest() {
+        String yolo = "YOLO";
+        testee.setId(yolo);
+        assertEquals(yolo,testee.getId());
+    }
+
+    @Test
+    public void emptyConstructorWorksProperly() {
+        Player player = new Player();
+        assertNotNull(player);
+    }
+
+    @Test
+    public void sortingWithNumberPhaseSortsProperly() {
+        testee.setPhase("Phase3");
+        DeckOfCards numberPhase = new DeckOfCards();
+        Card one = new Card(CardValue.ONE, CardColor.BLUE);
+        Card three = new Card(CardValue.THREE, CardColor.BLUE);
+        Card two = new Card(CardValue.TWO, CardColor.BLUE);
+        numberPhase.add(two);
+        numberPhase.add(three);
+        numberPhase.add(one);
+        testee.setDeckOfCards(numberPhase);
+
     }
 }

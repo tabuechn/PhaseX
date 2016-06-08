@@ -84,6 +84,11 @@ public class Phase5Test {
         testee.splitAndCheckPhase(cards);
     }
 
+    @Test
+    public void isNumberPhaseShouldReturnFalse() {
+        assertFalse(testee.isNumberPhase());
+    }
+
     private void setCheckIsPassingAndFillDeck(boolean passing) {
         createCardDeck();
         when(splitterMock.split(eq(cards))).thenReturn(splittedDeck);
