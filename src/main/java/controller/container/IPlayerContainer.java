@@ -1,4 +1,4 @@
-package controller.playerContainer;
+package controller.container;
 
 import model.player.IPlayer;
 

@@ -8,13 +8,12 @@ import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
-import model.roundState.IRoundState;
-import model.roundState.impl.RoundState;
+import model.roundstate.IRoundState;
+import model.roundstate.impl.RoundState;
 import model.stack.ICardStack;
 import model.stack.impl.ColorStack;
 import org.junit.Before;
 import org.junit.Test;
-import scala.concurrent.Future;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;

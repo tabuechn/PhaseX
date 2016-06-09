@@ -2,7 +2,7 @@ package actors.message;
 
 import model.deck.IDeckOfCards;
 import model.player.IPlayer;
-import model.roundState.IRoundState;
+import model.roundstate.IRoundState;
 
 /**
  * If everything works right this class was

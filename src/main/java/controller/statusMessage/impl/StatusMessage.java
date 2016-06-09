@@ -1,6 +1,6 @@
-package controller.statusMessage.impl;
+package controller.statusmessage.impl;
 
-import controller.statusMessage.IStatusMessage;
+import controller.statusmessage.IStatusMessage;
 
 /**
  * Created by tabuechn on 25.05.2016.

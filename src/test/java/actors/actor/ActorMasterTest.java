@@ -5,7 +5,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.pattern.Patterns;
-import model.roundState.StateEnum;
+import model.roundstate.StateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import scala.concurrent.Future;

@@ -1,4 +1,4 @@
-package model.roundState;
+package model.roundstate;
 
 /**
  * If everything works right this class was

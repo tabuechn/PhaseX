@@ -1,6 +1,6 @@
 package actors.message;
 
-import model.roundState.IRoundState;
+import model.roundstate.IRoundState;
 
 /**
  * Created by tabuechn on 12.05.2016.

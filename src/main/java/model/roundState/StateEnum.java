@@ -1,4 +1,4 @@
-package model.roundState;
+package model.roundstate;
 
 /**
  * If everything works right this class was
@@ -27,6 +27,7 @@ public enum StateEnum {
         return null;
     }
 
+    @SuppressWarnings("squid:MethodCyclomaticComplexity")
     public static StateEnum getRoundNameByString(String stateString) {
         switch (stateString) {
             case "START_PHASE":

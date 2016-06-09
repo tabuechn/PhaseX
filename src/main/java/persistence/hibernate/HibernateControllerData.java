@@ -10,7 +10,7 @@ import model.deck.impl.DeckOfCards;
 import model.phase.IPhase;
 import model.player.IPlayer;
 import model.player.impl.Player;
-import model.roundState.StateEnum;
+import model.roundstate.StateEnum;
 import model.stack.ICardStack;
 import model.stack.json.GsonStackDeserializer;
 import persistence.IControllerData;

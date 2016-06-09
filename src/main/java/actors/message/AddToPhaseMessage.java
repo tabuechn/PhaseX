@@ -2,7 +2,7 @@ package actors.message;
 
 import model.card.ICard;
 import model.player.IPlayer;
-import model.roundState.IRoundState;
+import model.roundstate.IRoundState;
 import model.stack.ICardStack;
 
 /**

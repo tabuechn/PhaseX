@@ -1,6 +1,6 @@
-package controller.statusMessage.impl;
+package controller.statusmessage.impl;
 
-import controller.statusMessage.IStatusMessage;
+import controller.statusmessage.IStatusMessage;
 import org.junit.Before;
 import org.junit.Test;
 

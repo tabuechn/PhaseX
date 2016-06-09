@@ -1,6 +1,6 @@
-package controller.playerContainer.impl;
+package controller.container.impl;
 
-import controller.playerContainer.IPlayerContainer;
+import controller.container.IPlayerContainer;
 import model.player.IPlayer;
 import model.player.impl.Player;
 

@@ -8,7 +8,7 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
-import model.roundState.StateEnum;
+import model.roundstate.StateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import scala.concurrent.Await;

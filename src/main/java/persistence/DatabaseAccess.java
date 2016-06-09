@@ -4,10 +4,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import controller.UIController;
 import model.player.IPlayer;
-import persistence.hibernate.HibernateDAO;
 import phasex.CouchedbModule;
 import phasex.HibernateModule;
-import phasex.PhaseXModule;
 
 /**
  * Created by tabuechn on 07.05.2016.

@@ -6,7 +6,7 @@ import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
-import model.roundState.StateEnum;
+import model.roundstate.StateEnum;
 import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

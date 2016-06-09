@@ -1,4 +1,4 @@
-package controller.playerContainer.impl;
+package controller.container.impl;
 
 import model.player.IPlayer;
 import org.junit.Before;
