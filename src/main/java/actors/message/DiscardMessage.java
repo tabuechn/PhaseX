@@ -3,7 +3,7 @@ package actors.message;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.player.IPlayer;
-import model.roundstate.IRoundState;
+import model.state.IRoundState;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.FiniteDuration;

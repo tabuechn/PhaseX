@@ -13,7 +13,7 @@ import model.card.CardValue;
 import model.card.impl.Card;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
-import model.roundstate.StateEnum;
+import model.state.StateEnum;
 import model.stack.ICardStack;
 import model.stack.impl.ColorStack;
 import org.junit.Before;

@@ -10,7 +10,7 @@ import akka.pattern.Patterns;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
-import model.roundstate.StateEnum;
+import model.state.StateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import scala.concurrent.Await;

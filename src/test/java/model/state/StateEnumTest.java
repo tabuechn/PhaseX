@@ -1,4 +1,4 @@
-package model.roundstate;
+package model.state;
 
 import org.junit.Test;
 

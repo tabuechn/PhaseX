@@ -8,9 +8,9 @@ import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
 import model.player.impl.Player;
-import model.roundstate.IRoundState;
-import model.roundstate.StateEnum;
-import model.roundstate.impl.RoundState;
+import model.state.IRoundState;
+import model.state.StateEnum;
+import model.state.impl.RoundState;
 import model.stack.ICardStack;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package controller.statusmessage;
+package controller.message;
 
 /**
  * Created by tabuechn on 25.05.2016.

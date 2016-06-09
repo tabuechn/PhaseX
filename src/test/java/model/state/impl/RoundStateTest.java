@@ -1,6 +1,6 @@
-package model.roundstate.impl;
+package model.state.impl;
 
-import model.roundstate.StateEnum;
+import model.state.StateEnum;
 import org.junit.Before;
 import org.junit.Test;
 

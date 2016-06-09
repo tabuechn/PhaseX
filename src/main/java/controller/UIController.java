@@ -1,6 +1,6 @@
 package controller;
 
-import model.roundstate.StateEnum;
+import model.state.StateEnum;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.player.IPlayer;

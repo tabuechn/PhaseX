@@ -1,7 +1,7 @@
-package model.roundState.impl;
+package model.state.impl;
 
-import model.roundState.IRoundState;
-import model.roundState.StateEnum;
+import model.state.IRoundState;
+import model.state.StateEnum;
 
 /**
  * If everything works right this class was
