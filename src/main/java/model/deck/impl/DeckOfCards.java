@@ -22,6 +22,11 @@ import java.util.List;
  * created by Konraifen88 on 24.09.2015.
  * If it doesn't work I don't know who the hell wrote it.
  */
+
+/**
+ * the superclass equals is sufficient
+ */
+@SuppressWarnings("squid:S2160")
 public class DeckOfCards extends LinkedList<ICard> implements IDeckOfCards, Serializable {
 
     @JsonProperty("_id")
