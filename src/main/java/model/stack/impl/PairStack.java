@@ -12,6 +12,11 @@ import java.io.Serializable;
 /**
  * Created by Tarek on 22.09.2015. Be grateful for this superior Code
  */
+
+/**
+ * Two different stacks can not be equals, because the abstract implementation uses the StackType Enum
+ */
+@SuppressWarnings("squid:S2160")
 public class PairStack extends AbstractStack implements ICardStack, Serializable {
 
 
