@@ -11,7 +11,7 @@ import model.roundState.IRoundState;
  */
 public class DrawHiddenMessage extends MasterMessage {
 
-    private IDeckOfCards pile;
+    private IDeckOfCards drawPile;
     private IDeckOfCards hand;
     private IPlayer currentPlayer;
 
@@ -21,13 +21,13 @@ public class DrawHiddenMessage extends MasterMessage {
      */
     public DrawHiddenMessage(IDeckOfCards pile, IDeckOfCards hand, IPlayer currentPlayer, IRoundState roundState) {
         super(roundState);
-        this.pile = pile;
+        this.drawPile = pile;
         this.hand = hand;
         this.currentPlayer = currentPlayer;
     }
 
     public IDeckOfCards getPile() {
-        return pile;
+        return drawPile;
     }
 
     public IDeckOfCards getHand() {
