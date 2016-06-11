@@ -16,10 +16,10 @@ import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.phase.impl.Phase5;
 import model.player.IPlayer;
+import model.stack.ICardStack;
 import model.state.IRoundState;
 import model.state.StateEnum;
 import model.state.impl.RoundState;
-import model.stack.ICardStack;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import util.CardCreator;
@@ -119,14 +119,13 @@ public class ActorController extends Observable implements UIController {
                 DrawOpenMessage message = (DrawOpenMessage) result;
                 this.setCurrentPlayer(message.getCurrentPlayer());
                 this.setDiscardPile(message.getPile());
-                setRoundStateWithMasterMessage(message);
+                afterDraw();
             } else if (result instanceof DrawHiddenMessage) {
                 DrawHiddenMessage message = (DrawHiddenMessage) result;
                 this.setCurrentPlayer(message.getCurrentPlayer());
                 this.setDrawPile(message.getPile());
-                setRoundStateWithMasterMessage(message);
+                afterDraw();
             }
-            afterDraw();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,17 +141,12 @@ public class ActorController extends Observable implements UIController {
                 dm = (DiscardMessage) result;
                 this.setCurrentPlayer(dm.getCurrentPlayer());
                 this.setDiscardPile(dm.getDiscardPile());
-                setRoundStateWithMasterMessage(dm);
                 afterDiscard();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         notifyObservers();
-    }
-
-    private void setRoundStateWithMasterMessage(MasterMessage message) {
-        setRoundState(message.getRoundState().getState());
     }
 
     private void afterDiscard() {
@@ -256,27 +250,25 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void addToFinishedPhase(ICard card, ICardStack stack) {
-        AddToPhaseMessage dtpm = new AddToPhaseMessage(state, card, stack, players.getCurrentPlayer());
+    public void addToFinishedPhase(ICard card, int stackNumber) {
+        addMultipleCardsToFinishedPhase(new DeckOfCards(Collections.singletonList(card)), stackNumber);
+    }
+
+    @Override
+    public void addMultipleCardsToFinishedPhase(List<ICard> cards, int stackNumber) {
+        AddToPhaseMessage dtpm = new AddToPhaseMessage(state, cards, cardStacks.get(stackNumber), players.getCurrentPlayer());
         Future<Object> fut = Patterns.ask(master, dtpm, TIMEOUT);
         try {
             Object result = Await.result(fut, TIMEOUT.duration());
             if (result instanceof AddToPhaseMessage) {
                 dtpm = (AddToPhaseMessage) result;
                 this.setCurrentPlayer(dtpm.getCurrentPlayer());
-                // TODO don't forget the Stack
-                endOfTurn();
+                this.cardStacks.set(stackNumber, dtpm.getStack());
+                //TODO: It is not correct to call end of turn  at this point, or did I do something wrong in test?
+                //endOfTurn();
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        notifyObservers();
-    }
-
-    @Override
-    public void addMultipleCardsToFinishedPhase(List<ICard> cards, ICardStack stack) {
-        for (ICard card : cards) {
-            addToFinishedPhase(card, stack);
         }
         notifyObservers();
     }
@@ -339,13 +331,13 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
-    public void setCurrentPlayer(IPlayer player) {
-        players.setCurrentPlayer(player);
+    public void setCurrentPlayer(int index) {
+        players.setCurrentPlayerIndex(index);
     }
 
     @Override
-    public void setCurrentPlayer(int index) {
-        players.setCurrentPlayerIndex(index);
+    public void setCurrentPlayer(IPlayer player) {
+        players.setCurrentPlayer(player);
     }
 
     @Override

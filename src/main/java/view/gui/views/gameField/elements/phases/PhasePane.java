@@ -49,7 +49,8 @@ public class PhasePane extends JPanel {
                 if (phase.getPhase() == null) {
                     controller.playPhase(currentPlayer.getChosenCards());
                 } else {
-                    controller.addMultipleCardsToFinishedPhase(currentPlayer.getChosenCards(), phase.getPhase());
+                    controller.addMultipleCardsToFinishedPhase(currentPlayer.getChosenCards(),
+                            controller.getAllStacks().indexOf(phase.getPhase()));
                 }
             }
         });

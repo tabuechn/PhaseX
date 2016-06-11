@@ -6,10 +6,14 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import model.card.ICard;
+import model.card.impl.CardColorComparator;
+import model.card.impl.CardValueComparator;
 import model.player.IPlayer;
 import model.stack.ICardStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 /**
  * Created by tabuechn on 24.05.2016.
@@ -34,12 +38,28 @@ class PlayerTurnFinishedActor extends UntypedActor {
 
     private void addToFinishedPhase(AddToPhaseMessage message) {
         ICardStack stack = message.getStack();
-        ICard card = message.getCard();
+        List<ICard> cards = message.getCard();
+        boolean canaries = true;
+        sortCards(cards);
         IPlayer currentPlayer = message.getCurrentPlayer();
-        if (stack.checkCardMatching(card)) {
-            stack.addCardToStack(card);
-            currentPlayer.getDeckOfCards().remove(card);
+        for (ICard c : cards) {
+            if (stack.checkCardMatching(c)) {
+                stack.addCardToStack(c);
+                currentPlayer.getDeckOfCards().remove(c);
+            } else {
+                canaries = false;
+                getSender().tell(false, getSelf());
+                break;
+            }
         }
+        if (canaries) {
+            getSender().tell(message, getSelf());
+        }
+    }
+
+    private void sortCards(List<ICard> cards) {
+        cards.sort(new CardColorComparator());
+        cards.sort(new CardValueComparator());
     }
 
 

@@ -2,28 +2,30 @@ package actors.message;
 
 import model.card.ICard;
 import model.player.IPlayer;
-import model.state.IRoundState;
 import model.stack.ICardStack;
+import model.state.IRoundState;
+
+import java.util.List;
 
 /**
  * Created by tabuechn on 28.05.2016.
  */
 public class AddToPhaseMessage extends MasterMessage {
 
-    private ICard card;
+    private List<ICard> card;
 
     private ICardStack stack;
 
     private IPlayer currentPlayer;
 
-    public AddToPhaseMessage(IRoundState roundState, ICard card, ICardStack stack, IPlayer currentPlayer) {
+    public AddToPhaseMessage(IRoundState roundState, List<ICard> cards, ICardStack stack, IPlayer currentPlayer) {
         super(roundState);
-        this.card = card;
+        this.card = cards;
         this.stack = stack;
         this.currentPlayer = currentPlayer;
     }
 
-    public ICard getCard() {
+    public List<ICard> getCard() {
         return card;
     }
 

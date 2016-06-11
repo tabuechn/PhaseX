@@ -6,8 +6,8 @@ import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.player.IPlayer;
-import model.state.StateEnum;
 import model.stack.ICardStack;
+import model.state.StateEnum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.Event;
@@ -95,7 +95,7 @@ public class TUI implements IObserver {
             return;
         }
         controller.addToFinishedPhase(controller.getCurrentPlayersHand().get(cardIndex),
-                controller.getAllStacks().get(stackIndex));
+                controller.getAllStacks().indexOf(stackIndex));
     }
 
     private void checkPlayerTurnNotFinished(String input) {

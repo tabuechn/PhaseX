@@ -1,10 +1,10 @@
 package controller;
 
-import model.state.StateEnum;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.player.IPlayer;
 import model.stack.ICardStack;
+import model.state.StateEnum;
 import util.IObservable;
 
 import java.util.List;
@@ -48,11 +48,17 @@ public interface UIController extends IObservable {
      * Event for the UIs to add a card to finished phase
      *
      * @param card  the card to add to the stack
-     * @param stack the stack the card should be added to
+     * @param stackNumber the index of the stack, the card should be added to
      */
-    void addToFinishedPhase(ICard card, ICardStack stack);
+    void addToFinishedPhase(ICard card, int stackNumber);
 
-    void addMultipleCardsToFinishedPhase(List<ICard> cards, ICardStack stack);
+    /**
+     * Method to add multiple cards to a desired stack
+     *
+     * @param cards       the List of Cards
+     * @param stackNumber the current index of the stack
+     */
+    void addMultipleCardsToFinishedPhase(List<ICard> cards, int stackNumber);
 
     /**
      * Returns the cards which the current Player has in his hand
@@ -111,9 +117,9 @@ public interface UIController extends IObservable {
      */
     IPlayer getCurrentPlayer();
 
-    void setCurrentPlayer(IPlayer player);
-
     void setCurrentPlayer(int index);
+
+    void setCurrentPlayer(IPlayer player);
 
     /**
      * Getter for the opponent player
