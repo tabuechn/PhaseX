@@ -21,11 +21,11 @@ import java.util.List;
  */
 public class HibernateDAO implements SaveSinglePlayerDAO {
 
-    public static final int NUMBER_OF_STACKS = 4;
-    Gson gson;
-    Gson gsonNormal;
+    private static final int NUMBER_OF_STACKS = 4;
+    private Gson gson;
+    private Gson gsonNormal;
 
-    public HibernateDAO() {
+    HibernateDAO() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
         gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
@@ -37,7 +37,7 @@ public class HibernateDAO implements SaveSinglePlayerDAO {
     public void saveGame(UIController controller) {
 
         HibernateControllerData cd = new HibernateControllerData();
-        IPlayer[] players = controller.getPlayers();
+        IPlayer[] players = controller.getPlayersArray();
         Player player1 = (Player)players[0];
         Player player2 = (Player)players[1];
 

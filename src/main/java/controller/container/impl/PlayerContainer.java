@@ -1,5 +1,10 @@
 package controller.container.impl;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import controller.container.IPlayerContainer;
 import model.player.IPlayer;
 import model.player.impl.Player;
@@ -15,11 +20,21 @@ public class PlayerContainer implements IPlayerContainer {
     private static final int FIRST_PLAYER = 0;
     private static final int SECOND_PLAYER = 1;
 
+    @JsonDeserialize(contentAs = IPlayer.class)
+    @JsonSerialize(contentAs = IPlayer.class)
     private IPlayer[] players;
-    private int currentPlayer;
+
+
+    private int currentPlayerIndex;
+
+
+    @JsonCreator
+    public PlayerContainer() {
+        players = new Player[2];
+    }
 
     public PlayerContainer(String firstPlayerName){
-        currentPlayer = FIRST_PLAYER;
+        currentPlayerIndex = FIRST_PLAYER;
         players = new Player[2];
         players[FIRST_PLAYER] = new Player(FIRST_PLAYER);
         players[FIRST_PLAYER].setName(firstPlayerName);
@@ -27,19 +42,45 @@ public class PlayerContainer implements IPlayerContainer {
         players[SECOND_PLAYER].setName(DEFAULT_PLAYER_2_NAME);
     }
 
-    @Override
+    @JsonProperty("players")
     public IPlayer[] getPlayers() {
         return players;
     }
 
-    @Override
+    @JsonProperty("players")
     public void setPlayers(IPlayer[] players) {
         this.players = players;
     }
 
     @Override
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    @Override
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
+    }
+
+    @Override
+    @JsonIgnore
+    public IPlayer getCurrentPlayer() {
+        return players[currentPlayerIndex];
+    }
+
+    //TODO: Check if this is correct/needed, better way would be to keep the Array as is and only change the index...
+    @Override
     public void setCurrentPlayer(IPlayer player) {
         players[0] = player;
+    }
+
+    @Override
+    @JsonIgnore
+    public IPlayer getOtherPlayer() {
+        if (currentPlayerIndex == FIRST_PLAYER) {
+            return players[SECOND_PLAYER];
+        }
+        return players[FIRST_PLAYER];
     }
 
     @Override
@@ -48,34 +89,11 @@ public class PlayerContainer implements IPlayerContainer {
     }
 
     @Override
-    public void setCurrentPlayerIndex(int index) {
-        currentPlayer = index;
-    }
-
-    @Override
-    public int getCurrentPlayerIndex() {
-        return currentPlayer;
-    }
-
-    @Override
-    public IPlayer getCurrentPlayer() {
-        return players[currentPlayer];
-    }
-
-    @Override
-    public IPlayer getOtherPlayer() {
-        if (currentPlayer == FIRST_PLAYER){
-            return players[SECOND_PLAYER];
-        }
-        return players[FIRST_PLAYER];
-    }
-
-    @Override
     public void nextPlayer() {
-        if (currentPlayer == SECOND_PLAYER) {
-            currentPlayer = FIRST_PLAYER;
+        if (currentPlayerIndex == SECOND_PLAYER) {
+            currentPlayerIndex = FIRST_PLAYER;
         } else {
-            currentPlayer = SECOND_PLAYER;
+            currentPlayerIndex = SECOND_PLAYER;
         }
     }
 }

@@ -154,10 +154,10 @@ public class HibernateDAOTest {
         assertEquals(ctrl.getStatusMessage(), loadedController.getStatusMessage());
         assertEquals(ctrl.getRoundState().toString(), loadedController.getRoundState().toString());
         assertEquals(testStacks.size(), loadedController.getAllStacks().size());
-        assertEquals(ctrl.getPlayers()[0].getDeckOfCards(),loadedController.getPlayers()[0].getDeckOfCards());
-        assertEquals(ctrl.getPlayers()[1].getDeckOfCards(),loadedController.getPlayers()[1].getDeckOfCards());
+        assertEquals(ctrl.getPlayersArray()[0].getDeckOfCards(), loadedController.getPlayersArray()[0].getDeckOfCards());
+        assertEquals(ctrl.getPlayersArray()[1].getDeckOfCards(), loadedController.getPlayersArray()[1].getDeckOfCards());
 
-        assertEquals(herberObject.getDeckOfCards(),loadedController.getPlayers()[0].getDeckOfCards());
+        assertEquals(herberObject.getDeckOfCards(), loadedController.getPlayersArray()[0].getDeckOfCards());
         for (int i = 0; i < testStacks.size(); ++i) {
             assertEquals(ctrl.getAllStacks().get(i).getList(), loadedController.getAllStacks().get(i).getList());
         }
@@ -184,13 +184,13 @@ public class HibernateDAOTest {
             HibernateControllerData cd = (HibernateControllerData) o;
             assertEquals(herbert, cd.getPlayer1().getPlayerName());
             DeckOfCards herbertDeck = gson.fromJson(cd.getPlayer1Pile(), DeckOfCards.class);
-            assertEquals(ctrl.getPlayers()[0].getDeckOfCards(), herbertDeck);
-            assertEquals(ctrl.getPlayers()[0].getPhase().toString(), cd.getPlayer1PhaseString());
+            assertEquals(ctrl.getPlayersArray()[0].getDeckOfCards(), herbertDeck);
+            assertEquals(ctrl.getPlayersArray()[0].getPhase().toString(), cd.getPlayer1PhaseString());
 
             assertEquals(klaus, cd.getPlayer2().getPlayerName());
             DeckOfCards klausDeck = gson.fromJson(cd.getPlayer2Pile(), DeckOfCards.class);
-            assertEquals(ctrl.getPlayers()[1].getDeckOfCards(), klausDeck);
-            assertEquals(ctrl.getPlayers()[1].getPhase().toString(), cd.getPlayer2PhaseString());
+            assertEquals(ctrl.getPlayersArray()[1].getDeckOfCards(), klausDeck);
+            assertEquals(ctrl.getPlayersArray()[1].getPhase().toString(), cd.getPlayer2PhaseString());
 
             assertEquals(ctrl.getCurrentPlayerIndex(),cd.getCurrentPlayerIndex());
 

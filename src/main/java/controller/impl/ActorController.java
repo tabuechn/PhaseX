@@ -7,7 +7,12 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import controller.UIController;
+import controller.container.IPlayerContainer;
 import controller.container.impl.PlayerContainer;
 import controller.message.IStatusMessage;
 import controller.message.impl.StatusMessage;
@@ -38,17 +43,37 @@ public class ActorController extends Observable implements UIController {
     private static final Timeout TIMEOUT = new Timeout(60, TimeUnit.SECONDS);
 
     private static final int PLAYER_STARTING_DECK_SIZE = 10;
-    private PlayerContainer players;
+
+    @JsonDeserialize(as = PlayerContainer.class)
+    private IPlayerContainer players;
+
+    @JsonDeserialize(as = RoundState.class)
     private IRoundState state;
+
+    @JsonDeserialize(as = DeckOfCards.class)
     private IDeckOfCards drawPile;
+
+    @JsonDeserialize(as = DeckOfCards.class)
     private IDeckOfCards discardPile;
+
+    @JsonDeserialize(contentAs = ICardStack.class)
     private List<ICardStack> cardStacks;
+
+    @JsonIgnore
     private ActorSystem phaseXActorSystem;
+
+    @JsonIgnore
     private ActorRef master;
+
+    @JsonIgnore
     private IStatusMessage statusMessage;
+
+    @JsonIgnore
     private IPlayer winner;
 
+    @JsonCreator
     public ActorController(){
+        players = new PlayerContainer();
         state = new RoundState();
         drawPile = new DeckOfCards();
         discardPile = new DeckOfCards();
@@ -274,11 +299,13 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
+    @JsonIgnore
     public IDeckOfCards getCurrentPlayersHand() {
         return players.getCurrentPlayer().getDeckOfCards();
     }
 
     @Override
+    @JsonIgnore
     public Map<Integer, Integer> getNumberOfCardsForNextPlayer() {
         Map<Integer, Integer> returnMap = new TreeMap<>();
         returnMap.put(0, players.getOtherPlayer().getDeckOfCards().size());
@@ -326,21 +353,25 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
+    @JsonIgnore
     public IPlayer getCurrentPlayer() {
         return players.getCurrentPlayer();
     }
 
     @Override
+    @JsonIgnore
     public void setCurrentPlayer(int index) {
         players.setCurrentPlayerIndex(index);
     }
 
     @Override
+    @JsonIgnore
     public void setCurrentPlayer(IPlayer player) {
         players.setCurrentPlayer(player);
     }
 
     @Override
+    @JsonIgnore
     public IPlayer getOpponentPlayer() {
         return players.getOtherPlayer();
     }
@@ -351,58 +382,79 @@ public class ActorController extends Observable implements UIController {
     }
 
     @Override
+    @JsonProperty("statusMessage")
     public String getStatusMessage() {
         return statusMessage.getStatusMessage();
     }
 
     @Override
+    @JsonProperty("statusMessage")
     public void setStatusMessage(String statusMessage) {
         this.statusMessage.setStatusMessage(statusMessage);
     }
 
     @Override
+    @JsonIgnore
     public String getCurrentPhaseDescription() {
         return players.getCurrentPlayer().getPhase().getDescription();
     }
 
     @Override
+    @JsonIgnore
     public IPlayer getWinner() {
         return winner;
     }
 
     @Override
+    @JsonIgnore
     public void setSecondPlayerName(String name) {
         players.getOtherPlayer().setName(name);
     }
 
     @Override
-    public IPlayer[] getPlayers() {
+    @JsonIgnore
+    public IPlayer[] getPlayersArray() {
         return players.getPlayers();
     }
 
     @Override
-    public void setPlayers(IPlayer[] players) {
+    @JsonIgnore
+    public void setPlayersArray(IPlayer[] players) {
         this.players.setPlayers(players);
     }
 
     @Override
+    @JsonIgnore
     public int getCurrentPlayerIndex() {
         return players.getCurrentPlayerIndex();
     }
 
     @Override
+    @JsonIgnore
     public void setCurrentPlayerIndex(int index) {
         players.setCurrentPlayerIndex(index);
     }
 
     @Override
+    @JsonIgnore
     public void setPlayer1(IPlayer player1) {
         players.getPlayers()[0] = player1;
     }
 
     @Override
+    @JsonIgnore
     public void setPlayer2(IPlayer player2) {
         players.getPlayers()[1] = player2;
+    }
+
+    @JsonProperty("players")
+    public IPlayerContainer getPlayers() {
+        return this.players;
+    }
+
+    @JsonProperty("players")
+    public void setPlayers(PlayerContainer players) {
+        this.players = players;
     }
 
 }

@@ -1,5 +1,6 @@
 package controller.message.impl;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import controller.message.IStatusMessage;
 
 /**
@@ -7,6 +8,7 @@ import controller.message.IStatusMessage;
  */
 public class StatusMessage implements IStatusMessage {
 
+    @JsonProperty("statusMessageString")
     private String statusMessageString;
 
     public StatusMessage() {

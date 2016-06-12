@@ -3,7 +3,6 @@ package persistence.couch;
 import controller.UIController;
 import controller.impl.ActorController;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +12,6 @@ import static org.junit.Assert.assertEquals;
  * created by Konraifen88 on 21.04.2016.
  * If it doesn't work I don't know who the hell wrote it.
  */
-@Ignore
 public class CouchControllerDataTest {
 
     private static final String PLAYER_NAME = "TestPlayer1";
@@ -31,7 +29,7 @@ public class CouchControllerDataTest {
     @Test
     public void setterAndGetterForControllerWorkingCorrectly() {
         testee.setController(controller);
-        assertEquals(PLAYER_NAME, testee.getController().getPlayers()[0].getPlayerName());
+        assertEquals(PLAYER_NAME, testee.getController().getPlayersArray()[0].getPlayerName());
     }
 
     @Test

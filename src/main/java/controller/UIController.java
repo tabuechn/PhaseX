@@ -160,9 +160,9 @@ public interface UIController extends IObservable {
      * Returns the Array of all Players
      * @return Array of all Players
      */
-    IPlayer[] getPlayers();
+    IPlayer[] getPlayersArray();
 
-    void setPlayers(IPlayer[] players);
+    void setPlayersArray(IPlayer[] players);
 
     int getCurrentPlayerIndex();
 

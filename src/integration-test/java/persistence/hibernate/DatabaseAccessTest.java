@@ -14,7 +14,7 @@ import static junit.framework.TestCase.assertNotNull;
  * Created by tabuechn on 07.05.2016.
  */
 public class DatabaseAccessTest {
-    DatabaseAccess dbtest;
+    private DatabaseAccess dbtest;
 
     @Before
     public void setUp() throws Exception {
@@ -27,7 +27,7 @@ public class DatabaseAccessTest {
         controller.startGame("Peter");
         dbtest.saveGame(controller);
 
-        UIController loadedController = dbtest.loadGame(controller.getPlayers()[0]);
+        UIController loadedController = dbtest.loadGame(controller.getPlayersArray()[0]);
         assertNotNull(loadedController);
     }
 
