@@ -47,7 +47,7 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
 
     public void setController(UIController controller) {
         this.controller = controller;
-        //playerName = getPlayerNameFromController(controller);
+        playerName = getPlayerNameFromController(controller);
     }
 
     private String getPlayerNameFromController(UIController controller) {

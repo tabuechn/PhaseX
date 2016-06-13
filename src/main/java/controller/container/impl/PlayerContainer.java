@@ -42,11 +42,13 @@ public class PlayerContainer implements IPlayerContainer {
         players[SECOND_PLAYER].setName(DEFAULT_PLAYER_2_NAME);
     }
 
+    @Override
     @JsonProperty("players")
     public IPlayer[] getPlayers() {
         return players;
     }
 
+    @Override
     @JsonProperty("players")
     public void setPlayers(IPlayer[] players) {
         this.players = players;
