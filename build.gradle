@@ -139,10 +139,17 @@ sonarqube {
         property "sonar.projectKey", "${group}"
         property "sonar.projectName", "${project.name}"
         property "sonar.projectVersion", "${version}"
+
+        property "sonar.language", "java"
+
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
         property "sonar.binaries", "build/classes"
-        property "sonar.java.coveragePlugin", "jacoco"
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-        property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integrationTest.exec"
+
+        property "sonar.junit.reportsPath", "build/reports/junit"
+
+        property "sonar.jacoco.reportPath", "build/jacoco/test.exec"
+        property "sonar.jacoco.itReportPath", "build/jacoco/intTest.exec"
         property "sonar.exclusions", "**/view/**, **/java/phasex/**"
 
         property "sonar.jdbc.url", "jdbc:mysql://lenny2.in.htwg-konstanz.de:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
@@ -157,13 +164,18 @@ sonarqube {
 /*
  * Tasks
  */
-task intTest(type: Test, dependsOn: cleanTest){
+task intTest(type: Test) {
     jacoco {
-        destinationFile = file("${project.buildDir}/jacoco/integrationTest.exec")
-        classDumpFile = file("${project.buildDir}/classes/integrationTest")
+        destinationFile = file("${project.buildDir}/jacoco/intTest.exec")
+        classDumpFile = file("${project.buildDir}/classes/integration")
     }
     testClassesDir = sourceSets.integration.output.classesDir
     classpath += sourceSets.integration.runtimeClasspath
+}
+
+//Separating dirs for unit and int tests
+tasks.withType(Test) {
+    reports.html.destination = file("${reporting.baseDir}/${name}")
 }
 
 task wrapper(type: Wrapper) {
