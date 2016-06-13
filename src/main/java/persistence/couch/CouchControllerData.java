@@ -28,6 +28,7 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
     private String playerName;
 
     @JsonProperty("type")
+    @SuppressWarnings("squid:S1068") // type is needed for couchDB, suppress warning for sonar
     private String type;
 
     CouchControllerData() {
