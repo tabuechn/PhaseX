@@ -28,7 +28,6 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
     private String playerName;
 
     @JsonProperty("type")
-    @SuppressWarnings("squid:S1068") // type is needed for couchDB, suppress warning for sonar
     private String type;
 
     CouchControllerData() {
@@ -71,5 +70,15 @@ class CouchControllerData extends CouchDbDocument implements IControllerData {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    @SuppressWarnings("unused") //needed for CouchDB to find entries
+    public String getType() {
+        return type;
+    }
+
+    @SuppressWarnings("unused") //needed for CouchDB to find entries
+    public void setType(String type) {
+        this.type = type;
     }
 }
