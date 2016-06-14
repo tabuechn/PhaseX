@@ -70,7 +70,6 @@ public class PlayerContainer implements IPlayerContainer {
         return players[currentPlayerIndex];
     }
 
-    //TODO: Check if this is correct/needed, better way would be to keep the Array as is and only change the index...
     @Override
     public void setCurrentPlayer(IPlayer player) {
         players[0] = player;
