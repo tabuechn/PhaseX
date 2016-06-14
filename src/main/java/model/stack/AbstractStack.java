@@ -1,7 +1,6 @@
 package model.stack;
 
 import model.deck.IDeckOfCards;
-import model.stack.impl.StackType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

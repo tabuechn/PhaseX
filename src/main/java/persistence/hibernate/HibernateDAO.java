@@ -21,15 +21,13 @@ import java.util.List;
  */
 public class HibernateDAO implements SaveSinglePlayerDAO {
 
-    private static final int NUMBER_OF_STACKS = 4;
-    private Gson gson;
+    public static final int NUMBER_OF_STACKS = 4;
     private Gson gsonNormal;
 
-    HibernateDAO() {
+    public HibernateDAO() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ICard.class, new CardDeserializer());
         gsonBuilder.registerTypeAdapter(ICardStack.class, new GsonStackDeserializer());
-        gson = gsonBuilder.create();
         gsonNormal = new Gson();
     }
 

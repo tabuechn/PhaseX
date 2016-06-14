@@ -1,5 +1,6 @@
 package model.stack.impl;
 
+import model.stack.StackType;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

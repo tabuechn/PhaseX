@@ -6,6 +6,7 @@ import model.card.ICard;
 import model.deck.IDeckOfCards;
 import model.stack.AbstractStack;
 import model.stack.ICardStack;
+import model.stack.StackType;
 
 import java.io.Serializable;
 

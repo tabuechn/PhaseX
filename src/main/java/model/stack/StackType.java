@@ -1,4 +1,4 @@
-package model.stack.impl;
+package model.stack;
 
 /**
  * If everything works right this class was

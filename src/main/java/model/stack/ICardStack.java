@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.card.ICard;
 import model.deck.IDeckOfCards;
-import model.stack.impl.StackType;
 import model.stack.json.JacksonStackDeserializer;
 import model.stack.json.JacksonStackSerializer;
 

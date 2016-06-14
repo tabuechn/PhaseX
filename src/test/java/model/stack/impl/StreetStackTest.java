@@ -4,6 +4,7 @@ import model.card.CardColor;
 import model.card.CardValue;
 import model.card.impl.Card;
 import model.deck.impl.DeckOfCards;
+import model.stack.StackType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class StreetStackTest {
 
     @Test
     public void getStackType() {
-        Assert.assertEquals(testee.getStackType(),StackType.STREET);
+        Assert.assertEquals(testee.getStackType(), StackType.STREET);
     }
 
     @Test

@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.deck.IDeckOfCards;
 import model.deck.impl.DeckOfCards;
 import model.stack.ICardStack;
+import model.stack.StackType;
 import model.stack.impl.ColorStack;
 import model.stack.impl.PairStack;
-import model.stack.impl.StackType;
 import model.stack.impl.StreetStack;
 
 import java.io.IOException;
