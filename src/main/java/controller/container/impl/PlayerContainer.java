@@ -72,7 +72,7 @@ public class PlayerContainer implements IPlayerContainer {
 
     @Override
     public void setCurrentPlayer(IPlayer player) {
-        players[0] = player;
+        players[currentPlayerIndex] = player;
     }
 
     @Override
