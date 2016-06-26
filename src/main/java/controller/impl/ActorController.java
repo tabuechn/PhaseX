@@ -267,6 +267,9 @@ public class ActorController extends Observable implements UIController {
                 ppm = (PlayPhaseMessage) result;
                 this.setCurrentPlayer(ppm.getCurrentPlayer());
                 this.setAllStacks(ppm.getAllStacks());
+                if (players.getCurrentPlayer().isPhaseDone()) {
+                    this.setRoundState(StateEnum.PLAYER_TURN_FINISHED);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
