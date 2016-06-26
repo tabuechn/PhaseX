@@ -95,7 +95,8 @@ public class TUI implements IObserver {
             return;
         }
         controller.addToFinishedPhase(controller.getCurrentPlayersHand().get(cardIndex),
-                controller.getAllStacks().indexOf(stackIndex));
+                stackIndex);
+
     }
 
     private void checkPlayerTurnNotFinished(String input) {
