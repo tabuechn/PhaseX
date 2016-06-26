@@ -13,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by tabuechn on 25.05.2016.
@@ -51,7 +50,9 @@ class PlayerTurnNotFinishedActor extends UntypedActor {
     }
 
     private List<ICardStack> putDownStacks(List<ICardStack> phases, List<ICardStack> allStacks) {
-        return phases.stream().collect(Collectors.toList());
+        //return phases.stream().collect(Collectors.toList());
+        allStacks.addAll(phases);
+        return allStacks;
     }
 
     private IPlayer removePhaseFromCurrentPlayer(IDeckOfCards phase, IPlayer currentPlayer) {
