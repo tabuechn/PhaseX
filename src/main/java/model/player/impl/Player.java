@@ -174,6 +174,7 @@ public class Player implements IPlayer, Serializable {
             jgen.writeNumberField("playerNumber", value.getPlayerNumber());
             jgen.writeStringField("name", value.getPlayerName());
             jgen.writeStringField("phase", value.getPhase().toString());
+            jgen.writeBooleanField("phaseDone", value.isPhaseDone());
             jgen.writeArrayFieldStart("cards");
             for (ICard card : value.getDeckOfCards()) {
                 jgen.writeObject(card);
@@ -192,7 +193,7 @@ public class Player implements IPlayer, Serializable {
             Player tmp = new Player(node.get("playerNumber").asInt());
             tmp.setName(node.get("name").asText());
             tmp.setPhase(node.get("phase").asText());
-
+            tmp.setPhaseDone(node.get("phaseDone").asBoolean());
             JsonNode cards = node.path("cards");
             IDeckOfCards deckOfCards = mapper.readValue(cards.traverse(), DeckOfCards.class);
             tmp.setDeckOfCards(deckOfCards);
