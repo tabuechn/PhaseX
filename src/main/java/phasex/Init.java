@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import controller.UIController;
 import controller.impl.ActorController;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import view.gui.GUI;
 import view.tui.TUI;
 
 import java.util.Scanner;
@@ -20,6 +21,7 @@ public class Init {
     private static Init instance;
 
     private TUI tui;
+
     private Injector in;
 
     private Init() {
@@ -29,8 +31,8 @@ public class Init {
 
         tui = in.getInstance(TUI.class);
 
-//        gui = in.getInstance(GUI.class);
-//        gui.start();
+        GUI gui = in.getInstance(GUI.class);
+        gui.start();
     }
 
     public static Init getInstance() {

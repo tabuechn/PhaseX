@@ -61,10 +61,10 @@ public class PilePane extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (("DrawPhase").equals(controller.getRoundState().toString())) {
+                if (("DRAW_PHASE").equals(controller.getRoundState().toString())) {
                     controller.drawOpen();
-                } else if (("PlayerTurnFinished".equals(controller.getRoundState().toString()) ||
-                        "PlayerTurnNotFinishedActor".equals(controller.getRoundState().toString()))) {
+                } else if (("PLAYER_TURN_NOT_FINISHED".equals(controller.getRoundState().toString()) ||
+                        "PLAYER_TURN_FINISHED".equals(controller.getRoundState().toString()))) {
                     checkIfOnlyOneCardIsSelected(player.getChosenCards());
                 }
             }

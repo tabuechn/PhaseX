@@ -43,19 +43,19 @@ public class GUI implements IObserver {
     public void update(Event e) {
         String state = controller.getRoundState().toString();
         switch (state) {
-            case "StartPhase":
+            case "START_PHASE":
                 startPhase();
                 break;
-            case "EndPhase":
+            case "END_PHASE":
                 endPhase();
                 break;
-            case "DrawPhase":
+            case "DRAW_PHASE":
                 drawPhase();
                 break;
-            case "PlayerTurnNotFinishedActor":
+            case "PLAYER_TURN_NOT_FINISHED":
                 playerTurnNotFinished();
                 break;
-            case "PlayerTurnFinished":
+            case "PLAYER_TURN_FINISHED":
                 playerTurnFinished();
                 break;
             default:
