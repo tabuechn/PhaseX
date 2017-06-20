@@ -24,7 +24,7 @@ public class PhaseStreet {
         phaseChecker = new StreetChecker(LENGTH_OF_STREET);
     }
 
-    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException {
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase, Integer streetLenght) throws DeckNotFitException {
         if (phaseChecker.check(phase)) {
             return Collections.singletonList(new StreetStack(phase));
         }

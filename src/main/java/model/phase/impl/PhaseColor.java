@@ -18,7 +18,7 @@ import java.util.List;
  * date: 30.09.2015
  * merged phase checker and getter
  */
-public class PhaseColor implements IPhase {
+public class PhaseColor  {
 
     public static final int PHASE_NUMBER = 3;
     public static final int COLOR_SIZE = 6;
@@ -29,36 +29,10 @@ public class PhaseColor implements IPhase {
         phaseChecker = new ColorChecker(COLOR_SIZE);
     }
 
-    @Override
-    public String getDescription() {
-        return DESCRIPTION_PHASE_3;
-    }
-
-    @Override
-    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException {
+    public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase, Integer numberColors) throws DeckNotFitException {
         if (phaseChecker.check(phase)) {
             return Collections.singletonList(new ColorStack(phase));
         }
         throw new DeckNotFitException();
-    }
-
-    @Override
-    public IPhase getNextPhase() {
-        return new Phase4();
-    }
-
-    @Override
-    public int getPhaseNumber() {
-        return PHASE_NUMBER;
-    }
-
-    @Override
-    public boolean isNumberPhase() {
-        return phaseChecker instanceof ColorChecker;
-    }
-
-    @Override
-    public String toString() {
-        return "Phase3";
     }
 }

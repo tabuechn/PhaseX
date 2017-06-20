@@ -27,7 +27,11 @@ public class Phases implements IPhase {
 
     public static final int PHASE_NUMBER = 4;
     private static final String DESCRIPTION_PHASE = "number quadruple and number pair";
-    Boolean isNumberPhase = false;
+    private Boolean isNumberPhase = false;
+    private String phaseType = null;
+    private String[] numbersType = null;
+    private Integer numberColors = 0;
+    private Integer streetLenght = 0;
 
     public Phases() {
         //empty
@@ -40,9 +44,6 @@ public class Phases implements IPhase {
 
     @Override
     public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException {
-        String phaseType = null;
-        String[] numbersType = null;
-        List<ICardStack> pairStackList = Collections.emptyList();
 
         if(phaseType.equals("NUMBERS")) {
             isNumberPhase = true;
@@ -51,11 +52,11 @@ public class Phases implements IPhase {
         }
         if(phaseType.equals("COLORS")) {
             PhaseColor phaseNumber = new PhaseColor();
-            return phaseNumber.splitAndCheckPhase(phase);
+            return phaseNumber.splitAndCheckPhase(phase, numberColors);
         }
         if(phaseType.equals("STREET")) {
             PhaseStreet phaseNumber = new PhaseStreet();
-            return phaseNumber.splitAndCheckPhase(phase);
+            return phaseNumber.splitAndCheckPhase(phase, streetLenght);
         }
         throw new DeckNotFitException();
     }
@@ -77,6 +78,6 @@ public class Phases implements IPhase {
 
     @Override
     public String toString() {
-        return "Phase4";
+        return "Phase"+PHASE_NUMBER;
     }
 }
