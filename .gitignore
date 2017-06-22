@@ -4,6 +4,7 @@
 .metadata
 libs/
 tmp/
+src-gen/
 *.tmp
 *.bak
 *.swp
@@ -136,3 +137,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+/bin/

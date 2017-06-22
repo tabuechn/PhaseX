@@ -1,79 +1,79 @@
 package model.phase.impl;
-
 import model.card.impl.CardValueComparator;
 import model.deck.IDeckOfCards;
 import model.phase.DeckNotFitException;
 import model.phase.IPhase;
 import model.phase.IPhaseChecker;
 import model.phase.IPhaseSplitter;
-import model.phase.checker.ColorChecker;
 import model.phase.checker.ValueChecker;
+import model.phase.checker.ColorChecker;
+import model.phase.checker.StreetChecker;
 import model.phase.splitter.DeckSplitter;
 import model.stack.ICardStack;
 import model.stack.impl.PairStack;
+import model.stack.impl.ColorStack;
+import model.stack.impl.StreetStack;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Tarek on 24.09.2015. Be grateful for this superior Code!
- * <p>
+ *
  * edited: Konraifen88
  * date: 30.09.2015
  * merged phase checker and getter
+ * edited: daschwin
+ * date: 20.07.2017
+ * to be generated
  */
 public class Phase1 implements IPhase {
 
     public static final int PHASE_NUMBER = 1;
-    protected static final String DESCRIPTION_PHASE_1 = "two number triples";
-    private static final int SIZE_OF_A_TRIPLE = 3;
-    private static final int FIRST_TRIPLE_INDEX = 0;
-    private static final int SECOND_TRIPLE_INDEX = 1;
-
-    private IPhaseChecker phaseChecker;
-
-    private IPhaseSplitter phaseSplitter;
-
+	private static final String DESCRIPTION_PHASE = "two number pairs";
+private static final String DOUBLE = "DOUBLE";
+private static final String TRIPLE = "TRIPLE";
+private static final String QUADRUPLE = "QUADRUPLE";
+private IPhaseChecker firstChecker = new ValueChecker(2); 
+private IPhaseChecker secondChecker = new ValueChecker(2); 
+private IPhaseSplitter phaseSplitter = new DeckSplitter(2, new CardValueComparator());
+    
+    
     public Phase1() {
-        phaseChecker = new ValueChecker(SIZE_OF_A_TRIPLE);
-        phaseSplitter = new DeckSplitter(SIZE_OF_A_TRIPLE, new CardValueComparator());
     }
 
     @Override
     public String getDescription() {
-        return DESCRIPTION_PHASE_1;
+        return DESCRIPTION_PHASE;
     }
 
     @Override
     public List<ICardStack> splitAndCheckPhase(IDeckOfCards phase) throws DeckNotFitException {
-        List<IDeckOfCards> splitted = phaseSplitter.split(phase);
-        if (phaseChecker.check(splitted.get(FIRST_TRIPLE_INDEX))
-                && phaseChecker.check(splitted.get(SECOND_TRIPLE_INDEX))) {
-            return Arrays.asList(new PairStack(splitted.get(FIRST_TRIPLE_INDEX)),
-                    new PairStack(splitted.get(SECOND_TRIPLE_INDEX)));
-        }
-        throw new DeckNotFitException();
+List<IDeckOfCards> splitted = phaseSplitter.split(phase);
+if (firstChecker.check(splitted.get(0)) && secondChecker.check(splitted.get(1)) ) {
+    	return Arrays.asList(new PairStack(splitted.get(0)), new PairStack(splitted.get(1)));
+}
+throw new DeckNotFitException();
     }
-
 
     @Override
     public IPhase getNextPhase() {
-        return new Phase2();
+    	return new Phase2();
     }
 
     @Override
     public int getPhaseNumber() {
-        return PHASE_NUMBER;
+    	return PHASE_NUMBER;
     }
 
     @Override
     public boolean isNumberPhase() {
-        return phaseChecker instanceof ColorChecker;
+    	return true;
     }
-
 
     @Override
     public String toString() {
-        return "Phase1";
+        return "Phase" + PHASE_NUMBER;
     }
 }

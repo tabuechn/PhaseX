@@ -1,0 +1,15 @@
+PHASE 1
+NUMBERS:DOUBLE DOUBLE
+"two number pairs"
+PHASE 2
+STREET:7
+"street of seven numbers in a row"
+PHASE 3
+NUMBERS:QUADRUPLE TRIPLE
+"number quadruple and number triple"
+PHASE 4
+STREET:6
+"street of six numbers in a row"
+PHASE 5
+COLORS:5
+"5 of the same color"

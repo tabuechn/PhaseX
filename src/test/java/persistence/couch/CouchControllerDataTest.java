@@ -1,11 +1,6 @@
 package persistence.couch;
 
-import controller.UIController;
-import controller.impl.ActorController;
-import org.junit.Before;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 
 /**
  * If everything works right this class was
@@ -14,34 +9,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class CouchControllerDataTest {
 
-    private static final String PLAYER_NAME = "TestPlayer1";
 
-    private CouchControllerData testee;
-    private UIController controller;
 
-    @Before
-    public void setUp() throws Exception {
-        controller = new ActorController();
-        controller.startGame(PLAYER_NAME);
-        testee = new CouchControllerData();
-    }
-
-    @Test
-    public void setterAndGetterForControllerWorkingCorrectly() {
-        testee.setController(controller);
-        assertEquals(PLAYER_NAME, testee.getController().getPlayersArray()[0].getPlayerName());
-    }
-
-    @Test
-    public void setterAndGetterForPlayerNameWorkingCorrectly() {
-        testee.setPlayerName(PLAYER_NAME);
-        assertEquals(PLAYER_NAME, testee.getPlayerName());
-    }
-
-    @Test
-    public void nameIsCorrectlySetWhenUsingConstructorWithParam() {
-        testee = new CouchControllerData(controller);
-        assertEquals(PLAYER_NAME, testee.getPlayerName());
-    }
 
 }
